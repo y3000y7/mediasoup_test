@@ -208,32 +208,26 @@ const TopBar = props => {
 
   const lockTooltip = room.locked
     ? intl.formatMessage({
-        id: "tooltip.unLockRoom",
-        defaultMessage: "Unlock room"
+        id: "tooltip.unLockRoom"
       })
     : intl.formatMessage({
-        id: "tooltip.lockRoom",
-        defaultMessage: "Lock room"
+        id: "tooltip.lockRoom"
       });
 
   const fullscreenTooltip = fullscreen
     ? intl.formatMessage({
-        id: "tooltip.leaveFullscreen",
-        defaultMessage: "Leave fullscreen"
+        id: "tooltip.leaveFullscreen"
       })
     : intl.formatMessage({
-        id: "tooltip.enterFullscreen",
-        defaultMessage: "Enter fullscreen"
+        id: "tooltip.enterFullscreen"
       });
 
   const loginTooltip = loggedIn
     ? intl.formatMessage({
-        id: "tooltip.logout",
-        defaultMessage: "Log out"
+        id: "tooltip.logout"
       })
     : intl.formatMessage({
-        id: "tooltip.login",
-        defaultMessage: "Log in"
+        id: "tooltip.login"
       });
 
   return (
@@ -256,8 +250,7 @@ const TopBar = props => {
             <IconButton
               color="inherit"
               aria-label={intl.formatMessage({
-                id: "label.openDrawer",
-                defaultMessage: "Open drawer"
+                id: "label.openDrawer"
               })}
               className={classes.menuButton}
             >
@@ -275,8 +268,7 @@ const TopBar = props => {
           <div className={classes.sectionDesktop}>
             <Tooltip
               title={intl.formatMessage({
-                id: "label.moreActions",
-                defaultMessage: "More actions"
+                id: "label.moreActions"
               })}
             >
               <IconButton
@@ -296,8 +288,7 @@ const TopBar = props => {
               <Tooltip title={fullscreenTooltip}>
                 <IconButton
                   aria-label={intl.formatMessage({
-                    id: "tooltip.enterFullscreen",
-                    defaultMessage: "Enter fullscreen"
+                    id: "tooltip.enterFullscreen"
                   })}
                   className={classes.actionButton}
                   color="inherit"
@@ -309,14 +300,12 @@ const TopBar = props => {
             )}
             <Tooltip
               title={intl.formatMessage({
-                id: "tooltip.participants",
-                defaultMessage: "Show participants"
+                id: "tooltip.participants"
               })}
             >
               <IconButton
                 aria-label={intl.formatMessage({
-                  id: "tooltip.participants",
-                  defaultMessage: "Show participants"
+                  id: "tooltip.participants"
                 })}
                 color="inherit"
                 onClick={() => openUsersTab()}
@@ -328,14 +317,12 @@ const TopBar = props => {
             </Tooltip>
             <Tooltip
               title={intl.formatMessage({
-                id: "tooltip.settings",
-                defaultMessage: "Show settings"
+                id: "tooltip.settings"
               })}
             >
               <IconButton
                 aria-label={intl.formatMessage({
-                  id: "tooltip.settings",
-                  defaultMessage: "Show settings"
+                  id: "tooltip.settings"
                 })}
                 className={classes.actionButton}
                 color="inherit"
@@ -348,8 +335,7 @@ const TopBar = props => {
               <span className={classes.disabledButton}>
                 <IconButton
                   aria-label={intl.formatMessage({
-                    id: "tooltip.lockRoom",
-                    defaultMessage: "Lock room"
+                    id: "tooltip.lockRoom"
                   })}
                   className={classes.actionButton}
                   color="inherit"
@@ -369,15 +355,13 @@ const TopBar = props => {
             {lobbyPeers.length > 0 && (
               <Tooltip
                 title={intl.formatMessage({
-                  id: "tooltip.lobby",
-                  defaultMessage: "Show lobby"
+                  id: "tooltip.lobby"
                 })}
               >
                 <span className={classes.disabledButton}>
                   <IconButton
                     aria-label={intl.formatMessage({
-                      id: "tooltip.lobby",
-                      defaultMessage: "Show lobby"
+                      id: "tooltip.lobby"
                     })}
                     className={classes.actionButton}
                     color="inherit"
@@ -398,8 +382,7 @@ const TopBar = props => {
               <Tooltip title={loginTooltip}>
                 <IconButton
                   aria-label={intl.formatMessage({
-                    id: "tooltip.login",
-                    defaultMessage: "Log in"
+                    id: "tooltip.login"
                   })}
                   className={classes.actionButton}
                   color="inherit"
@@ -422,15 +405,13 @@ const TopBar = props => {
             {lobbyPeers.length > 0 && (
               <Tooltip
                 title={intl.formatMessage({
-                  id: "tooltip.lobby",
-                  defaultMessage: "Show lobby"
+                  id: "tooltip.lobby"
                 })}
               >
                 <span className={classes.disabledButton}>
                   <IconButton
                     aria-label={intl.formatMessage({
-                      id: "tooltip.lobby",
-                      defaultMessage: "Show lobby"
+                      id: "tooltip.lobby"
                     })}
                     className={classes.actionButton}
                     color="inherit"
@@ -459,8 +440,7 @@ const TopBar = props => {
 
           <Button
             aria-label={intl.formatMessage({
-              id: "label.leave",
-              defaultMessage: "Leave"
+              id: "label.leave"
             })}
             className={classes.actionButton}
             variant="contained"
@@ -491,8 +471,7 @@ const TopBar = props => {
             >
               <VideoCallIcon
                 aria-label={intl.formatMessage({
-                  id: "label.addVideo",
-                  defaultMessage: "Add video"
+                  id: "label.addVideo"
                 })}
               />
               <p className={classes.moreAction}>
@@ -511,15 +490,13 @@ const TopBar = props => {
               {room.hideSelfView ? (
                 <SelfViewOnIcon
                   aria-label={intl.formatMessage({
-                    id: "room.showSelfView",
-                    defaultMessage: "Show self view video"
+                    id: "room.showSelfView"
                   })}
                 />
               ) : (
                 <SelfViewOffIcon
                   aria-label={intl.formatMessage({
-                    id: "room.hideSelfView",
-                    defaultMessage: "Hide self view video"
+                    id: "room.hideSelfView"
                   })}
                 />
               )}
@@ -609,8 +586,7 @@ const TopBar = props => {
         </MenuItem>
         <MenuItem
           aria-label={intl.formatMessage({
-            id: "tooltip.settings",
-            defaultMessage: "Show settings"
+            id: "tooltip.settings"
           })}
           onClick={() => {
             handleMenuClose();
@@ -627,8 +603,7 @@ const TopBar = props => {
         </MenuItem>
         <MenuItem
           aria-label={intl.formatMessage({
-            id: "tooltip.participants",
-            defaultMessage: "Show participants"
+            id: "tooltip.participants"
           })}
           onClick={() => {
             handleMenuClose();
@@ -648,8 +623,7 @@ const TopBar = props => {
         {fullscreenEnabled && (
           <MenuItem
             aria-label={intl.formatMessage({
-              id: "tooltip.enterFullscreen",
-              defaultMessage: "Enter fullscreen"
+              id: "tooltip.enterFullscreen"
             })}
             onClick={() => {
               handleMenuClose();
@@ -674,8 +648,7 @@ const TopBar = props => {
         >
           <VideoCallIcon
             aria-label={intl.formatMessage({
-              id: "label.addVideo",
-              defaultMessage: "Add video"
+              id: "label.addVideo"
             })}
           />
           <p className={classes.moreAction}>
@@ -691,15 +664,13 @@ const TopBar = props => {
           {room.hideSelfView ? (
             <SelfViewOnIcon
               aria-label={intl.formatMessage({
-                id: "room.showSelfView",
-                defaultMessage: "Show self view video"
+                id: "room.showSelfView"
               })}
             />
           ) : (
             <SelfViewOffIcon
               aria-label={intl.formatMessage({
-                id: "room.hideSelfView",
-                defaultMessage: "Hide self view video"
+                id: "room.hideSelfView"
               })}
             />
           )}

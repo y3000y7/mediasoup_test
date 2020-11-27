@@ -274,7 +274,6 @@ const JoinDialog = ({
                   open
                   title={intl.formatMessage({
                     id: loggedIn ? "label.logout" : "label.login",
-                    defaultMessage: loggedIn ? "Logout" : "Login"
                   })}
                   placement="left"
                 >
@@ -314,7 +313,6 @@ const JoinDialog = ({
             id="roomId"
             label={intl.formatMessage({
               id: "label.roomName",
-              defaultMessage: "Room name"
             })}
             value={roomId}
             variant="outlined"
@@ -383,7 +381,6 @@ const JoinDialog = ({
             id="displayname"
             label={intl.formatMessage({
               id: "label.yourName",
-              defaultMessage: "Your name"
             })}
             value={displayName}
             variant="outlined"
@@ -468,7 +465,6 @@ const JoinDialog = ({
                         <Tooltip
                           title={intl.formatMessage({
                             id: "devices.disableBothMicrophoneAndCamera",
-                            defaultMessage: "Disable both Microphone And Camera"
                           })}
                           placement="bottom"
                         >
@@ -479,7 +475,6 @@ const JoinDialog = ({
                         <Tooltip
                           title={intl.formatMessage({
                             id: "devices.enableOnlyMicrophone",
-                            defaultMessage: "Enable only Microphone"
                           })}
                           placement="bottom"
                         >
@@ -490,7 +485,6 @@ const JoinDialog = ({
                         <Tooltip
                           title={intl.formatMessage({
                             id: "devices.enableOnlyCamera",
-                            defaultMessage: "Enable only Camera"
                           })}
                           placement="bottom"
                         >
@@ -501,7 +495,6 @@ const JoinDialog = ({
                         <Tooltip
                           title={intl.formatMessage({
                             id: "devices.enableBothMicrophoneAndCamera",
-                            defaultMessage: "Enable both Microphone and Camera"
                           })}
                           placement="bottom"
                         >

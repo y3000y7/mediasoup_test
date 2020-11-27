@@ -108,7 +108,6 @@ const ChooseRoom = ({ classes }) => {
               id="username"
               label={intl.formatMessage({
                 id: "label.username",
-                defaultMessage: "Username"
               })}
               variant="outlined"
               margin="normal"
@@ -120,7 +119,6 @@ const ChooseRoom = ({ classes }) => {
               id="password"
               label={intl.formatMessage({
                 id: "label.password",
-                defaultMessage: "Password"
               })}
               variant="outlined"
               margin="normal"

@@ -63,7 +63,6 @@ const MeetingDrawer = props => {
               <Badge color="secondary" badgeContent={unreadMessages}>
                 {intl.formatMessage({
                   id: "label.chat",
-                  defaultMessage: "Chat"
                 })}
               </Badge>
             }
@@ -73,7 +72,6 @@ const MeetingDrawer = props => {
               <Badge color="secondary" badgeContent={raisedHands}>
                 {intl.formatMessage({
                   id: "label.participants",
-                  defaultMessage: "Participants"
                 })}
               </Badge>
             }
