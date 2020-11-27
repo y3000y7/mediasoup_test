@@ -40,8 +40,6 @@ import SelfViewOffIcon from "@material-ui/icons/VideocamOff";
 import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import HelpIcon from "@material-ui/icons/Help";
-import InfoIcon from "@material-ui/icons/Info";
 
 const styles = theme => ({
   persistentDrawerOpen: {
@@ -194,8 +192,6 @@ const TopBar = props => {
     onFullscreen,
     setSettingsOpen,
     setExtraVideoOpen,
-    setHelpOpen,
-    setAboutOpen,
     setLockDialogOpen,
     setHideSelfView,
     toggleToolArea,
@@ -543,38 +539,6 @@ const TopBar = props => {
                 </p>
               )}
             </MenuItem>
-            <MenuItem
-              onClick={() => {
-                handleMenuClose();
-                setHelpOpen(!room.helpOpen);
-              }}
-            >
-              <HelpIcon
-                aria-label={intl.formatMessage({
-                  id: "room.help",
-                  defaultMessage: "Help"
-                })}
-              />
-              <p className={classes.moreAction}>
-                <FormattedMessage id="room.help" defaultMessage="Help" />
-              </p>
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                handleMenuClose();
-                setAboutOpen(!room.aboutOpen);
-              }}
-            >
-              <InfoIcon
-                aria-label={intl.formatMessage({
-                  id: "room.about",
-                  defaultMessage: "About"
-                })}
-              />
-              <p className={classes.moreAction}>
-                <FormattedMessage id="room.about" defaultMessage="About" />
-              </p>
-            </MenuItem>
           </Paper>
         )}
       </Popover>
@@ -755,38 +719,6 @@ const TopBar = props => {
             </p>
           )}
         </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleMenuClose();
-            setHelpOpen(!room.helpOpen);
-          }}
-        >
-          <HelpIcon
-            aria-label={intl.formatMessage({
-              id: "room.help",
-              defaultMessage: "Help"
-            })}
-          />
-          <p className={classes.moreAction}>
-            <FormattedMessage id="room.help" defaultMessage="Help" />
-          </p>
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleMenuClose();
-            setAboutOpen(!room.aboutOpen);
-          }}
-        >
-          <InfoIcon
-            aria-label={intl.formatMessage({
-              id: "room.about",
-              defaultMessage: "About"
-            })}
-          />
-          <p className={classes.moreAction}>
-            <FormattedMessage id="room.about" defaultMessage="About" />
-          </p>
-        </MenuItem>
       </Menu>
     </React.Fragment>
   );
@@ -810,8 +742,6 @@ TopBar.propTypes = {
   setToolbarsVisible: PropTypes.func.isRequired,
   setSettingsOpen: PropTypes.func.isRequired,
   setExtraVideoOpen: PropTypes.func.isRequired,
-  setHelpOpen: PropTypes.func.isRequired,
-  setAboutOpen: PropTypes.func.isRequired,
   setLockDialogOpen: PropTypes.func.isRequired,
   setHideSelfView: PropTypes.func.isRequired,
   toggleToolArea: PropTypes.func.isRequired,
@@ -849,10 +779,7 @@ const makeMapStateToProps = () => {
     loggedIn: state.me.loggedIn,
     loginEnabled: state.me.loginEnabled,
     myPicture: state.me.picture,
-    unread:
-      state.toolarea.unreadMessages +
-      state.toolarea.unreadFiles +
-      raisedHandsSelector(state),
+    unread: state.toolarea.unreadMessages + raisedHandsSelector(state),
     canProduceExtraVideo: hasExtraVideoPermission(state),
     canLock: hasLockPermission(state),
     canPromote: hasPromotionPermission(state),
@@ -872,12 +799,6 @@ const mapDispatchToProps = dispatch => ({
   },
   setExtraVideoOpen: extraVideoOpen => {
     dispatch(roomActions.setExtraVideoOpen(extraVideoOpen));
-  },
-  setHelpOpen: helpOpen => {
-    dispatch(roomActions.setHelpOpen(helpOpen));
-  },
-  setAboutOpen: aboutOpen => {
-    dispatch(roomActions.setAboutOpen(aboutOpen));
   },
   setLockDialogOpen: lockDialogOpen => {
     dispatch(roomActions.setLockDialogOpen(lockDialogOpen));
@@ -913,7 +834,6 @@ export default withRoomContext(
           prev.me.picture === next.me.picture &&
           prev.me.roles === next.me.roles &&
           prev.toolarea.unreadMessages === next.toolarea.unreadMessages &&
-          prev.toolarea.unreadFiles === next.toolarea.unreadFiles &&
           prev.toolarea.toolAreaOpen === next.toolarea.toolAreaOpen &&
           prev.intl.locale === next.intl.locale &&
           prev.intl.localesList === next.intl.localesList

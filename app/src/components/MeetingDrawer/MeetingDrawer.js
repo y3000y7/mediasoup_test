@@ -10,7 +10,6 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Badge from "@material-ui/core/Badge";
 import Chat from "./Chat/Chat";
-import FileSharing from "./FileSharing/FileSharing";
 import ParticipantList from "./ParticipantList/ParticipantList";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
@@ -41,7 +40,6 @@ const MeetingDrawer = props => {
   const {
     currentToolTab,
     unreadMessages,
-    unreadFiles,
     raisedHands,
     closeDrawer,
     setToolTab,
@@ -99,7 +97,6 @@ MeetingDrawer.propTypes = {
   currentToolTab: PropTypes.string.isRequired,
   setToolTab: PropTypes.func.isRequired,
   unreadMessages: PropTypes.number.isRequired,
-  unreadFiles: PropTypes.number.isRequired,
   raisedHands: PropTypes.number.isRequired,
   closeDrawer: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
@@ -110,7 +107,6 @@ const mapStateToProps = state => {
   return {
     currentToolTab: state.toolarea.currentToolTab,
     unreadMessages: state.toolarea.unreadMessages,
-    unreadFiles: state.toolarea.unreadFiles,
     raisedHands: raisedHandsSelector(state)
   };
 };
@@ -128,7 +124,6 @@ export default connect(
       return (
         prev.toolarea.currentToolTab === next.toolarea.currentToolTab &&
         prev.toolarea.unreadMessages === next.toolarea.unreadMessages &&
-        prev.toolarea.unreadFiles === next.toolarea.unreadFiles &&
         prev.peers === next.peers
       );
     }
