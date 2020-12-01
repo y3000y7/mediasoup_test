@@ -231,18 +231,6 @@ class Filmstrip extends React.PureComponent {
         )}
         ref={this.rootContainer}
       >
-        <div className={classes.speaker} ref={this.activePeerContainer}>
-          {/* {peers[activePeerId] && (
-            <SpeakerPeer
-              advancedMode={advancedMode}
-              id={activePeerId}
-              style={speakerStyle}
-            />
-          )} */}
-
-          <DrawingBoard style={speakerStyle} />
-        </div>
-
         <div className={classes.filmStrip} ref={this.filmStripContainer}>
           <Grid container justify="center" spacing={0}>
             <Grid item>
@@ -291,6 +279,17 @@ class Filmstrip extends React.PureComponent {
               }
             })}
           </Grid>
+        </div>
+        <div className={classes.speaker} ref={this.activePeerContainer}>
+          {/* {peers[activePeerId] && (
+            <SpeakerPeer
+              advancedMode={advancedMode}
+              id={activePeerId}
+              style={speakerStyle}
+            />
+          )} */}
+
+          <DrawingBoard style={speakerStyle} />
         </div>
       </div>
     );

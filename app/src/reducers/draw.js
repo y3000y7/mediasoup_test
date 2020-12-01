@@ -18,6 +18,10 @@ const draw = (state = [], action) => {
       return [...state, ...drawingHistory];
     }
 
+    case "CLEAR_DRAWING_OBJECTS": {
+      return [];
+    }
+
     default:
       return state;
   }

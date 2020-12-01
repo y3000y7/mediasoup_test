@@ -12,3 +12,7 @@ export const addDrawingHistory = drawingHistory => ({
   type: "ADD_DRAWING_HISTORY",
   payload: { drawingHistory }
 });
+
+export const clearDrawingObjects = () => ({
+  type: "CLEAR_DRAWING_OBJECTS"
+});

@@ -1231,6 +1231,19 @@ export default class RoomClient {
       logger.error('addDrawingObject() [error:"%o"]', error);
     }
   }
+  
+  async clearDrawingObjects() {
+    logger.debug("clearDrawingObjects()");
+  
+    try {
+      await this.sendRequest("clearDrawingObjects");
+  
+      store.dispatch(drawActions.clearDrawingObjects());
+    } catch (error) {
+      logger.error('clearDrawingObjects() [error:"%o"]', error);
+    }
+
+  }
 
   addSelectedPeer(peerId) {
     logger.debug('addSelectedPeer() [peerId:"%s"]', peerId);
@@ -2460,6 +2473,13 @@ export default class RoomClient {
               drawActions.addResponseDrawingObject({ ...object, peerId })
             );
 
+            break;
+          }
+          
+          case "clearDrawingObjects":{
+            console.log("RESPONSE?",111111)
+
+            store.dispatch(drawActions.clearDrawingObjects());
             break;
           }
 

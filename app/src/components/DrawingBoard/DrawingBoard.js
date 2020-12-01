@@ -11,7 +11,28 @@ const styles = () => ({
     background: "#333333",
     width: "100%",
     height: "100%",
-    border: "2px solid green"
+    border: "1px solid red",
+    position: "relative"
+  },
+  tools: {
+    position: "absolute",
+    right: "20px",
+    top: "50px",
+    width: "50px",
+    height: "200px"
+  },
+  tool: {
+    cursor: "pointer",
+    width: "50px",
+    lineHeight: "50px",
+    marginBottom: "10px",
+    backgroundColor: "#ffffff",
+    fontSize: "12px",
+    border: "2px solid red",
+    textAlign: "center"
+  },
+  selectedTool: {
+    background: "#ffff00"
   }
 });
 
@@ -19,82 +40,113 @@ class DrawingBoard extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      isDrawing: false,
-      line: { tool: "pen", points: [] }
+      selectedTool: "pen",
+      drawingObject: null
     };
+    this.tools = ["select", "pen", "text", "clear"];
   }
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.draw.length !== this.props.draw.length) return true;
-    if (nextState.line.points.length !== this.state.line.points.length)
+    if (nextProps.draw.length !== this.props.draw.length) {
       return true;
+    }
+    if (
+      JSON.stringify(nextState.drawingObject) !==
+      JSON.stringify(this.state.drawingObject)
+    ) {
+      return true;
+    }
+    if (nextState.selectedTool !== this.state.selectedTool) {
+      return true;
+    }
 
     return false;
   }
 
   handleMouseDown = e => {
+    const { selectedTool } = this.state;
     const pos = e.target.getStage().getPointerPosition();
+    let drawingObject = null;
+    if (selectedTool === "pen") {
+      drawingObject = { tool: "pen", points: [pos.x, pos.y] };
+    }
+
     this.setState({
-      isDrawing: true,
-      line: { tool: "pen", points: [pos.x, pos.y] }
+      drawingObject
     });
   };
 
   handleMouseMove = e => {
     // no drawing - skipping
-    if (!this.state.isDrawing) {
+    if (!this.state.drawingObject) {
       return;
     }
-    const { line } = this.state;
+    const { drawingObject } = this.state;
     const stage = e.target.getStage();
     const point = stage.getPointerPosition();
-    // let lastLine = lines[lines.length - 1];
-    // add point
-    // line.points = line.points.concat([point.x, point.y]);
 
-    // replace last
-    // lines.splice(lines.length - 1, 1, lastLine);
-    // setLines(lines.concat());
     this.setState({
-      line: { ...line, points: line.points.concat([point.x, point.y]) }
+      drawingObject: {
+        ...drawingObject,
+        points: drawingObject.points.concat([point.x, point.y])
+      }
     });
   };
 
   handleMouseUp = () => {
     this.setState({ isDrawing: false });
     const { roomClient } = this.props;
-    const { line } = this.state;
-    roomClient.addDrawingObject(line);
-    this.setState({ line: { tool: "pen", points: [] } });
+    const { drawingObject } = this.state;
+    if (drawingObject) {
+      roomClient.addDrawingObject(drawingObject);
+      this.setState({ drawingObject: null });
+    }
+  };
+
+  handleSelectTool = tool => {
+    if (tool === "clear") {
+      const { roomClient } = this.props;
+      roomClient.clearDrawingObjects();
+    } else {
+      if (tool !== this.state.selectedTool) {
+        this.setState({ selectedTool: tool });
+      }
+    }
   };
 
   render() {
     const { classes, draw } = this.props;
-    const { line, stageWidth, stageHeight } = this.state;
-    const { handleMouseDown, handleMouseMove, handleMouseUp } = this;
+    const { drawingObject, selectedTool, stageWidth, stageHeight } = this.state;
+    const {
+      tools,
+      handleMouseDown,
+      handleMouseMove,
+      handleMouseUp,
+      handleSelectTool
+    } = this;
     return (
       <div className={classes.board}>
         <Stage
-          width={1280}
-          height={720}
+          width={600}
+          height={400}
           onMouseDown={handleMouseDown}
           onMousemove={handleMouseMove}
           onMouseup={handleMouseUp}
         >
           <Layer>
-            <Rect width={1280} height={720} x={0} y={0} fill="#dddddd" />
-            {draw.map((line, i) => (
+            <Rect width={600} height={400} x={0} y={0} fill="#dddddd" />
+            {draw.map((obj, i) => (
               <Line
                 key={i}
-                points={line.points}
+                points={obj.points}
                 stroke="#000000"
                 strokeWidth={5}
                 tension={0.5}
                 lineCap="round"
               />
             ))}
-            {line.points.length > 0 && (
+            {drawingObject && (
               <Line
-                points={line.points}
+                points={drawingObject.points}
                 stroke="#000000"
                 strokeWidth={5}
                 tension={0.5}
@@ -103,6 +155,23 @@ class DrawingBoard extends React.PureComponent {
             )}
           </Layer>
         </Stage>
+        <div className={classes.tools}>
+          {tools.map((tool, i) => {
+            let className = classes.tool;
+            if (tool === selectedTool) {
+              className += " " + classes.selectedTool;
+            }
+            return (
+              <div
+                key={i}
+                className={className}
+                onClick={() => handleSelectTool(tool)}
+              >
+                {tool}
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }
