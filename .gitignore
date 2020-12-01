@@ -1,4 +1,6 @@
 node_modules/
 
 /app/build/
+/app/build_release/
 .vscode
+.eslintcache
