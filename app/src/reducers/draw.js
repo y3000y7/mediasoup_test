@@ -9,7 +9,7 @@ const draw = (state = [], action) => {
     case "ADD_NEW_RESPONSE_LINE": {
       const { line } = action.payload;
 
-      return [...state, line];
+      return [...state, line.line];
     }
 
     case "ADD_DRAW_HISTORY": {

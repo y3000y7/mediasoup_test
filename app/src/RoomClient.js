@@ -1219,7 +1219,7 @@ export default class RoomClient {
   }
 
   async drawLine(line) {
-    logger.debug("draw()", line);
+    logger.debug("drawLine()", line);
 
     try {
       await this.sendRequest("drawLine", {
@@ -1228,7 +1228,7 @@ export default class RoomClient {
 
       store.dispatch(drawActions.drawLine(line));
     } catch (error) {
-      logger.error('draw() [error:"%o"]', error);
+      logger.error('drawLine() [error:"%o"]', error);
     }
   }
 
@@ -2625,6 +2625,7 @@ export default class RoomClient {
         userRoles,
         allowWhenRoleMissing,
         chatHistory,
+        drawHistory,
         lastNHistory,
         locked,
         lobbyPeers,
@@ -2687,6 +2688,9 @@ export default class RoomClient {
 
       chatHistory.length > 0 &&
         store.dispatch(chatActions.addChatHistory(chatHistory));
+
+      drawHistory.length > 0 &&
+        store.dispatch(drawActions.addDrawHistory(drawHistory));
 
       locked
         ? store.dispatch(roomActions.setRoomLocked())

@@ -19,18 +19,23 @@ class DrawingBoard extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      tool: "pen",
       isDrawing: false,
-      lines: []
+      line: { tool: "pen", points: [] }
     };
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.draw.length !== this.props.draw.length) return true;
+    if (nextState.line.points.length !== this.state.line.points.length)
+      return true;
+
+    return false;
   }
 
   handleMouseDown = e => {
-    const { lines, tool } = this.state;
     const pos = e.target.getStage().getPointerPosition();
     this.setState({
       isDrawing: true,
-      lines: [...lines, { tool, points: [pos.x, pos.y] }]
+      line: { tool: "pen", points: [pos.x, pos.y] }
     });
   };
 
@@ -39,29 +44,32 @@ class DrawingBoard extends React.PureComponent {
     if (!this.state.isDrawing) {
       return;
     }
-    const { lines } = this.state;
+    const { line } = this.state;
     const stage = e.target.getStage();
     const point = stage.getPointerPosition();
-    let lastLine = lines[lines.length - 1];
+    // let lastLine = lines[lines.length - 1];
     // add point
-    lastLine.points = lastLine.points.concat([point.x, point.y]);
+    // line.points = line.points.concat([point.x, point.y]);
 
     // replace last
-    lines.splice(lines.length - 1, 1, lastLine);
+    // lines.splice(lines.length - 1, 1, lastLine);
     // setLines(lines.concat());
-    this.setState({ lines: lines.concat() });
+    this.setState({
+      line: { ...line, points: line.points.concat([point.x, point.y]) }
+    });
   };
 
   handleMouseUp = () => {
     this.setState({ isDrawing: false });
     const { roomClient } = this.props;
-    const { lines } = this.state;
-    roomClient.drawLine(lines[lines.length - 1]);
+    const { line } = this.state;
+    roomClient.drawLine(line);
+    this.setState({ line: { tool: "pen", points: [] } });
   };
 
   render() {
-    const { classes } = this.props;
-    const { lines, stageWidth, stageHeight } = this.state;
+    const { classes, draw } = this.props;
+    const { line, stageWidth, stageHeight } = this.state;
     const { handleMouseDown, handleMouseMove, handleMouseUp } = this;
     return (
       <div className={classes.board}>
@@ -73,7 +81,16 @@ class DrawingBoard extends React.PureComponent {
           onMouseup={handleMouseUp}
         >
           <Layer>
-            {lines.map((line, i) => (
+            {line.points.length > 0 && (
+              <Line
+                points={line.points}
+                stroke="#ff9900"
+                strokeWidth={5}
+                tension={0.5}
+                lineCap="round"
+              />
+            )}
+            {draw.map((line, i) => (
               <Line
                 key={i}
                 points={line.points}
@@ -121,7 +138,7 @@ const mapStateToProps = state => {
     // toolAreaOpen: state.toolarea.toolAreaOpen,
     // aspectRatio: state.settings.aspectRatio,
     // permanentTopBar: state.settings.permanentTopBar
-    lines: state.draw.lines
+    draw: state.draw
   };
 };
 
@@ -132,19 +149,7 @@ export default withRoomContext(
     null,
     {
       areStatesEqual: (next, prev) => {
-        return (
-          prev.room.activeSpeakerId === next.room.activeSpeakerId &&
-          prev.room.selectedPeerId === next.room.selectedPeerId &&
-          prev.room.toolbarsVisible === next.room.toolbarsVisible &&
-          prev.room.hideSelfView === next.room.hideSelfView &&
-          prev.toolarea.toolAreaOpen === next.toolarea.toolAreaOpen &&
-          prev.settings.permanentTopBar === next.settings.permanentTopBar &&
-          prev.settings.aspectRatio === next.settings.aspectRatio &&
-          prev.peers === next.peers &&
-          prev.consumers === next.consumers &&
-          prev.room.spotlights === next.room.spotlights &&
-          prev.me.id === next.me.id
-        );
+        return prev.draw === next.draw;
       }
     }
   )(withStyles(styles)(DrawingBoard))

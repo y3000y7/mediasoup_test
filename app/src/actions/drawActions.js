@@ -1,4 +1,4 @@
-export const drawLines = line => ({
+export const drawLine = line => ({
   type: "DRAW_LINE",
   payload: { line }
 });
