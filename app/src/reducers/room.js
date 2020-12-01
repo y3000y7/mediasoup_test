@@ -15,7 +15,7 @@ const initialState = {
   fullScreenConsumer: null, // ConsumerID
   windowConsumer: null, // ConsumerID
   toolbarsVisible: true,
-  mode: window.config.defaultLayout || "democratic",
+  mode: window.config.defaultLayout || "filmstrip",
   selectedPeers: [],
   spotlights: [],
   rolesManagerPeer: null, // peerId
