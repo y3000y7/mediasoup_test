@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import classnames from "classnames";
 import { withRoomContext } from "../../RoomContext";
-import { Stage, Layer, Rect, Text, Circle, Line } from "react-konva";
+import { Stage, Layer, Rect, Line } from "react-konva";
 
 const styles = () => ({
   board: {
@@ -74,32 +74,33 @@ class DrawingBoard extends React.PureComponent {
     return (
       <div className={classes.board}>
         <Stage
-          width={1000}
-          height={500}
+          width={1280}
+          height={720}
           onMouseDown={handleMouseDown}
           onMousemove={handleMouseMove}
           onMouseup={handleMouseUp}
         >
           <Layer>
-            {line.points.length > 0 && (
-              <Line
-                points={line.points}
-                stroke="#ff9900"
-                strokeWidth={5}
-                tension={0.5}
-                lineCap="round"
-              />
-            )}
+            <Rect width={1280} height={720} x={0} y={0} fill="#dddddd" />
             {draw.map((line, i) => (
               <Line
                 key={i}
                 points={line.points}
-                stroke="#ff9900"
+                stroke="#000000"
                 strokeWidth={5}
                 tension={0.5}
                 lineCap="round"
               />
             ))}
+            {line.points.length > 0 && (
+              <Line
+                points={line.points}
+                stroke="#000000"
+                strokeWidth={5}
+                tension={0.5}
+                lineCap="round"
+              />
+            )}
           </Layer>
         </Stage>
       </div>
