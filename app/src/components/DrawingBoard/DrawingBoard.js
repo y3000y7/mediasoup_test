@@ -142,6 +142,7 @@ class DrawingBoard extends React.PureComponent {
                 strokeWidth={5}
                 tension={0.5}
                 lineCap="round"
+                draggable={selectedTool === "select"}
               />
             ))}
             {drawingObject && (
