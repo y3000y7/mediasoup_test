@@ -1677,6 +1677,21 @@ class Room extends EventEmitter {
         cb();
       }
 
+      case "clearDrawingObjects": {
+        if (!this._hasPermission(peer, DRAW_OBJECT))
+          throw new Error("peer not authorized");
+
+        this._drawingHistory = [];
+
+        // Spread to others
+        this._notification(peer.socket, "clearDrawingObjects", null, true);
+
+        // Return no error
+        cb();
+
+        break;
+      }
+
       default: {
         logger.error('unknown request.method "%s"', request.method);
 
