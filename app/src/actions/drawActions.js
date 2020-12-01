@@ -1,14 +1,14 @@
-export const drawLine = line => ({
-  type: "DRAW_LINE",
-  payload: { line }
+export const addDrawingObject = object => ({
+  type: "ADD_DRAWING_OBJECT",
+  payload: { object }
 });
 
-export const addResponseLine = line => ({
-  type: "ADD_NEW_RESPONSE_LINE",
-  payload: { line }
+export const addResponseDrawingObject = object => ({
+  type: "ADD_NEW_RESPONSE_DRAWING_OBJECT",
+  payload: { object }
 });
 
-export const addDrawHistory = drawHistory => ({
-  type: "ADD_DRAW_HISTORY",
-  payload: { drawHistory }
+export const addDrawingHistory = drawingHistory => ({
+  type: "ADD_DRAWING_HISTORY",
+  payload: { drawingHistory }
 });

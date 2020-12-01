@@ -24,7 +24,7 @@ const permissions = require("../permissions"),
     SHARE_FILE,
     MODERATE_FILES,
     MODERATE_ROOM,
-    DRAW_LINE
+    DRAW_OBJECT
   } = permissions;
 
 const config = require("../config/config");
@@ -51,7 +51,7 @@ const roomPermissions = {
   [SHARE_FILE]: [userRoles.NORMAL],
   [MODERATE_FILES]: [userRoles.MODERATOR],
   [MODERATE_ROOM]: [userRoles.MODERATOR],
-  [DRAW_LINE]: [userRoles.NORMAL],
+  [DRAW_OBJECT]: [userRoles.NORMAL],
   ...config.permissionsFromRoles
 };
 
@@ -1654,21 +1654,21 @@ class Room extends EventEmitter {
         break;
       }
 
-      case "drawLine": {
-        if (!this._hasPermission(peer, DRAW_LINE))
+      case "addDrawingObject": {
+        if (!this._hasPermission(peer, DRAW_OBJECT))
           throw new Error("peer not authorized");
 
-        const { line } = request.data;
+        const { object } = request.data;
 
-        this._drawHistory.push(line);
+        this._drawHistory.push(object);
 
         // Spread to others
         this._notification(
           peer.socket,
-          "drawLine",
+          "addDrawingObject",
           {
             peerId: peer.id,
-            line: line
+            object: object
           },
           true
         );

@@ -1218,17 +1218,17 @@ export default class RoomClient {
     store.dispatch(meActions.setWebcamInProgress(false));
   }
 
-  async drawLine(line) {
-    logger.debug("drawLine()", line);
+  async addDrawingObject(object) {
+    logger.debug("addDrawingObject()", object);
 
     try {
-      await this.sendRequest("drawLine", {
-        line
+      await this.sendRequest("addDrawingObject", {
+        object
       });
 
-      store.dispatch(drawActions.drawLine(line));
+      store.dispatch(drawActions.addDrawingObject(object));
     } catch (error) {
-      logger.error('drawLine() [error:"%o"]', error);
+      logger.error('addDrawingObject() [error:"%o"]', error);
     }
   }
 
@@ -2453,10 +2453,12 @@ export default class RoomClient {
             break;
           }
 
-          case "drawLine": {
-            const { peerId, line } = notification.data;
+          case "addDrawingObject": {
+            const { peerId, object } = notification.data;
 
-            store.dispatch(drawActions.addResponseLine({ line, peerId }));
+            store.dispatch(
+              drawActions.addResponseDrawingObject({ ...object, peerId })
+            );
 
             break;
           }
@@ -2625,7 +2627,7 @@ export default class RoomClient {
         userRoles,
         allowWhenRoleMissing,
         chatHistory,
-        drawHistory,
+        drawingHistory,
         lastNHistory,
         locked,
         lobbyPeers,
@@ -2689,8 +2691,8 @@ export default class RoomClient {
       chatHistory.length > 0 &&
         store.dispatch(chatActions.addChatHistory(chatHistory));
 
-      drawHistory.length > 0 &&
-        store.dispatch(drawActions.addDrawHistory(drawHistory));
+      drawingHistory.length > 0 &&
+        store.dispatch(drawActions.addDrawingHistory(drawingHistory));
 
       locked
         ? store.dispatch(roomActions.setRoomLocked())

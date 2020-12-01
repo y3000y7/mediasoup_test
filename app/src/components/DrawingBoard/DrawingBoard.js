@@ -63,7 +63,7 @@ class DrawingBoard extends React.PureComponent {
     this.setState({ isDrawing: false });
     const { roomClient } = this.props;
     const { line } = this.state;
-    roomClient.drawLine(line);
+    roomClient.addDrawingObject(line);
     this.setState({ line: { tool: "pen", points: [] } });
   };
 
