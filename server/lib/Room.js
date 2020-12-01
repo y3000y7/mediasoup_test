@@ -250,7 +250,7 @@ class Room extends EventEmitter {
 
     this._fileHistory = [];
 
-    this._drawHistory = [];
+    this._drawingHistory = [];
 
     this._lastN = [];
 
@@ -792,7 +792,7 @@ class Room extends EventEmitter {
           allowWhenRoleMissing: roomAllowWhenRoleMissing,
           chatHistory: this._chatHistory,
           fileHistory: this._fileHistory,
-          drawHistory: this._drawHistory,
+          drawingHistory: this._drawingHistory,
           lastNHistory: this._lastN,
           locked: this._locked,
           lobbyPeers: lobbyPeers,
@@ -1660,7 +1660,7 @@ class Room extends EventEmitter {
 
         const { object } = request.data;
 
-        this._drawHistory.push(object);
+        this._drawingHistory.push(object);
 
         // Spread to others
         this._notification(
