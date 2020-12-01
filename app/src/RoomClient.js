@@ -15,6 +15,7 @@ import * as consumerActions from "./actions/consumerActions";
 import * as producerActions from "./actions/producerActions";
 import * as notificationActions from "./actions/notificationActions";
 import * as transportActions from "./actions/transportActions";
+import * as drawActions from "./actions/drawActions";
 import Spotlights from "./Spotlights";
 import { permissions } from "./permissions";
 import * as locales from "./translations/locales";
@@ -284,7 +285,7 @@ export default class RoomClient {
             store.dispatch(
               requestActions.notify({
                 text: intl.formatMessage({
-                  id: "room.toggleAdvancedMode",
+                  id: "room.toggleAdvancedMode"
                 })
               })
             );
@@ -297,7 +298,7 @@ export default class RoomClient {
             store.dispatch(
               requestActions.notify({
                 text: intl.formatMessage({
-                  id: "room.setDemocraticView",
+                  id: "room.setDemocraticView"
                 })
               })
             );
@@ -310,7 +311,7 @@ export default class RoomClient {
             store.dispatch(
               requestActions.notify({
                 text: intl.formatMessage({
-                  id: "room.setFilmStripView",
+                  id: "room.setFilmStripView"
                 })
               })
             );
@@ -336,7 +337,7 @@ export default class RoomClient {
                 store.dispatch(
                   requestActions.notify({
                     text: intl.formatMessage({
-                      id: "devices.microphoneMute",
+                      id: "devices.microphoneMute"
                     })
                   })
                 );
@@ -346,7 +347,7 @@ export default class RoomClient {
                 store.dispatch(
                   requestActions.notify({
                     text: intl.formatMessage({
-                      id: "devices.microphoneUnMute",
+                      id: "devices.microphoneUnMute"
                     })
                   })
                 );
@@ -357,7 +358,7 @@ export default class RoomClient {
               store.dispatch(
                 requestActions.notify({
                   text: intl.formatMessage({
-                    id: "devices.microphoneEnable",
+                    id: "devices.microphoneEnable"
                   })
                 })
               );
@@ -427,7 +428,7 @@ export default class RoomClient {
       store.dispatch(
         requestActions.notify({
           text: intl.formatMessage({
-            id: "devices.devicesChanged",
+            id: "devices.devicesChanged"
           })
         })
       );
@@ -481,7 +482,7 @@ export default class RoomClient {
     store.dispatch(
       requestActions.notify({
         text: intl.formatMessage({
-          id: "room.loggedIn",
+          id: "room.loggedIn"
         })
       })
     );
@@ -497,7 +498,7 @@ export default class RoomClient {
     store.dispatch(
       requestActions.notify({
         text: intl.formatMessage({
-          id: "room.loggedOut",
+          id: "room.loggedOut"
         })
       })
     );
@@ -623,7 +624,7 @@ export default class RoomClient {
         requestActions.notify({
           text: intl.formatMessage(
             {
-              id: "room.changedDisplayName",
+              id: "room.changedDisplayName"
             },
             {
               displayName
@@ -638,7 +639,7 @@ export default class RoomClient {
         requestActions.notify({
           type: "error",
           text: intl.formatMessage({
-            id: "room.changeDisplayNameError",
+            id: "room.changeDisplayNameError"
           })
         })
       );
@@ -671,7 +672,7 @@ export default class RoomClient {
         requestActions.notify({
           type: "error",
           text: intl.formatMessage({
-            id: "room.chatError",
+            id: "room.chatError"
           })
         })
       );
@@ -698,7 +699,7 @@ export default class RoomClient {
         requestActions.notify({
           type: "error",
           text: intl.formatMessage({
-            id: "devices.microphoneMuteError",
+            id: "devices.microphoneMuteError"
           })
         })
       );
@@ -730,7 +731,7 @@ export default class RoomClient {
           requestActions.notify({
             type: "error",
             text: intl.formatMessage({
-              id: "devices.microphoneUnMuteError",
+              id: "devices.microphoneUnMuteError"
             })
           })
         );
@@ -992,7 +993,7 @@ export default class RoomClient {
             requestActions.notify({
               type: "error",
               text: intl.formatMessage({
-                id: "devices.microphoneDisconnected",
+                id: "devices.microphoneDisconnected"
               })
             })
           );
@@ -1040,7 +1041,7 @@ export default class RoomClient {
         requestActions.notify({
           type: "error",
           text: intl.formatMessage({
-            id: "devices.microphoneError",
+            id: "devices.microphoneError"
           })
         })
       );
@@ -1172,7 +1173,7 @@ export default class RoomClient {
             requestActions.notify({
               type: "error",
               text: intl.formatMessage({
-                id: "devices.cameraDisconnected",
+                id: "devices.cameraDisconnected"
               })
             })
           );
@@ -1206,7 +1207,7 @@ export default class RoomClient {
         requestActions.notify({
           type: "error",
           text: intl.formatMessage({
-            id: "devices.cameraError",
+            id: "devices.cameraError"
           })
         })
       );
@@ -1215,6 +1216,20 @@ export default class RoomClient {
     }
 
     store.dispatch(meActions.setWebcamInProgress(false));
+  }
+
+  async drawLine(line) {
+    logger.debug("draw()", line);
+
+    try {
+      await this.sendRequest("drawLine", {
+        line
+      });
+
+      store.dispatch(drawActions.drawLine(line));
+    } catch (error) {
+      logger.error('draw() [error:"%o"]', error);
+    }
   }
 
   addSelectedPeer(peerId) {
@@ -1641,7 +1656,7 @@ export default class RoomClient {
         store.dispatch(
           requestActions.notify({
             text: intl.formatMessage({
-              id: "socket.disconnected",
+              id: "socket.disconnected"
             })
           })
         );
@@ -1652,7 +1667,7 @@ export default class RoomClient {
       store.dispatch(
         requestActions.notify({
           text: intl.formatMessage({
-            id: "socket.reconnecting",
+            id: "socket.reconnecting"
           })
         })
       );
@@ -1709,7 +1724,7 @@ export default class RoomClient {
       store.dispatch(
         requestActions.notify({
           text: intl.formatMessage({
-            id: "socket.disconnected",
+            id: "socket.disconnected"
           })
         })
       );
@@ -1726,7 +1741,7 @@ export default class RoomClient {
       store.dispatch(
         requestActions.notify({
           text: intl.formatMessage({
-            id: "socket.reconnected",
+            id: "socket.reconnected"
           })
         })
       );
@@ -1896,7 +1911,7 @@ export default class RoomClient {
             store.dispatch(
               requestActions.notify({
                 text: intl.formatMessage({
-                  id: "room.locked",
+                  id: "room.locked"
                 })
               })
             );
@@ -1910,7 +1925,7 @@ export default class RoomClient {
             store.dispatch(
               requestActions.notify({
                 text: intl.formatMessage({
-                  id: "room.unlocked",
+                  id: "room.unlocked"
                 })
               })
             );
@@ -1929,7 +1944,7 @@ export default class RoomClient {
             store.dispatch(
               requestActions.notify({
                 text: intl.formatMessage({
-                  id: "room.newLobbyPeer",
+                  id: "room.newLobbyPeer"
                 })
               })
             );
@@ -1963,7 +1978,7 @@ export default class RoomClient {
               store.dispatch(
                 requestActions.notify({
                   text: intl.formatMessage({
-                    id: "room.newLobbyPeer",
+                    id: "room.newLobbyPeer"
                   })
                 })
               );
@@ -1980,7 +1995,7 @@ export default class RoomClient {
             store.dispatch(
               requestActions.notify({
                 text: intl.formatMessage({
-                  id: "room.lobbyPeerLeft",
+                  id: "room.lobbyPeerLeft"
                 })
               })
             );
@@ -2007,7 +2022,7 @@ export default class RoomClient {
               requestActions.notify({
                 text: intl.formatMessage(
                   {
-                    id: "room.lobbyPeerChangedDisplayName",
+                    id: "room.lobbyPeerChangedDisplayName"
                   },
                   {
                     displayName
@@ -2029,7 +2044,7 @@ export default class RoomClient {
             store.dispatch(
               requestActions.notify({
                 text: intl.formatMessage({
-                  id: "room.lobbyPeerChangedPicture",
+                  id: "room.lobbyPeerChangedPicture"
                 })
               })
             );
@@ -2045,7 +2060,7 @@ export default class RoomClient {
             store.dispatch(
               requestActions.notify({
                 text: intl.formatMessage({
-                  id: "room.setAccessCode",
+                  id: "room.setAccessCode"
                 })
               })
             );
@@ -2062,7 +2077,7 @@ export default class RoomClient {
               store.dispatch(
                 requestActions.notify({
                   text: intl.formatMessage({
-                    id: "room.accessCodeOn",
+                    id: "room.accessCodeOn"
                   })
                 })
               );
@@ -2070,7 +2085,7 @@ export default class RoomClient {
               store.dispatch(
                 requestActions.notify({
                   text: intl.formatMessage({
-                    id: "room.accessCodeOff",
+                    id: "room.accessCodeOff"
                   })
                 })
               );
@@ -2099,7 +2114,7 @@ export default class RoomClient {
               requestActions.notify({
                 text: intl.formatMessage(
                   {
-                    id: "room.peerChangedDisplayName",
+                    id: "room.peerChangedDisplayName"
                   },
                   {
                     oldDisplayName,
@@ -2142,7 +2157,7 @@ export default class RoomClient {
             if (raisedHand) {
               text = intl.formatMessage(
                 {
-                  id: "room.raisedHand",
+                  id: "room.raisedHand"
                 },
                 {
                   displayName
@@ -2151,7 +2166,7 @@ export default class RoomClient {
             } else {
               text = intl.formatMessage(
                 {
-                  id: "room.loweredHand",
+                  id: "room.loweredHand"
                 },
                 {
                   displayName
@@ -2198,7 +2213,7 @@ export default class RoomClient {
             store.dispatch(
               requestActions.notify({
                 text: intl.formatMessage({
-                  id: "moderator.clearChat",
+                  id: "moderator.clearChat"
                 })
               })
             );
@@ -2235,7 +2250,7 @@ export default class RoomClient {
               requestActions.notify({
                 text: intl.formatMessage(
                   {
-                    id: "room.newPeer",
+                    id: "room.newPeer"
                   },
                   {
                     displayName
@@ -2338,7 +2353,7 @@ export default class RoomClient {
               store.dispatch(
                 requestActions.notify({
                   text: intl.formatMessage({
-                    id: "moderator.muteAudio",
+                    id: "moderator.muteAudio"
                   })
                 })
               );
@@ -2353,7 +2368,7 @@ export default class RoomClient {
             store.dispatch(
               requestActions.notify({
                 text: intl.formatMessage({
-                  id: "moderator.muteVideo",
+                  id: "moderator.muteVideo"
                 })
               })
             );
@@ -2367,7 +2382,7 @@ export default class RoomClient {
             store.dispatch(
               requestActions.notify({
                 text: intl.formatMessage({
-                  id: "moderator.stopScreenSharing",
+                  id: "moderator.stopScreenSharing"
                 })
               })
             );
@@ -2400,7 +2415,7 @@ export default class RoomClient {
                 requestActions.notify({
                   text: intl.formatMessage(
                     {
-                      id: "roles.gotRole",
+                      id: "roles.gotRole"
                     },
                     {
                       role: userRoles.get(roleId).label
@@ -2425,7 +2440,7 @@ export default class RoomClient {
                 requestActions.notify({
                   text: intl.formatMessage(
                     {
-                      id: "roles.lostRole",
+                      id: "roles.lostRole"
                     },
                     {
                       role: userRoles.get(roleId).label
@@ -2434,6 +2449,14 @@ export default class RoomClient {
                 })
               );
             } else store.dispatch(peerActions.removePeerRole(peerId, roleId));
+
+            break;
+          }
+
+          case "drawLine": {
+            const { peerId, line } = notification.data;
+
+            store.dispatch(drawActions.addResponseLine({ line, peerId }));
 
             break;
           }
@@ -2455,7 +2478,7 @@ export default class RoomClient {
           requestActions.notify({
             type: "error",
             text: intl.formatMessage({
-              id: "socket.requestError",
+              id: "socket.requestError"
             })
           })
         );
@@ -2647,7 +2670,7 @@ export default class RoomClient {
             requestActions.notify({
               text: intl.formatMessage(
                 {
-                  id: "roles.gotRole",
+                  id: "roles.gotRole"
                 },
                 {
                   role: roomUserRoles.get(roleId).label
@@ -2725,7 +2748,7 @@ export default class RoomClient {
       store.dispatch(
         requestActions.notify({
           text: intl.formatMessage({
-            id: "room.joined",
+            id: "room.joined"
           })
         })
       );
@@ -2746,7 +2769,7 @@ export default class RoomClient {
         requestActions.notify({
           type: "error",
           text: intl.formatMessage({
-            id: "room.cantJoin",
+            id: "room.cantJoin"
           })
         })
       );
@@ -2766,7 +2789,7 @@ export default class RoomClient {
       store.dispatch(
         requestActions.notify({
           text: intl.formatMessage({
-            id: "room.youLocked",
+            id: "room.youLocked"
           })
         })
       );
@@ -2775,7 +2798,7 @@ export default class RoomClient {
         requestActions.notify({
           type: "error",
           text: intl.formatMessage({
-            id: "room.cantLock",
+            id: "room.cantLock"
           })
         })
       );
@@ -2795,7 +2818,7 @@ export default class RoomClient {
       store.dispatch(
         requestActions.notify({
           text: intl.formatMessage({
-            id: "room.youUnLocked",
+            id: "room.youUnLocked"
           })
         })
       );
@@ -2804,7 +2827,7 @@ export default class RoomClient {
         requestActions.notify({
           type: "error",
           text: intl.formatMessage({
-            id: "room.cantUnLock",
+            id: "room.cantUnLock"
           })
         })
       );
@@ -2966,7 +2989,7 @@ export default class RoomClient {
             requestActions.notify({
               type: "error",
               text: intl.formatMessage({
-                id: "devices.cameraDisconnected",
+                id: "devices.cameraDisconnected"
               })
             })
           );
@@ -2981,7 +3004,7 @@ export default class RoomClient {
           requestActions.notify({
             type: "error",
             text: intl.formatMessage({
-              id: "room.extraVideoDuplication",
+              id: "room.extraVideoDuplication"
             })
           })
         );
@@ -2993,7 +3016,7 @@ export default class RoomClient {
         requestActions.notify({
           type: "error",
           text: intl.formatMessage({
-            id: "devices.cameraError",
+            id: "devices.cameraError"
           })
         })
       );
@@ -3132,7 +3155,7 @@ export default class RoomClient {
             requestActions.notify({
               type: "error",
               text: intl.formatMessage({
-                id: "devices.screenSharingDisconnected",
+                id: "devices.screenSharingDisconnected"
               })
             })
           );
@@ -3154,7 +3177,7 @@ export default class RoomClient {
         requestActions.notify({
           type: "error",
           text: intl.formatMessage({
-            id: "devices.screenSharingError",
+            id: "devices.screenSharingError"
           })
         })
       );

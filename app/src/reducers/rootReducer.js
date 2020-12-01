@@ -11,6 +11,7 @@ import chat from "./chat";
 import toolarea from "./toolarea";
 import settings from "./settings";
 import transports from "./transports";
+import draw from "./draw";
 import intl from "./intl";
 // import { intlReducer } from 'react-intl-redux';
 
@@ -27,6 +28,7 @@ export default combineReducers({
   chat,
   toolarea,
   settings,
+  draw,
   // intl : intlReducer
   intl
 });
