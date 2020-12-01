@@ -1675,6 +1675,8 @@ class Room extends EventEmitter {
 
         // Return no error
         cb();
+
+        break;
       }
 
       case "clearDrawingObjects": {
