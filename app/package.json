@@ -45,6 +45,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "ssl": "HTTPS=true SSL_CRT_FILE=./cert/fullchain.crt SSL_KEY_FILE=./cert/privkey.key PORT=5001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
