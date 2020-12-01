@@ -24,5 +24,5 @@ module.exports = {
   // The role(s) have permission to moderate room (e.g. kick user)
   MODERATE_ROOM: "MODERATE_ROOM",
 
-  DRAW_LINES: "DRAW_LINES"
+  DRAW_LINE: "DRAW_LINE"
 };
