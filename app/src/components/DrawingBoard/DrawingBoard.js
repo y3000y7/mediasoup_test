@@ -11,7 +11,7 @@ const styles = () => ({
     background: "#333333",
     width: "100%",
     height: "100%",
-    border: "1px solid red",
+    // border: "1px solid red",
     position: "relative"
   },
   tools: {
@@ -28,7 +28,7 @@ const styles = () => ({
     marginBottom: "10px",
     backgroundColor: "#ffffff",
     fontSize: "12px",
-    border: "2px solid red",
+    // border: "2px solid red",
     textAlign: "center"
   },
   selectedTool: {
@@ -126,19 +126,19 @@ class DrawingBoard extends React.PureComponent {
     return (
       <div className={classes.board}>
         <Stage
-          width={600}
-          height={400}
+          width={2500}
+          height={700}
           onMouseDown={handleMouseDown}
           onMousemove={handleMouseMove}
           onMouseup={handleMouseUp}
         >
           <Layer>
-            <Rect width={600} height={400} x={0} y={0} fill="#dddddd" />
+            <Rect width={2500} height={1000} x={0} y={0} fill="#333333" />
             {draw.map((obj, i) => (
               <Line
                 key={i}
                 points={obj.points}
-                stroke="#000000"
+                stroke="#ffffff"
                 strokeWidth={5}
                 tension={0.5}
                 lineCap="round"
@@ -148,7 +148,7 @@ class DrawingBoard extends React.PureComponent {
             {drawingObject && (
               <Line
                 points={drawingObject.points}
-                stroke="#000000"
+                stroke="#ffffff"
                 strokeWidth={5}
                 tension={0.5}
                 lineCap="round"
