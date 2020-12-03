@@ -126,14 +126,14 @@ class DrawingBoard extends React.PureComponent {
     return (
       <div className={classes.board}>
         <Stage
-          width={2500}
-          height={700}
+          width={600}
+          height={600}
           onMouseDown={handleMouseDown}
           onMousemove={handleMouseMove}
           onMouseup={handleMouseUp}
         >
           <Layer>
-            <Rect width={2500} height={1000} x={0} y={0} fill="#333333" />
+            <Rect width={600} height={600} x={0} y={0} fill="#333333" />
             {draw.map((obj, i) => (
               <Line
                 key={i}
