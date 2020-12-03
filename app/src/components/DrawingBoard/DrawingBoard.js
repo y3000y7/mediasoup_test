@@ -133,7 +133,7 @@ class DrawingBoard extends React.PureComponent {
           onMouseup={handleMouseUp}
         >
           <Layer>
-            <Rect width={600} height={600} x={0} y={0} fill="#333333" />
+            <Rect width={600} height={600} x={0} y={0} fill="#330033" />
             {draw.map((obj, i) => (
               <Line
                 key={i}
