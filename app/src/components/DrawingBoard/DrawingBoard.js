@@ -12,43 +12,45 @@ const styles = () => ({
     background: "#333333",
     width: "100%",
     height: "100%",
-    // border: "1px solid red",
     position: "relative"
   },
   tools: {
     position: "absolute",
-    right: "20px",
-    top: "50px",
-    width: "50px",
-    height: "200px"
+    left: "20px",
+    top: "20px",
+    display: "flex"
   },
   tool: {
     cursor: "pointer",
     width: "50px",
     lineHeight: "50px",
-    marginBottom: "10px",
+    borderRadius: "10px",
+    marginRight: "10px",
     backgroundColor: "#ffffff",
     fontSize: "12px",
     textAlign: "center"
   },
   selectedTool: {
-    background: "#ffff00"
+    background: "#000000",
+    color: "#ffffff"
   },
   colors: {
     position: "absolute",
-    right: "30px",
-    top: "300px",
-    width: "30px",
-    height: "200px"
+    left: "20px",
+    top: "80px",
+    display: "flex"
   },
   color: {
     cursor: "pointer",
     width: "30px",
     height: "30px",
-    marginBottom: "10px",
-    fontSize: "12px",
-    textAlign: "center",
-    borderRadius: "15px"
+    marginRight: "10px",
+    borderRadius: "15px",
+    transform: "scale(1)"
+  },
+  selectedColor: {
+    transform: "scale(1.3)",
+    border: "3px solid #000000"
   }
 });
 
@@ -57,7 +59,7 @@ class DrawingBoard extends React.PureComponent {
     super(props);
     this.state = {
       selectedTool: "pen",
-      selectedColor: "#ffffff",
+      selectedColor: "#FFFFFF",
       drawingObject: null
     };
     this.tools = ["select", "pen", "text", "clear"];
@@ -83,6 +85,9 @@ class DrawingBoard extends React.PureComponent {
       return true;
     }
     if (nextState.selectedTool !== this.state.selectedTool) {
+      return true;
+    }
+    if (nextState.selectedColor !== this.state.selectedColor) {
       return true;
     }
 
@@ -241,6 +246,7 @@ class DrawingBoard extends React.PureComponent {
             if (color === selectedColor) {
               className += " " + classes.selectedColor;
             }
+            console.log(1111111, className);
             return (
               <div
                 key={i}
