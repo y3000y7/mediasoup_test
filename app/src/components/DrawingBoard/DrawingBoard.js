@@ -117,15 +117,18 @@ class DrawingBoard extends React.PureComponent {
       return;
     }
     const { drawingObject } = this.state;
-    const stage = e.target.getStage();
-    const point = stage.getPointerPosition();
 
-    this.setState({
-      drawingObject: {
-        ...drawingObject,
-        points: drawingObject.points.concat([point.x, point.y])
-      }
-    });
+    if (drawingObject.tool === "pen") {
+      const stage = e.target.getStage();
+      const point = stage.getPointerPosition();
+
+      this.setState({
+        drawingObject: {
+          ...drawingObject,
+          points: drawingObject.points.concat([point.x, point.y])
+        }
+      });
+    }
   };
 
   handleMouseUp = () => {
@@ -201,14 +204,22 @@ class DrawingBoard extends React.PureComponent {
                 }
                 case "text": {
                   return (
-                    <Text key={i} x={obj.points[0][0]} y={obj.points[0][1]} />
+                    <Text
+                      key={i}
+                      x={obj.points[0]}
+                      y={obj.points[1]}
+                      text="type here..."
+                      fill={obj.fill}
+                      fontSize={20}
+                    />
                   );
                 }
                 default:
                   return null;
               }
             })}
-            {drawingObject && (
+
+            {drawingObject && drawingObject.tool === "pen" && (
               <Line
                 points={drawingObject.points}
                 stroke={drawingObject.fill}
@@ -246,7 +257,7 @@ class DrawingBoard extends React.PureComponent {
             if (color === selectedColor) {
               className += " " + classes.selectedColor;
             }
-            console.log(1111111, className);
+
             return (
               <div
                 key={i}
