@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import classnames from "classnames";
 import { withRoomContext } from "../../RoomContext";
-import { Stage, Layer, Rect, Line } from "react-konva";
+import { Stage, Layer, Rect, Line, Text } from "react-konva";
+import { borderRadius } from "@material-ui/system";
 
 const styles = () => ({
   board: {
@@ -28,11 +29,26 @@ const styles = () => ({
     marginBottom: "10px",
     backgroundColor: "#ffffff",
     fontSize: "12px",
-    // border: "2px solid red",
     textAlign: "center"
   },
   selectedTool: {
     background: "#ffff00"
+  },
+  colors: {
+    position: "absolute",
+    right: "30px",
+    top: "300px",
+    width: "30px",
+    height: "200px"
+  },
+  color: {
+    cursor: "pointer",
+    width: "30px",
+    height: "30px",
+    marginBottom: "10px",
+    fontSize: "12px",
+    textAlign: "center",
+    borderRadius: "15px"
   }
 });
 
@@ -41,9 +57,20 @@ class DrawingBoard extends React.PureComponent {
     super(props);
     this.state = {
       selectedTool: "pen",
+      selectedColor: "#ffffff",
       drawingObject: null
     };
     this.tools = ["select", "pen", "text", "clear"];
+    this.colors = [
+      "#FF0000",
+      "#00FF00",
+      "#0000FF",
+      "#FFFF00",
+      "#00FFFF",
+      "#FF00FF",
+      "#000000",
+      "#FFFFFF"
+    ];
   }
   shouldComponentUpdate(nextProps, nextState) {
     if (nextProps.draw.length !== this.props.draw.length) {
@@ -63,12 +90,16 @@ class DrawingBoard extends React.PureComponent {
   }
 
   handleMouseDown = e => {
-    const { selectedTool } = this.state;
+    const { selectedTool, selectedColor } = this.state;
     const pos = e.target.getStage().getPointerPosition();
     let drawingObject = null;
-    if (selectedTool === "pen") {
-      drawingObject = { tool: "pen", points: [pos.x, pos.y] };
-    }
+    // if (selectedTool === "pen") {
+    drawingObject = {
+      tool: selectedTool,
+      fill: selectedColor,
+      points: [pos.x, pos.y]
+    };
+    // }
 
     this.setState({
       drawingObject
@@ -113,15 +144,29 @@ class DrawingBoard extends React.PureComponent {
     }
   };
 
+  handleSelectColor = color => {
+    if (color !== this.state.selectedColor) {
+      this.setState({ selectedColor: color });
+    }
+  };
+
   render() {
     const { classes, draw } = this.props;
-    const { drawingObject, selectedTool, stageWidth, stageHeight } = this.state;
+    const {
+      drawingObject,
+      selectedTool,
+      selectedColor,
+      stageWidth,
+      stageHeight
+    } = this.state;
     const {
       tools,
+      colors,
       handleMouseDown,
       handleMouseMove,
       handleMouseUp,
-      handleSelectTool
+      handleSelectTool,
+      handleSelectColor
     } = this;
     return (
       <div className={classes.board}>
@@ -133,22 +178,35 @@ class DrawingBoard extends React.PureComponent {
           onMouseup={handleMouseUp}
         >
           <Layer>
-            <Rect width={600} height={600} x={0} y={0} fill="#330033" />
-            {draw.map((obj, i) => (
-              <Line
-                key={i}
-                points={obj.points}
-                stroke="#ffffff"
-                strokeWidth={5}
-                tension={0.5}
-                lineCap="round"
-                draggable={selectedTool === "select"}
-              />
-            ))}
+            <Rect width={600} height={600} x={0} y={0} fill="#444" />
+            {draw.map((obj, i) => {
+              switch (obj.tool) {
+                case "pen": {
+                  return (
+                    <Line
+                      key={i}
+                      points={obj.points}
+                      stroke={obj.fill}
+                      strokeWidth={5}
+                      tension={0.5}
+                      lineCap="round"
+                      draggable={selectedTool === "select"}
+                    />
+                  );
+                }
+                case "text": {
+                  return (
+                    <Text key={i} x={obj.points[0][0]} y={obj.points[0][1]} />
+                  );
+                }
+                default:
+                  return null;
+              }
+            })}
             {drawingObject && (
               <Line
                 points={drawingObject.points}
-                stroke="#ffffff"
+                stroke={drawingObject.fill}
                 strokeWidth={5}
                 tension={0.5}
                 lineCap="round"
@@ -156,6 +214,8 @@ class DrawingBoard extends React.PureComponent {
             )}
           </Layer>
         </Stage>
+
+        {/* tools */}
         <div className={classes.tools}>
           {tools.map((tool, i) => {
             let className = classes.tool;
@@ -170,6 +230,24 @@ class DrawingBoard extends React.PureComponent {
               >
                 {tool}
               </div>
+            );
+          })}
+        </div>
+
+        {/* colors */}
+        <div className={classes.colors}>
+          {colors.map((color, i) => {
+            let className = classes.color;
+            if (color === selectedColor) {
+              className += " " + classes.selectedColor;
+            }
+            return (
+              <div
+                key={i}
+                className={className}
+                onClick={() => handleSelectColor(color)}
+                style={{ backgroundColor: color }}
+              ></div>
             );
           })}
         </div>
