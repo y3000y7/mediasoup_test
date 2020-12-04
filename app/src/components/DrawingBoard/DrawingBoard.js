@@ -4,8 +4,7 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import classnames from "classnames";
 import { withRoomContext } from "../../RoomContext";
-import { Stage, Layer, Rect, Line, Text } from "react-konva";
-import { borderRadius } from "@material-ui/system";
+import { Stage, Layer, Rect, Ellipse, Line, Text } from "react-konva";
 
 const styles = () => ({
   board: {
@@ -62,7 +61,7 @@ class DrawingBoard extends React.PureComponent {
       selectedColor: "#FFFFFF",
       drawingObject: null
     };
-    this.tools = ["select", "pen", "text", "clear"];
+    this.tools = ["select", "pen", "rect", "ellipse", "text", "clear"];
     this.colors = [
       "#FF0000",
       "#00FF00",
@@ -98,13 +97,15 @@ class DrawingBoard extends React.PureComponent {
     const { selectedTool, selectedColor } = this.state;
     const pos = e.target.getStage().getPointerPosition();
     let drawingObject = null;
-    // if (selectedTool === "pen") {
     drawingObject = {
       tool: selectedTool,
       fill: selectedColor,
       points: [pos.x, pos.y]
     };
-    // }
+
+    if (selectedTool === "rect" || selectedTool === "ellipse") {
+      drawingObject.points = [pos.x, pos.y, pos.x, pos.y];
+    }
 
     this.setState({
       drawingObject
@@ -117,17 +118,33 @@ class DrawingBoard extends React.PureComponent {
       return;
     }
     const { drawingObject } = this.state;
+    const stage = e.target.getStage();
+    const point = stage.getPointerPosition();
 
-    if (drawingObject.tool === "pen") {
-      const stage = e.target.getStage();
-      const point = stage.getPointerPosition();
-
-      this.setState({
-        drawingObject: {
-          ...drawingObject,
-          points: drawingObject.points.concat([point.x, point.y])
-        }
-      });
+    switch (drawingObject.tool) {
+      case "pen": {
+        this.setState({
+          drawingObject: {
+            ...drawingObject,
+            points: drawingObject.points.concat([point.x, point.y])
+          }
+        });
+        break;
+      }
+      case "rect":
+      case "ellipse": {
+        this.setState({
+          drawingObject: {
+            ...drawingObject,
+            points: [
+              drawingObject.points[0],
+              drawingObject.points[1],
+              point.x,
+              point.y
+            ]
+          }
+        });
+      }
     }
   };
 
@@ -179,14 +196,14 @@ class DrawingBoard extends React.PureComponent {
     return (
       <div className={classes.board}>
         <Stage
-          width={600}
-          height={600}
+          width={1280}
+          height={720}
           onMouseDown={handleMouseDown}
           onMousemove={handleMouseMove}
           onMouseup={handleMouseUp}
         >
           <Layer>
-            <Rect width={600} height={600} x={0} y={0} fill="#444" />
+            <Rect width={1280} height={720} x={0} y={0} fill="#444" />
             {draw.map((obj, i) => {
               switch (obj.tool) {
                 case "pen": {
@@ -214,6 +231,28 @@ class DrawingBoard extends React.PureComponent {
                     />
                   );
                 }
+                case "rect": {
+                  return (
+                    <Rect
+                      x={obj.points[0]}
+                      y={obj.points[1]}
+                      width={obj.points[2] - obj.points[0]}
+                      height={obj.points[3] - obj.points[1]}
+                      fill={obj.fill}
+                    />
+                  );
+                }
+                case "ellipse": {
+                  return (
+                    <Ellipse
+                      x={obj.points[0] + (obj.points[2] - obj.points[0]) / 2}
+                      y={obj.points[1] + (obj.points[3] - obj.points[1]) / 2}
+                      width={Math.abs(obj.points[2] - obj.points[0])}
+                      height={Math.abs(obj.points[3] - obj.points[1])}
+                      fill={obj.fill}
+                    />
+                  );
+                }
                 default:
                   return null;
               }
@@ -226,6 +265,36 @@ class DrawingBoard extends React.PureComponent {
                 strokeWidth={5}
                 tension={0.5}
                 lineCap="round"
+              />
+            )}
+
+            {drawingObject && drawingObject.tool === "rect" && (
+              <Rect
+                x={drawingObject.points[0]}
+                y={drawingObject.points[1]}
+                width={drawingObject.points[2] - drawingObject.points[0]}
+                height={drawingObject.points[3] - drawingObject.points[1]}
+                fill={drawingObject.fill}
+              />
+            )}
+
+            {drawingObject && drawingObject.tool === "ellipse" && (
+              <Ellipse
+                x={
+                  drawingObject.points[0] +
+                  (drawingObject.points[2] - drawingObject.points[0]) / 2
+                }
+                y={
+                  drawingObject.points[1] +
+                  (drawingObject.points[3] - drawingObject.points[1]) / 2
+                }
+                width={Math.abs(
+                  drawingObject.points[2] - drawingObject.points[0]
+                )}
+                height={Math.abs(
+                  drawingObject.points[3] - drawingObject.points[1]
+                )}
+                fill={drawingObject.fill}
               />
             )}
           </Layer>
