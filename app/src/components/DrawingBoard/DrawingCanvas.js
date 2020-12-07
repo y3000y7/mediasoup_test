@@ -1,7 +1,8 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Stage, Layer, Rect, Ellipse, Line, Text } from "react-konva";
-import TransformerComponent from "./TransformerComponent";
+import { Stage, Layer, Rect } from "react-konva";
+import TransformShape from "./TransformShape";
+import Tool from "./Tool";
 
 const styles = () => ({
   tools: {
@@ -44,14 +45,6 @@ const styles = () => ({
   }
 });
 
-const Tool = {
-  SELECT: "select",
-  PEN: "pen",
-  RECT: "rect",
-  ELLIPSE: "ellipse",
-  TEXT: "text",
-  CLEAR: "clear"
-};
 const tools = Object.values(Tool);
 
 const colors = [
@@ -74,7 +67,7 @@ class DrawingCanvas extends React.PureComponent {
       selectedTool: Tool.PEN,
       selectedColor: colors[0],
       drawingObject: null,
-      selectedShapeName: ""
+      selectedObjId: null
     };
   }
   shouldComponentUpdate(nextProps, nextState) {
@@ -103,41 +96,11 @@ class DrawingCanvas extends React.PureComponent {
   handleMouseDown = e => {
     const { selectedTool, selectedColor } = this.state;
 
-    if (selectedTool === Tool.SELECT) {
-      // clicked on stage - cler selection
-      if (e.target === e.target.getStage()) {
-        this.setState({
-          selectedShapeName: ""
-        });
-        return;
-      }
-      // clicked on transformer - do nothing
-      const clickedOnTransformer =
-        e.target.getParent().className === "Transformer";
-      if (clickedOnTransformer) {
-        return;
-      }
-
-      // find clicked rect by its name
-      const id = e.target.id();
-      const rect = this.props.draw.find(r => r.id === id);
-      if (rect) {
-        this.setState({
-          selectedShapeName: id
-        });
-      } else {
-        this.setState({
-          selectedShapeName: ""
-        });
-      }
-      return;
-    }
-
     const pos = e.target.getStage().getPointerPosition();
     const scale = this.props.stageWidth / originWidth;
     let drawingObject = null;
     drawingObject = {
-      tool: selectedTool,
+      type: selectedTool,
       fill: selectedColor,
       points: [pos.x / scale, pos.y / scale],
       id: new Date().getTime()
@@ -160,7 +123,7 @@ class DrawingCanvas extends React.PureComponent {
     const stage = e.target.getStage();
     const point = stage.getPointerPosition();
     const scale = this.props.stageWidth / originWidth;
-    switch (drawingObject.tool) {
+    switch (drawingObject.type) {
       case Tool.PEN: {
         this.setState({
           drawingObject: {
@@ -215,18 +178,29 @@ class DrawingCanvas extends React.PureComponent {
     }
   };
 
+  handleOnSelect = id => {
+    this.setState({ selectedObjId: id });
+  };
+
   render() {
     const { classes, draw, stageWidth, stageHeight } = this.props;
-    const { drawingObject, selectedTool, selectedColor } = this.state;
+    const {
+      drawingObject,
+      selectedTool,
+      selectedColor,
+      selectedObjId
+    } = this.state;
     const {
       handleMouseDown,
       handleMouseMove,
       handleMouseUp,
       handleSelectTool,
-      handleSelectColor
+      handleSelectColor,
+      handleOnSelect
     } = this;
 
     const scale = stageWidth / originWidth;
+
     return (
       <div>
         <Stage
@@ -251,70 +225,66 @@ class DrawingCanvas extends React.PureComponent {
               if (!obj) {
                 return null;
               }
-              switch (obj.tool) {
+              let properties;
+              switch (obj.type) {
                 case Tool.PEN: {
-                  return (
-                    <Line
-                      key={i}
-                      id={obj.id}
-                      points={obj.points}
-                      stroke={obj.fill}
-                      strokeWidth={5}
-                      tension={0.5}
-                      lineCap="round"
-                      draggable={selectedTool === Tool.SELECT}
-                    />
-                  );
+                  properties = {
+                    points: obj.points,
+                    stroke: obj.fill,
+                    strokeWidth: 5,
+                    tension: 0.5,
+                    lineCap: "round"
+                  };
+                  break;
                 }
                 case Tool.TEXT: {
-                  return (
-                    <Text
-                      key={i}
-                      id={obj.id}
-                      x={obj.points[0]}
-                      y={obj.points[1]}
-                      text="type here..."
-                      fill={obj.fill}
-                      fontSize={20}
-                      draggable={selectedTool === Tool.SELECT}
-                    />
-                  );
+                  properties = {
+                    x: obj.points[0],
+                    y: obj.points[1],
+                    text: "type here...",
+                    fill: obj.fill,
+                    fontSize: 20
+                  };
+                  break;
                 }
                 case Tool.RECT: {
-                  return (
-                    <Rect
-                      key={i}
-                      id={obj.id}
-                      x={obj.points[0]}
-                      y={obj.points[1]}
-                      width={obj.points[2] - obj.points[0]}
-                      height={obj.points[3] - obj.points[1]}
-                      fill={obj.fill}
-                      draggable={selectedTool === Tool.SELECT}
-                    />
-                  );
+                  properties = {
+                    x: obj.points[0],
+                    y: obj.points[1],
+                    width: obj.points[2] - obj.points[0],
+                    height: obj.points[3] - obj.points[1],
+                    fill: obj.fill
+                  };
+                  break;
                 }
                 case Tool.ELLIPSE: {
-                  return (
-                    <Ellipse
-                      key={i}
-                      id={obj.id}
-                      x={obj.points[0] + (obj.points[2] - obj.points[0]) / 2}
-                      y={obj.points[1] + (obj.points[3] - obj.points[1]) / 2}
-                      width={Math.abs(obj.points[2] - obj.points[0])}
-                      height={Math.abs(obj.points[3] - obj.points[1])}
-                      fill={obj.fill}
-                      draggable={selectedTool === Tool.SELECT}
-                    />
-                  );
+                  properties = {
+                    x: obj.points[0] + (obj.points[2] - obj.points[0]) / 2,
+                    y: obj.points[1] + (obj.points[3] - obj.points[1]) / 2,
+                    width: Math.abs(obj.points[2] - obj.points[0]),
+                    height: Math.abs(obj.points[3] - obj.points[1]),
+                    fill: obj.fill
+                  };
+                  break;
                 }
                 default:
                   return null;
               }
+              return (
+                <TransformShape
+                  type={obj.type}
+                  key={i}
+                  id={obj.id}
+                  properties={properties}
+                  draggable={selectedTool === Tool.SELECT}
+                  onChange={changedProps => {
+                    console.log(11111111, "onchanged", changedProps);
+                  }}
+                  onSelect={() => handleOnSelect(obj.id)}
+                  isSelected={obj.id === selectedObjId}
+                />
+              );
             })}
-            <TransformerComponent
-              selectedShapeName={this.state.selectedShapeName}
-            />
           </Layer>
         </Stage>
 
