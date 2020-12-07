@@ -97,92 +97,12 @@ class Filmstrip extends React.PureComponent {
     }
   };
 
-  isSharingCamera = peerId =>
+  isSharingCamera = peerId => {
     this.props.peers[peerId] &&
-    this.props.peers[peerId].consumers.some(
-      consumer => this.props.consumers[consumer].source === "screen"
-    );
-
-  updateDimensions = () => {
-    const { toolbarsVisible, permanentTopBar, boxes, aspectRatio } = this.props;
-
-    const newState = {};
-
-    const root = this.rootContainer.current;
-
-    if (!root) return;
-
-    const availableWidth = root.clientWidth;
-    // Grid is:
-    // 4/5 speaker
-    // 1/5 filmstrip
-    const availableSpeakerHeight =
-      root.clientHeight * 0.8 -
-      (toolbarsVisible || permanentTopBar ? PADDING_V : 0);
-
-    const availableFilmstripHeight = root.clientHeight * 0.2;
-
-    const speaker = this.activePeerContainer.current;
-
-    if (speaker) {
-      let speakerWidth = availableWidth;
-
-      let speakerHeight = speakerWidth / aspectRatio;
-
-      if (this.isSharingCamera(this.getActivePeerId())) {
-        speakerWidth /= 2;
-        speakerHeight = speakerWidth / aspectRatio;
-      }
-
-      if (speakerHeight > availableSpeakerHeight) {
-        speakerHeight = availableSpeakerHeight;
-        speakerWidth = speakerHeight * aspectRatio;
-      }
-
-      newState.speakerWidth = speakerWidth;
-      newState.speakerHeight = speakerHeight;
-    }
-
-    const filmStrip = this.filmStripContainer.current;
-
-    if (filmStrip) {
-      // let filmStripHeight = availableFilmstripHeight - FILMSTRING_PADDING_V;
-
-      // let filmStripWidth = filmStripHeight * aspectRatio;
-
-      // if (filmStripWidth * boxes > availableWidth - FILMSTRING_PADDING_H) {
-      //   filmStripWidth = (availableWidth - FILMSTRING_PADDING_H) / boxes;
-      //   filmStripHeight = filmStripWidth / aspectRatio;
-      // }
-
-      // newState.filmStripWidth = filmStripWidth * FILL_RATE;
-      // newState.filmStripHeight = filmStripHeight * FILL_RATE;
-
-      newState.filmStripWidth = 296;
-      newState.filmStripHeight = 186;
-    }
-
-    this.setState({
-      ...newState
-    });
+      this.props.peers[peerId].consumers.some(
+        consumer => this.props.consumers[consumer].source === "screen"
+      );
   };
-
-  componentDidMount() {
-    // window.resize event listener
-    window.addEventListener("resize", () => {
-      // clear the timeout
-      clearTimeout(this.resizeTimeout);
-
-      // start timing for event "completion"
-      this.resizeTimeout = setTimeout(() => this.updateDimensions(), 250);
-    });
-
-    this.updateDimensions();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.updateDimensions);
-  }
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
@@ -195,8 +115,6 @@ class Filmstrip extends React.PureComponent {
           lastSpeaker: this.props.activeSpeakerId
         });
       }
-
-      this.updateDimensions();
     }
   }
 
@@ -217,13 +135,12 @@ class Filmstrip extends React.PureComponent {
 
     const speakerStyle = {
       width: this.state.speakerWidth,
-      height: this.state.speakerHeight,
-      border: "2px solid red"
+      height: this.state.speakerHeight
     };
 
     const peerStyle = {
-      width: this.state.filmStripWidth,
-      height: this.state.filmStripHeight
+      width: "296px",
+      height: "186px"
     };
 
     return (
