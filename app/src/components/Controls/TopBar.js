@@ -118,6 +118,12 @@ const styles = theme => ({
   },
   moreAction: {
     margin: theme.spacing(0.5, 0, 0.5, 1.5)
+  },
+
+  toolBar: {
+    backgroundColor: "#1a1a1a",
+    boxShadow: "0 3px 6px 0 rgba(0,0,0,0.2)",
+    height: "50px"
   }
 });
 
@@ -241,7 +247,7 @@ const TopBar = props => {
             : null
         )}
       >
-        <Toolbar>
+        <Toolbar className={classes.toolBar}>
           <PulsingBadge
             color="secondary"
             badgeContent={unread}

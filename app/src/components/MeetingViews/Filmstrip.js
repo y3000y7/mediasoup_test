@@ -35,6 +35,7 @@ const styles = () => ({
   },
   filmStrip: {
     // gridArea: "auto / auto / auto / auto"
+    background: "#1a1a1a"
   },
   filmItem: {
     display: "flex",
@@ -140,7 +141,12 @@ class Filmstrip extends React.PureComponent {
 
     const peerStyle = {
       width: "296px",
-      height: "186px"
+      height: "186px",
+      borderRadius: "10px",
+      overflow: "hidden",
+      border: "none",
+      margin: "0 15px",
+      fontFamily: "Noto Sans KR"
     };
 
     return (
