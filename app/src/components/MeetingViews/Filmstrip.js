@@ -21,23 +21,25 @@ const styles = () => ({
   root: {
     height: "100%",
     width: "100%",
-    display: "grid",
+    // display: "grid",
     overflow: "hidden",
     gridTemplateColumns: "1fr",
     gridTemplateRows: "1fr 0.25fr"
   },
   speaker: {
-    gridArea: "1 / 1 / 1 / 1",
+    // gridArea: "auto / auto / auto / auto",
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    height: "calc(100vh - 50px - 186px - 19px - 19px)"
   },
   filmStrip: {
-    gridArea: "2 / 1 / 2 / 1"
+    // gridArea: "auto / auto / auto / auto"
   },
   filmItem: {
     display: "flex",
     border: "var(--peer-border)",
+    padding: "19px 0",
     "&.selected": {
       borderColor: "var(--selected-peer-border-color)"
     },
@@ -144,17 +146,20 @@ class Filmstrip extends React.PureComponent {
     const filmStrip = this.filmStripContainer.current;
 
     if (filmStrip) {
-      let filmStripHeight = availableFilmstripHeight - FILMSTRING_PADDING_V;
+      // let filmStripHeight = availableFilmstripHeight - FILMSTRING_PADDING_V;
 
-      let filmStripWidth = filmStripHeight * aspectRatio;
+      // let filmStripWidth = filmStripHeight * aspectRatio;
 
-      if (filmStripWidth * boxes > availableWidth - FILMSTRING_PADDING_H) {
-        filmStripWidth = (availableWidth - FILMSTRING_PADDING_H) / boxes;
-        filmStripHeight = filmStripWidth / aspectRatio;
-      }
+      // if (filmStripWidth * boxes > availableWidth - FILMSTRING_PADDING_H) {
+      //   filmStripWidth = (availableWidth - FILMSTRING_PADDING_H) / boxes;
+      //   filmStripHeight = filmStripWidth / aspectRatio;
+      // }
 
-      newState.filmStripWidth = filmStripWidth * FILL_RATE;
-      newState.filmStripHeight = filmStripHeight * FILL_RATE;
+      // newState.filmStripWidth = filmStripWidth * FILL_RATE;
+      // newState.filmStripHeight = filmStripHeight * FILL_RATE;
+
+      newState.filmStripWidth = 296;
+      newState.filmStripHeight = 186;
     }
 
     this.setState({
@@ -258,6 +263,8 @@ class Filmstrip extends React.PureComponent {
                 return (
                   <Grid key={peerId} item>
                     <div
+                      width={100}
+                      height={100}
                       key={peerId}
                       // onClick={() => roomClient.setSelectedPeer(peerId)}
                       className={classnames(classes.filmItem, {
