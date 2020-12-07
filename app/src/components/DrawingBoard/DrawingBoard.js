@@ -15,9 +15,7 @@ const styles = () => ({
     alignItems: "center",
     justifyContent: "center"
   },
-  boardWrap: {
-    // border: "2px solid white"
-  }
+  boardWrap: {}
 });
 
 class DrawingBoard extends React.PureComponent {
@@ -29,11 +27,11 @@ class DrawingBoard extends React.PureComponent {
     };
   }
   componentDidMount() {
-    window.addEventListener("resize", this.onResize);
-    this.onResize();
+    window.addEventListener("resize", this.resizeView);
+    this.resizeView();
   }
   componentWillUnmount() {
-    window.removeEventListener("resize", this.onResize);
+    window.removeEventListener("resize", this.resizeView);
   }
   shouldComponentUpdate(nextProps, nextState) {
     if (nextProps.draw.length !== this.props.draw.length) {
@@ -46,17 +44,17 @@ class DrawingBoard extends React.PureComponent {
     return false;
   }
 
-  onResize = () => {
+  resizeView = () => {
     const parent = document.getElementById("DrawingBoard");
     const h = parent.offsetHeight;
     const w = parent.offsetWidth;
 
     let canvasWrapperWidth, canvasWrapperHeight;
-    if (h / w > 9 / 16) {
+    if (h / w > 5 / 12) {
       canvasWrapperWidth = w;
-      canvasWrapperHeight = (w * 9) / 16;
+      canvasWrapperHeight = (w * 5) / 12;
     } else {
-      canvasWrapperWidth = (h * 16) / 9;
+      canvasWrapperWidth = (h * 12) / 5;
       canvasWrapperHeight = h;
     }
 

@@ -91,6 +91,9 @@ class DrawingCanvas extends React.PureComponent {
     if (nextState.selectedColor !== this.state.selectedColor) {
       return true;
     }
+    if (nextProps.stageWidth !== this.props.stageWidth) {
+      return true;
+    }
 
     return false;
   }
@@ -216,6 +219,8 @@ class DrawingCanvas extends React.PureComponent {
       handleSelectTool,
       handleSelectColor
     } = this;
+
+    const scale = stageWidth / 1920;
     return (
       <div>
         <Stage
@@ -226,11 +231,12 @@ class DrawingCanvas extends React.PureComponent {
           }}
           onMousemove={handleMouseMove}
           onMouseup={handleMouseUp}
+          scale={{ x: scale, y: scale }}
         >
           <Layer>
             <Rect
-              width={stageWidth}
-              height={stageHeight}
+              width={stageWidth / scale}
+              height={stageHeight / scale}
               x={0}
               y={0}
               fill="#444"
