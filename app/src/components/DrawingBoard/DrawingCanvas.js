@@ -65,6 +65,8 @@ const colors = [
   "#FFFFFF"
 ];
 
+const originWidth = 1920;
+
 class DrawingCanvas extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -132,11 +134,12 @@ class DrawingCanvas extends React.PureComponent {
     }
 
     const pos = e.target.getStage().getPointerPosition();
+    const scale = this.props.stageWidth / originWidth;
     let drawingObject = null;
     drawingObject = {
       tool: selectedTool,
       fill: selectedColor,
-      points: [pos.x, pos.y],
+      points: [pos.x / scale, pos.y / scale],
       id: new Date().getTime()
     };
 
@@ -156,13 +159,16 @@ class DrawingCanvas extends React.PureComponent {
     const { drawingObject } = this.state;
     const stage = e.target.getStage();
     const point = stage.getPointerPosition();
-
+    const scale = this.props.stageWidth / originWidth;
     switch (drawingObject.tool) {
       case Tool.PEN: {
         this.setState({
           drawingObject: {
             ...drawingObject,
-            points: drawingObject.points.concat([point.x, point.y])
+            points: drawingObject.points.concat([
+              point.x / scale,
+              point.y / scale
+            ])
           }
         });
         break;
@@ -175,8 +181,8 @@ class DrawingCanvas extends React.PureComponent {
             points: [
               drawingObject.points[0],
               drawingObject.points[1],
-              point.x,
-              point.y
+              point.x / scale,
+              point.y / scale
             ]
           }
         });
@@ -220,7 +226,7 @@ class DrawingCanvas extends React.PureComponent {
       handleSelectColor
     } = this;
 
-    const scale = stageWidth / 1920;
+    const scale = stageWidth / originWidth;
     return (
       <div>
         <Stage
