@@ -25,16 +25,19 @@ const styles = () => ({
     overflow: "hidden",
     gridTemplateColumns: "1fr",
     gridTemplateRows: "1fr 0.25fr"
+    // border: "2px solid green"
   },
   speaker: {
     // gridArea: "auto / auto / auto / auto",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "calc(100vh - 50px - 186px - 19px - 19px)"
+    height: "calc(100vh - 224px - 50px)"
   },
   filmStrip: {
-    // gridArea: "auto / auto / auto / auto"
+    // gridArea: "auto / auto / auto / auto",
+    // border: "2px solid yellow",
+    height: "224px"
   },
   filmItem: {
     display: "flex",
@@ -133,10 +136,10 @@ class Filmstrip extends React.PureComponent {
 
     const activePeerId = this.getActivePeerId();
 
-    const speakerStyle = {
-      width: this.state.speakerWidth,
-      height: this.state.speakerHeight
-    };
+    // const speakerStyle = {
+    //   width: this.state.speakerWidth,
+    //   height: this.state.speakerHeight
+    // };
 
     const peerStyle = {
       width: "296px",
@@ -213,7 +216,7 @@ class Filmstrip extends React.PureComponent {
             />
           )} */}
 
-          <DrawingBoard style={speakerStyle} />
+          <DrawingBoard />
         </div>
       </div>
     );

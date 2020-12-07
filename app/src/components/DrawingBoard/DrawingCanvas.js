@@ -207,14 +207,8 @@ class DrawingCanvas extends React.PureComponent {
   };
 
   render() {
-    const { classes, draw } = this.props;
-    const {
-      drawingObject,
-      selectedTool,
-      selectedColor,
-      stageWidth = 1280,
-      stageHeight = 720
-    } = this.state;
+    const { classes, draw, stageWidth, stageHeight } = this.props;
+    const { drawingObject, selectedTool, selectedColor } = this.state;
     const {
       handleMouseDown,
       handleMouseMove,

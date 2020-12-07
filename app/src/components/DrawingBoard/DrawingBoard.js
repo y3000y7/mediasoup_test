@@ -9,18 +9,62 @@ const styles = () => ({
     background: "#333333",
     width: "100%",
     height: "100%",
-    position: "relative"
+    position: "relative",
+    // border: "2px solid red",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  boardWrap: {
+    // border: "2px solid white"
   }
 });
 
 class DrawingBoard extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      canvasWrapperWidth: 0,
+      canvasWrapperHeight: 0
+    };
+  }
+  componentDidMount() {
+    window.addEventListener("resize", this.onResize);
+    this.onResize();
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.onResize);
+  }
   shouldComponentUpdate(nextProps, nextState) {
     if (nextProps.draw.length !== this.props.draw.length) {
+      return true;
+    }
+    if (nextState.canvasWrapperWidth !== this.state.canvasWrapperWidth) {
       return true;
     }
 
     return false;
   }
+
+  onResize = () => {
+    const parent = document.getElementById("DrawingBoard");
+    const h = parent.offsetHeight;
+    const w = parent.offsetWidth;
+
+    let canvasWrapperWidth, canvasWrapperHeight;
+    if (h / w > 9 / 16) {
+      canvasWrapperWidth = w;
+      canvasWrapperHeight = (w * 9) / 16;
+    } else {
+      canvasWrapperWidth = (h * 16) / 9;
+      canvasWrapperHeight = h;
+    }
+
+    this.setState({
+      canvasWrapperWidth,
+      canvasWrapperHeight
+    });
+  };
 
   onObjectAdded = obj => {
     this.props.roomClient.addDrawingObject(obj);
@@ -32,15 +76,24 @@ class DrawingBoard extends React.PureComponent {
 
   render() {
     const { classes, draw } = this.props;
+    const { canvasWrapperWidth, canvasWrapperHeight } = this.state;
     const { onObjectAdded, onClear } = this;
+    const wrapperStyles = {
+      width: canvasWrapperWidth,
+      height: canvasWrapperHeight
+    };
 
     return (
-      <div className={classes.board}>
-        <DrawingCanvas
-          draw={draw}
-          onObjectAdded={onObjectAdded}
-          onClear={onClear}
-        />
+      <div id="DrawingBoard" className={classes.board}>
+        <div className={classes.boardWrap} style={wrapperStyles}>
+          <DrawingCanvas
+            draw={draw}
+            onObjectAdded={onObjectAdded}
+            onClear={onClear}
+            stageWidth={canvasWrapperWidth}
+            stageHeight={canvasWrapperHeight}
+          />
+        </div>
       </div>
     );
   }
