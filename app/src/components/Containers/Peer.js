@@ -52,7 +52,7 @@ const styles = theme => ({
     "&.screen": {
       position: "absolute",
       left: "0",
-      bottom: "0",
+      top: "19px",
       order: 3,
       border: "2px solid violet"
     }

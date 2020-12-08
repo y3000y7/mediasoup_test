@@ -26,7 +26,7 @@ const styles = theme => ({
   root: {
     flex: "0 0 auto",
     // boxShadow: "var(--peer-shadow)",
-    border: "var(--peer-border)",
+    // border: "var(--peer-border)",
     // backgroundColor: "var(--peer-bg-color)",
     backgroundImage: "var(--peer-empty-avatar)",
     backgroundPosition: "bottom",
@@ -48,12 +48,15 @@ const styles = theme => ({
     "&.webcam": {
       order: 1
     },
-    "&.screen": {
+    "#.screen": {
       position: "absolute",
       left: "0",
-      top: "0",
+      top: "19px",
       order: 2,
-      border: "2px solid violet"
+
+      "@extend .viewContainer": {
+        border: "1px solid violet !important"
+      }
     }
   },
   fab: {
@@ -502,7 +505,9 @@ const Me = props => {
                                 className="MuiSvgIcon-root"
                                 focusable="false"
                                 aria-hidden="true"
-                                style={{ position: "absolute" }}
+                                style={{
+                                  position: "absolute"
+                                }}
                               >
                                 <defs>
                                   <clipPath id="cut-off-indicator">

@@ -273,7 +273,7 @@ const JoinDialog = ({
                 <Tooltip
                   open
                   title={intl.formatMessage({
-                    id: loggedIn ? "label.logout" : "label.login",
+                    id: loggedIn ? "label.logout" : "label.login"
                   })}
                   placement="left"
                 >
@@ -312,7 +312,7 @@ const JoinDialog = ({
             autoFocus
             id="roomId"
             label={intl.formatMessage({
-              id: "label.roomName",
+              id: "label.roomName"
             })}
             value={roomId}
             variant="outlined"
@@ -380,7 +380,7 @@ const JoinDialog = ({
           <TextField
             id="displayname"
             label={intl.formatMessage({
-              id: "label.yourName",
+              id: "label.yourName"
             })}
             value={displayName}
             variant="outlined"
@@ -464,7 +464,7 @@ const JoinDialog = ({
                       <ToggleButton value='{"audio":false,"video":false}'>
                         <Tooltip
                           title={intl.formatMessage({
-                            id: "devices.disableBothMicrophoneAndCamera",
+                            id: "devices.disableBothMicrophoneAndCamera"
                           })}
                           placement="bottom"
                         >
@@ -474,7 +474,7 @@ const JoinDialog = ({
                       <ToggleButton value='{"audio":true,"video":false}'>
                         <Tooltip
                           title={intl.formatMessage({
-                            id: "devices.enableOnlyMicrophone",
+                            id: "devices.enableOnlyMicrophone"
                           })}
                           placement="bottom"
                         >
@@ -484,7 +484,7 @@ const JoinDialog = ({
                       <ToggleButton value='{"audio":false,"video":true}'>
                         <Tooltip
                           title={intl.formatMessage({
-                            id: "devices.enableOnlyCamera",
+                            id: "devices.enableOnlyCamera"
                           })}
                           placement="bottom"
                         >
@@ -494,7 +494,7 @@ const JoinDialog = ({
                       <ToggleButton value='{"audio":true,"video":true}'>
                         <Tooltip
                           title={intl.formatMessage({
-                            id: "devices.enableBothMicrophoneAndCamera",
+                            id: "devices.enableBothMicrophoneAndCamera"
                           })}
                           placement="bottom"
                         >

@@ -164,13 +164,15 @@ var config = {
   theme: {
     palette: {
       primary: {
-        main: "#313131"
+        // main: "#313131"
+        main: "#ffffff"
       }
     },
     overrides: {
       MuiAppBar: {
         colorPrimary: {
-          backgroundColor: "#313131"
+          // backgroundColor: "#313131"
+          backgroundColor: "#ffffff"
         }
       },
       MuiButton: {
