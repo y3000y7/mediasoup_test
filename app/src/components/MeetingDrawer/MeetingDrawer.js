@@ -23,14 +23,19 @@ const styles = theme => ({
     flexDirection: "column",
     width: "100%",
     height: "100%",
-    backgroundColor: theme.palette.background.paper
+    background: "#2f2f2f",
+    boxShadow: "none"
   },
   appBar: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    background: "#2f2f2f"
   },
   tabsHeader: {
     flexGrow: 1
+  },
+  tab: {
+    color: "#ffffff"
   }
 });
 
@@ -54,30 +59,32 @@ const MeetingDrawer = props => {
           className={classes.tabsHeader}
           value={tabs.indexOf(currentToolTab)}
           onChange={(event, value) => setToolTab(tabs[value])}
-          indicatorColor="primary"
-          textColor="primary"
+          indicatorColor=""
+          textColor="#ffffff"
           variant="fullWidth"
         >
           <Tab
+            className={classes.tab}
             label={
               <Badge color="secondary" badgeContent={unreadMessages}>
                 {intl.formatMessage({
-                  id: "label.chat",
+                  id: "label.chat"
                 })}
               </Badge>
             }
           />
           <Tab
+            className={classes.tab}
             label={
               <Badge color="secondary" badgeContent={raisedHands}>
                 {intl.formatMessage({
-                  id: "label.participants",
+                  id: "label.participants"
                 })}
               </Badge>
             }
           />
         </Tabs>
-        <IconButton onClick={closeDrawer}>
+        <IconButton onClick={closeDrawer} color="primary">
           {theme.direction === "ltr" ? (
             <ChevronLeftIcon />
           ) : (

@@ -13,17 +13,24 @@ import SendIcon from "@material-ui/icons/Send";
 
 const styles = theme => ({
   root: {
+    margin: "0 10px 14px",
     padding: theme.spacing(1),
     display: "flex",
     alignItems: "center",
-    borderRadius: 0
+    borderRadius: 0,
+    background: "#393939",
+    color: "#ffffff",
+    borderRadius: "8px",
+    boxShadow: "none"
   },
   input: {
     marginLeft: 8,
-    flex: 1
+    flex: 1,
+    color: "#ffffff"
   },
   iconButton: {
-    padding: 10
+    padding: 10,
+    color: "#ffffff"
   }
 });
 

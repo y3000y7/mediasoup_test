@@ -49,6 +49,7 @@ const styles = theme => ({
   dialogTitle: {},
   dialogPaper: {
     width: "30vw",
+    backgroundColor: "#2f2f2f",
     padding: theme.spacing(2),
     [theme.breakpoints.down("lg")]: {
       width: "40vw"
@@ -78,13 +79,14 @@ const styles = theme => ({
     color: "rgba(153, 0, 0, 1)"
   },
   joinButton: {
-    background: "#2e7031",
+    background: "#ff9f0a",
     color: "white",
     "&:hover": {
-      backgroundColor: "#2e7031"
+      backgroundColor: "#ff9f0a"
     }
   },
   mediaDevicesAnySelectedButton: {
+    color: "#ffffff",
     "& .Mui-selected": {
       color: "white",
       backgroundColor: "#5F9B2D",
@@ -104,6 +106,26 @@ const styles = theme => ({
         backgroundColor: "#f50057"
       }
     }
+  },
+  line: {
+    border: "1px solid #242424"
+  },
+  text: {
+    color: "#ffffff",
+    borderRadius: "6px",
+    "& .MuiOutlinedInput-root": {
+      color: "#ffffff"
+    },
+    "& .MuiFormLabel-root": {
+      color: "#ffffff"
+    }
+
+    // "& .MuiOutlinedInput-notchedOutline": {
+    //   borderColor: "#242424"
+    // }
+    // "& .MuiFocused": {
+    //   borderColor: "#242424"
+    // }
   }
 });
 
@@ -273,7 +295,7 @@ const JoinDialog = ({
                 <Tooltip
                   open
                   title={intl.formatMessage({
-                    id: loggedIn ? "label.logout" : "label.login",
+                    id: loggedIn ? "label.logout" : "label.login"
                   })}
                   placement="left"
                 >
@@ -306,13 +328,14 @@ const JoinDialog = ({
         </DialogTitle>
 
         <DialogContent>
-          <hr />
+          <hr className={classes.line} />
           {/* ROOM NAME */}
           <TextField
             autoFocus
             id="roomId"
+            className={classes.text}
             label={intl.formatMessage({
-              id: "label.roomName",
+              id: "label.roomName"
             })}
             value={roomId}
             variant="outlined"
@@ -379,8 +402,9 @@ const JoinDialog = ({
           {/* NAME FIELD */}
           <TextField
             id="displayname"
+            className={classes.text}
             label={intl.formatMessage({
-              id: "label.yourName",
+              id: "label.yourName"
             })}
             value={displayName}
             variant="outlined"
@@ -464,7 +488,7 @@ const JoinDialog = ({
                       <ToggleButton value='{"audio":false,"video":false}'>
                         <Tooltip
                           title={intl.formatMessage({
-                            id: "devices.disableBothMicrophoneAndCamera",
+                            id: "devices.disableBothMicrophoneAndCamera"
                           })}
                           placement="bottom"
                         >
@@ -474,7 +498,7 @@ const JoinDialog = ({
                       <ToggleButton value='{"audio":true,"video":false}'>
                         <Tooltip
                           title={intl.formatMessage({
-                            id: "devices.enableOnlyMicrophone",
+                            id: "devices.enableOnlyMicrophone"
                           })}
                           placement="bottom"
                         >
@@ -484,7 +508,7 @@ const JoinDialog = ({
                       <ToggleButton value='{"audio":false,"video":true}'>
                         <Tooltip
                           title={intl.formatMessage({
-                            id: "devices.enableOnlyCamera",
+                            id: "devices.enableOnlyCamera"
                           })}
                           placement="bottom"
                         >
@@ -494,7 +518,7 @@ const JoinDialog = ({
                       <ToggleButton value='{"audio":true,"video":true}'>
                         <Tooltip
                           title={intl.formatMessage({
-                            id: "devices.enableBothMicrophoneAndCamera",
+                            id: "devices.enableBothMicrophoneAndCamera"
                           })}
                           placement="bottom"
                         >

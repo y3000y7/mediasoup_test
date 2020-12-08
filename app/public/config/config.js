@@ -164,20 +164,23 @@ var config = {
   theme: {
     palette: {
       primary: {
-        main: "#313131"
+        // main: "#313131"
+        main: "#ffffff"
       }
     },
     overrides: {
       MuiAppBar: {
         colorPrimary: {
-          backgroundColor: "#313131"
+          // backgroundColor: "#313131"
+          backgroundColor: "#ffffff"
         }
       },
       MuiButton: {
         containedPrimary: {
-          backgroundColor: "#5F9B2D",
+          backgroundColor: "#ff9f0a",
+          color: "#ffffff",
           "&:hover": {
-            backgroundColor: "#5F9B2D"
+            backgroundColor: "#ff9f0a"
           }
         },
         containedSecondary: {
@@ -189,9 +192,9 @@ var config = {
       },
       MuIconButton: {
         colorPrimary: {
-          backgroundColor: "#5F9B2D",
+          backgroundColor: "#ff9f0a",
           "&:hover": {
-            backgroundColor: "#5F9B2D"
+            backgroundColor: "#ff9f0a"
           }
         },
         colorSecondary: {
