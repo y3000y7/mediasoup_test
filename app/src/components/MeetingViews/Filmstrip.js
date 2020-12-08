@@ -36,7 +36,6 @@ const styles = () => ({
   },
   filmStrip: {
     // gridArea: "auto / auto / auto / auto"
-    // border: "2px solid yellow",
     background: "#1a1a1a",
     height: "224px"
   },
@@ -69,7 +68,7 @@ class Filmstrip extends React.PureComponent {
 
     this.rootContainer = React.createRef();
 
-    this.activePeerContainer = React.createRef();
+    // this.activePeerContainer = React.createRef();
 
     this.filmStripContainer = React.createRef();
   }
@@ -213,7 +212,7 @@ class Filmstrip extends React.PureComponent {
             })}
           </Grid>
         </div>
-        <div className={classes.speaker} ref={this.activePeerContainer}>
+        <div className={classes.speaker}>
           {/* {peers[activePeerId] && (
             <SpeakerPeer
               advancedMode={advancedMode}
