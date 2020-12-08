@@ -534,7 +534,7 @@ const Me = props => {
                     </div>
                   )}
                 </Tooltip>
-                {/* <Tooltip title={webcamTip} placement="left">
+                <Tooltip title={webcamTip} placement="left">
                   {smallContainer ? (
                     <div>
                       <IconButton
@@ -592,7 +592,7 @@ const Me = props => {
                       </Fab>
                     </div>
                   )}
-                </Tooltip> */}
+                </Tooltip>
                 {me.browser.platform !== "mobile" && (
                   <Tooltip
                     open={screenShareTooltipOpen}
