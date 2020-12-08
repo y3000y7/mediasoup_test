@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
@@ -215,6 +215,11 @@ const TopBar = props => {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const [currentMenu, setCurrentMenu] = useState(null);
+  const [time, setTime] = useState(0);
+
+  useInterval(() => {
+    setTime(time + 1);
+  }, 1000);
 
   const handleExited = () => {
     setCurrentMenu(null);
@@ -383,7 +388,9 @@ const TopBar = props => {
                 </Badge>
               </IconButton>
             </Tooltip> */}
-              <div className={classes.lectureTime}>수업 경과 12:12</div>
+              <div className={classes.lectureTime}>
+                수업 경과 {toTimerFormat(time)}
+              </div>
               <Tooltip
                 title={intl.formatMessage({
                   id: "tooltip.help"
@@ -920,3 +927,37 @@ export default withRoomContext(
     }
   )(withStyles(styles, { withTheme: true })(TopBar))
 );
+
+function useInterval(callback, delay) {
+  const savedCallback = useRef();
+
+  // Remember the latest function.
+  useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+
+function toTimerFormat(sec) {
+  const hours = Math.floor(sec / 3600);
+  let minutes = Math.floor((sec - hours * 3600) / 60);
+  let seconds = sec - hours * 3600 - minutes * 60;
+
+  if (minutes < 10) {
+    minutes = "0" + minutes;
+  }
+  if (seconds < 10) {
+    seconds = "0" + seconds;
+  }
+  return minutes + ":" + seconds;
+}

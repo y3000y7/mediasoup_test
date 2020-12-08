@@ -1,41 +1,39 @@
-const draw = (state = { objects: [], timeStamp: 0 }, action) => {
+const initialState = { objects: [] };
+
+const draw = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_DRAWING_OBJECT": {
       const { object } = action.payload;
 
-      return { objects: [...state.objects, object] };
+      return { ...state, objects: [...state.objects, object] };
     }
 
     case "ADD_NEW_RESPONSE_DRAWING_OBJECT": {
       const { object } = action.payload;
 
-      return { objects: [...state.objects, object] };
+      return { ...state, objects: [...state.objects, object] };
     }
 
     case "ADD_DRAWING_HISTORY": {
       const { drawingHistory } = action.payload;
 
-      return { objects: [...state.objects, ...drawingHistory] };
+      return { ...state, objects: [...state.objects, ...drawingHistory] };
     }
 
     case "CLEAR_DRAWING_OBJECTS": {
-      return { objects: [] };
+      return { ...state, objects: [] };
     }
 
     case "CHANGE_DRAWING_OBJECT": {
       const { object } = action.payload;
 
       const changedIndex = state.objects.findIndex(obj => obj.id === object.id);
-      let newObjects = removeItem(state.objects, changedIndex);
-      newObjects = insertItem(newObjects, changedIndex, {
-        ...state.objects[changedIndex],
-        ...object
-      });
+      let newObjects = [...state.objects];
+      newObjects[changedIndex] = { ...newObjects[changedIndex], ...object };
 
       return {
         ...state,
-        timeStamp: new Date().getTime(),
-        objects: [...newObjects]
+        objects: newObjects
       };
     }
 
@@ -43,17 +41,5 @@ const draw = (state = { objects: [], timeStamp: 0 }, action) => {
       return state;
   }
 };
-
-function insertItem(array, index, item) {
-  let newArray = array.slice();
-  newArray.splice(index, 0, item);
-  return newArray;
-}
-
-function removeItem(array, index) {
-  let newArray = array.slice();
-  newArray.splice(index, 1);
-  return newArray;
-}
 
 export default draw;

@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Stage, Layer, Rect } from "react-konva";
 import TransformShape from "./TransformShape";
@@ -8,8 +8,8 @@ import chatIconOn from "../../images/icon-chat-on.svg";
 import userlistIconOn from "../../images/icon-user-list-on.svg";
 import selectIconOn from "../../images/icon-select-on.svg";
 import penIconOn from "../../images/icon-pencil-on.svg";
-import rectIconOn from "../../images/icon-text-on.svg";
-import ellipseIconOn from "../../images/icon-text-on.svg";
+import rectIconOn from "../../images/icon-rect-on.png";
+import ellipseIconOn from "../../images/icon-ellipse-on.png";
 import textIconOn from "../../images/icon-text-on.svg";
 import clearIconOn from "../../images/icon-delete-on.svg";
 
@@ -17,8 +17,8 @@ import chatIconOff from "../../images/icon-chat-off.svg";
 import userlistIconOff from "../../images/icon-user-list-off.svg";
 import selectIconOff from "../../images/icon-select-off.svg";
 import penIconOff from "../../images/icon-pencil-off.svg";
-import rectIconOff from "../../images/icon-text-off.svg";
-import ellipseIconOff from "../../images/icon-text-off.svg";
+import rectIconOff from "../../images/icon-rect-off.png";
+import ellipseIconOff from "../../images/icon-ellipse-off.png";
 import textIconOff from "../../images/icon-text-off.svg";
 import clearIconOff from "../../images/icon-delete-off.svg";
 
@@ -124,13 +124,15 @@ class DrawingCanvas extends React.PureComponent {
       drawingObject: null,
       selectedObjId: null
     };
+    this.layerRef = React.createRef();
   }
   shouldComponentUpdate(nextProps, nextState) {
-    console.log(11111111, "change", "SHOULDCOM");
     if (nextProps.objects.length !== this.props.objects.length) {
       return true;
     }
-    if (JSON.stringify(nextProps.draw) !== JSON.stringify(this.props.draw)) {
+    if (
+      JSON.stringify(nextProps.objects) !== JSON.stringify(this.props.objects)
+    ) {
       return true;
     }
     if (
@@ -154,13 +156,15 @@ class DrawingCanvas extends React.PureComponent {
     ) {
       return true;
     }
-
     return false;
   }
+  componentDidUpdate() {}
 
   handleMouseDown = e => {
     const { selectedTool, selectedColor } = this.state;
     if (selectedTool === Tool.SELECT) return;
+    if (selectedTool === Tool.CHAT) return;
+    if (selectedTool === Tool.USERLIST) return;
 
     const pos = e.target.getStage().getPointerPosition();
     const scale = this.props.stageWidth / originWidth;
@@ -182,6 +186,11 @@ class DrawingCanvas extends React.PureComponent {
       drawingObject.startY = pos.y / scale;
     } else if (selectedTool === Tool.PEN) {
       drawingObject.points = [pos.x / scale, pos.y / scale];
+    } else if (selectedTool === Tool.TEXT) {
+      this.handleSelectTool(Tool.SELECT);
+      const text = window.prompt("작성할 내용을 입력하세요");
+      drawingObject.text = text;
+      drawingObject.fontSize = 48;
     }
 
     this.setState({
@@ -239,7 +248,7 @@ class DrawingCanvas extends React.PureComponent {
   };
 
   handleMouseUp = () => {
-    const { drawingObject } = this.state;
+    const { selectedTool, drawingObject } = this.state;
     if (drawingObject) {
       this.props.onObjectAdded(drawingObject);
       this.setState({ drawingObject: null });
@@ -247,6 +256,14 @@ class DrawingCanvas extends React.PureComponent {
   };
 
   handleSelectTool = tool => {
+    if (tool === Tool.CHAT) {
+      this.props.openChatTab();
+      return;
+    }
+    if (tool === Tool.USERLIST) {
+      this.props.openUsersTab();
+      return;
+    }
     if (tool !== Tool.SELECT) {
       this.handleOnSelect(null);
     }
@@ -278,7 +295,6 @@ class DrawingCanvas extends React.PureComponent {
   };
 
   render() {
-    console.log(11111111111, "RENDER");
     const { classes, objects, stageWidth, stageHeight } = this.props;
     const {
       drawingObject,
@@ -287,6 +303,7 @@ class DrawingCanvas extends React.PureComponent {
       selectedObjId
     } = this.state;
     const {
+      layerRef,
       handleMouseDown,
       handleMouseMove,
       handleMouseUp,
@@ -297,7 +314,6 @@ class DrawingCanvas extends React.PureComponent {
     } = this;
 
     const scale = stageWidth / originWidth;
-    console.log(1111111111, objects);
     return (
       <div>
         <Stage
@@ -311,7 +327,7 @@ class DrawingCanvas extends React.PureComponent {
           scale={{ x: scale, y: scale }}
           className={classes.stage}
         >
-          <Layer>
+          <Layer ref={layerRef}>
             <Rect
               width={stageWidth / scale}
               height={stageHeight / scale}
@@ -325,10 +341,16 @@ class DrawingCanvas extends React.PureComponent {
               if (!obj) {
                 return null;
               }
-              let properties;
+              let properties = {
+                skewX: obj.skewX ? obj.skewX : 0,
+                skewY: obj.skewY ? obj.skewY : 0,
+                scaleX: obj.scaleX ? obj.scaleX : 1,
+                scaleY: obj.scaleY ? obj.scaleY : 1
+              };
               switch (obj.type) {
                 case Tool.PEN: {
                   properties = {
+                    ...properties,
                     points: obj.points,
                     stroke: obj.fill,
                     strokeWidth: 5,
@@ -339,26 +361,19 @@ class DrawingCanvas extends React.PureComponent {
                 }
                 case Tool.TEXT: {
                   properties = {
+                    ...properties,
                     x: obj.x,
                     y: obj.y,
-                    text: "type here...",
-                    fill: obj.fill,
-                    fontSize: 20
-                  };
-                  break;
-                }
-                case Tool.RECT: {
-                  properties = {
-                    x: obj.x,
-                    y: obj.y,
-                    width: obj.width,
-                    height: obj.height,
+                    text: obj.text,
+                    fontSize: obj.fontSize,
                     fill: obj.fill
                   };
                   break;
                 }
-                case Tool.ELLIPSE: {
+                case Tool.ELLIPSE:
+                case Tool.RECT: {
                   properties = {
+                    ...properties,
                     x: obj.x,
                     y: obj.y,
                     width: obj.width,
@@ -376,9 +391,10 @@ class DrawingCanvas extends React.PureComponent {
                   key={i}
                   id={obj.id}
                   properties={properties}
-                  draggable={selectedTool === Tool.SELECT}
+                  draggable={
+                    selectedTool === Tool.SELECT && obj.type !== Tool.PEN
+                  }
                   onChange={changedProps => {
-                    console.log(1111111, "onchange");
                     handleOnSelect(obj.id);
                     handleOnChangeObj(changedProps);
                   }}
@@ -416,13 +432,14 @@ class DrawingCanvas extends React.PureComponent {
                 activeImg = penIconOn;
                 bgColor = "#fb7f85";
                 break;
-              // case Tool.RECT:
-              //   defaultImg = rectIconOff;
-              //   activeImg = rectIconOn;
-              // case Tool.ELLIPSE:
-              //   defaultImg = ellipseIconOff;
-              //   activeImg = ellipseIconOn;
-              //   break;
+              case Tool.RECT:
+                defaultImg = rectIconOff;
+                activeImg = rectIconOn;
+                break;
+              case Tool.ELLIPSE:
+                defaultImg = ellipseIconOff;
+                activeImg = ellipseIconOn;
+                break;
               case Tool.TEXT:
                 defaultImg = textIconOff;
                 activeImg = textIconOn;
