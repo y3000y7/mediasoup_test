@@ -11,7 +11,7 @@ import SpeakerPeer from "../Containers/SpeakerPeer";
 import DrawingBoard from "../DrawingBoard/DrawingBoard";
 import Grid from "@material-ui/core/Grid";
 
-const PADDING_V = 64;
+const PADDING_V = 50;
 const FILMSTRING_PADDING_V = 0;
 const FILMSTRING_PADDING_H = 10;
 
@@ -35,8 +35,8 @@ const styles = () => ({
     height: "calc(100vh - 224px - 50px)"
   },
   filmStrip: {
-    // gridArea: "auto / auto / auto / auto",
-    // border: "2px solid black",
+    // gridArea: "auto / auto / auto / auto"
+    background: "#1a1a1a",
     height: "224px"
   },
   filmItem: {
@@ -143,7 +143,12 @@ class Filmstrip extends React.PureComponent {
 
     const peerStyle = {
       width: "296px",
-      height: "186px"
+      height: "186px",
+      borderRadius: "10px",
+      overflow: "hidden",
+      border: "none",
+      margin: "0 15px",
+      fontFamily: "Noto Sans KR"
     };
 
     return (
