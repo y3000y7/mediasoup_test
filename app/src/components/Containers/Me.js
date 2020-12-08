@@ -13,8 +13,10 @@ import Volume from "./Volume";
 import Fab from "@material-ui/core/Fab";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
-import MicIcon from "../../images/icon-mic-on.svg";
-import MicOffIcon from "../../images/icon-mic-off.svg";
+import MicIcon from "@material-ui/icons/Mic";
+import MicOffIcon from "@material-ui/icons/MicOff";
+import MicIcon2 from "../../images/icon-mic-on.svg";
+import MicOffIcon2 from "../../images/icon-mic-off.svg";
 import VideoIcon from "@material-ui/icons/Videocam";
 import VideoOffIcon from "@material-ui/icons/VideocamOff";
 import ScreenIcon from "@material-ui/icons/ScreenShare";
@@ -96,9 +98,9 @@ const styles = theme => ({
     width: "100%",
     height: "100%",
     display: "flex",
-    // flexDirection: "column",
+    flexDirection: "column-reverse",
     // justifyContent: "center",
-    alignItems: "flex-end",
+    alignItems: "flex-start",
     padding: theme.spacing(1),
     zIndex: 21,
     touchAction: "none",
@@ -449,12 +451,12 @@ const Me = props => {
                               />
                             </React.Fragment>
                           ) : (
-                            <img src={MicOffIcon} alt="mic off icon" />
+                            <img src={MicOffIcon2} alt="mic off icon" />
                           )
                         ) : micState === "on" ? (
-                          <img src={MicIcon} alt="mic icon" />
+                          <img src={MicIcon2} alt="mic icon" />
                         ) : (
-                          <img src={MicOffIcon} alt="mic off icon" />
+                          <img src={MicOffIcon2} alt="mic off icon" />
                         )}
                       </IconButton>
                     </div>
@@ -521,12 +523,12 @@ const Me = props => {
                               />
                             </React.Fragment>
                           ) : (
-                            <img src={MicOffIcon} alt="mic off icon" />
+                            <img src={MicOffIcon2} alt="mic off icon" />
                           )
                         ) : micState === "on" ? (
-                          <MicIcon />
+                          <img src={MicIcon2} alt="mic icon" />
                         ) : (
-                          <img src={MicOffIcon} alt="mic off icon" />
+                          <img src={MicOffIcon2} alt="mic off icon" />
                         )}
                       </Fab>
                     </div>
@@ -591,7 +593,7 @@ const Me = props => {
                     </div>
                   )}
                 </Tooltip> */}
-                {/* {me.browser.platform !== "mobile" && (
+                {me.browser.platform !== "mobile" && (
                   <Tooltip
                     open={screenShareTooltipOpen}
                     onClose={screenShareTooltipHandleClose}
@@ -651,7 +653,7 @@ const Me = props => {
                       </div>
                     )}
                   </Tooltip>
-                )} */}
+                )}
               </React.Fragment>
             </div>
           )}
