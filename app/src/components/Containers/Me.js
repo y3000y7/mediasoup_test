@@ -96,9 +96,9 @@ const styles = theme => ({
     width: "100%",
     height: "100%",
     display: "flex",
-    // flexDirection: "column",
+    flexDirection: "column-reverse",
     // justifyContent: "center",
-    alignItems: "flex-end",
+    alignItems: "flex-start",
     padding: theme.spacing(1),
     zIndex: 21,
     touchAction: "none",
@@ -591,7 +591,7 @@ const Me = props => {
                     </div>
                   )}
                 </Tooltip> */}
-                {/* {me.browser.platform !== "mobile" && (
+                {me.browser.platform !== "mobile" && (
                   <Tooltip
                     open={screenShareTooltipOpen}
                     onClose={screenShareTooltipHandleClose}
@@ -651,7 +651,7 @@ const Me = props => {
                       </div>
                     )}
                   </Tooltip>
-                )} */}
+                )}
               </React.Fragment>
             </div>
           )}
