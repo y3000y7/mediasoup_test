@@ -72,7 +72,7 @@ class DrawingCanvas extends React.PureComponent {
   }
   shouldComponentUpdate(nextProps, nextState) {
     console.log(11111111, "change", "SHOULDCOM");
-    if (nextProps.draw.length !== this.props.draw.length) {
+    if (nextProps.objects.length !== this.props.objects.length) {
       return true;
     }
     if (JSON.stringify(nextProps.draw) !== JSON.stringify(this.props.draw)) {
@@ -223,7 +223,8 @@ class DrawingCanvas extends React.PureComponent {
   };
 
   render() {
-    const { classes, draw, stageWidth, stageHeight } = this.props;
+    console.log(11111111111, "RENDER");
+    const { classes, objects, stageWidth, stageHeight } = this.props;
     const {
       drawingObject,
       selectedTool,
@@ -241,7 +242,7 @@ class DrawingCanvas extends React.PureComponent {
     } = this;
 
     const scale = stageWidth / originWidth;
-
+    console.log(1111111111, objects);
     return (
       <div>
         <Stage
@@ -264,7 +265,7 @@ class DrawingCanvas extends React.PureComponent {
               onClick={() => handleOnSelect(null)}
               onTap={() => handleOnSelect(null)}
             />
-            {[...draw, drawingObject].map((obj, i) => {
+            {[...objects, drawingObject].map((obj, i) => {
               if (!obj) {
                 return null;
               }
