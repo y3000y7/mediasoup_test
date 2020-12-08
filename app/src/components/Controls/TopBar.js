@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import {
@@ -40,6 +40,24 @@ import SelfViewOffIcon from "@material-ui/icons/VideocamOff";
 import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+const theme = createMuiTheme({
+  overrides: {
+    MuiToolbar: {
+      regular: {
+        height: "50px",
+        minHeight: "50px",
+        "@media(min-width:600px)": {
+          minHeight: "50px"
+        }
+      },
+      gutters: {
+        padding: "0 !important"
+      }
+    }
+  }
+});
 
 const styles = theme => ({
   persistentDrawerOpen: {
@@ -119,11 +137,17 @@ const styles = theme => ({
   moreAction: {
     margin: theme.spacing(0.5, 0, 0.5, 1.5)
   },
-
   toolBar: {
+    position: "relative",
     backgroundColor: "#1a1a1a",
     boxShadow: "0 3px 6px 0 rgba(0,0,0,0.2)",
-    height: "50px"
+    height: "50px !important"
+  },
+  toolBarTitle: {
+    position: "absolute",
+    left: "50%",
+    fontSize: "15px",
+    fontWeight: "500"
   }
 });
 
@@ -238,17 +262,21 @@ const TopBar = props => {
 
   return (
     <React.Fragment>
-      <AppBar
-        position="fixed"
-        className={classnames(
-          room.toolbarsVisible || permanentTopBar ? classes.show : classes.hide,
-          !(isMobile || drawerOverlayed) && toolAreaOpen
-            ? classes.persistentDrawerOpen
-            : null
-        )}
-      >
-        <Toolbar className={classes.toolBar}>
-          <PulsingBadge
+      <MuiThemeProvider theme={theme}>
+        <AppBar
+          position="fixed"
+          className={classnames(
+            room.toolbarsVisible || permanentTopBar
+              ? classes.show
+              : classes.hide,
+            !(isMobile || drawerOverlayed) && toolAreaOpen
+              ? classes.persistentDrawerOpen
+              : null
+          )}
+        >
+          <Toolbar className={classes.toolBar}>
+            <p className={classes.toolBarTitle}>발레 기본 수업</p>
+            {/* <PulsingBadge
             color="secondary"
             badgeContent={unread}
             onClick={() => toggleToolArea()}
@@ -262,17 +290,17 @@ const TopBar = props => {
             >
               <MenuIcon />
             </IconButton>
-          </PulsingBadge>
-          {window.config.logo !== "" ? (
+          </PulsingBadge> */}
+            {/* {window.config.logo !== "" ? (
             <img alt="Logo" src={window.config.logo} className={classes.logo} />
           ) : (
             <Typography variant="h6" noWrap color="inherit">
               {window.config.title}
             </Typography>
-          )}
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <Tooltip
+          )} */}
+            <div className={classes.grow} />
+            <div className={classes.sectionDesktop}>
+              {/* <Tooltip
               title={intl.formatMessage({
                 id: "label.moreActions"
               })}
@@ -289,8 +317,8 @@ const TopBar = props => {
               >
                 <MoreIcon />
               </IconButton>
-            </Tooltip>
-            {fullscreenEnabled && (
+            </Tooltip> */}
+              {/* {fullscreenEnabled && (
               <Tooltip title={fullscreenTooltip}>
                 <IconButton
                   aria-label={intl.formatMessage({
@@ -303,8 +331,8 @@ const TopBar = props => {
                   {fullscreen ? <FullScreenExitIcon /> : <FullScreenIcon />}
                 </IconButton>
               </Tooltip>
-            )}
-            <Tooltip
+            )} */}
+              {/* <Tooltip
               title={intl.formatMessage({
                 id: "tooltip.participants"
               })}
@@ -320,24 +348,24 @@ const TopBar = props => {
                   <PeopleIcon />
                 </Badge>
               </IconButton>
-            </Tooltip>
-            <Tooltip
-              title={intl.formatMessage({
-                id: "tooltip.settings"
-              })}
-            >
-              <IconButton
-                aria-label={intl.formatMessage({
+            </Tooltip> */}
+              <Tooltip
+                title={intl.formatMessage({
                   id: "tooltip.settings"
                 })}
-                className={classes.actionButton}
-                color="inherit"
-                onClick={() => setSettingsOpen(!room.settingsOpen)}
               >
-                <SettingsIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title={lockTooltip}>
+                <IconButton
+                  aria-label={intl.formatMessage({
+                    id: "tooltip.settings"
+                  })}
+                  className={classes.actionButton}
+                  color="inherit"
+                  onClick={() => setSettingsOpen(!room.settingsOpen)}
+                >
+                  <SettingsIcon />
+                </IconButton>
+              </Tooltip>
+              {/* <Tooltip title={lockTooltip}>
               <span className={classes.disabledButton}>
                 <IconButton
                   aria-label={intl.formatMessage({
@@ -357,94 +385,94 @@ const TopBar = props => {
                   {room.locked ? <LockIcon /> : <LockOpenIcon />}
                 </IconButton>
               </span>
-            </Tooltip>
-            {lobbyPeers.length > 0 && (
-              <Tooltip
-                title={intl.formatMessage({
-                  id: "tooltip.lobby"
-                })}
-              >
-                <span className={classes.disabledButton}>
-                  <IconButton
-                    aria-label={intl.formatMessage({
-                      id: "tooltip.lobby"
-                    })}
-                    className={classes.actionButton}
-                    color="inherit"
-                    disabled={!canPromote}
-                    onClick={() => setLockDialogOpen(!room.lockDialogOpen)}
-                  >
-                    <PulsingBadge
-                      color="secondary"
-                      badgeContent={lobbyPeers.length}
-                    >
-                      <SecurityIcon />
-                    </PulsingBadge>
-                  </IconButton>
-                </span>
-              </Tooltip>
-            )}
-            {loginEnabled && (
-              <Tooltip title={loginTooltip}>
-                <IconButton
-                  aria-label={intl.formatMessage({
-                    id: "tooltip.login"
+            </Tooltip> */}
+              {lobbyPeers.length > 0 && (
+                <Tooltip
+                  title={intl.formatMessage({
+                    id: "tooltip.lobby"
                   })}
-                  className={classes.actionButton}
-                  color="inherit"
-                  onClick={() => {
-                    loggedIn ? roomClient.logout() : roomClient.login();
-                  }}
                 >
-                  {myPicture ? (
-                    <Avatar src={myPicture} />
-                  ) : (
-                    <AccountCircle
-                      className={loggedIn ? classes.green : null}
-                    />
-                  )}
-                </IconButton>
-              </Tooltip>
-            )}
-          </div>
-          <div className={classes.sectionMobile}>
-            {lobbyPeers.length > 0 && (
-              <Tooltip
-                title={intl.formatMessage({
-                  id: "tooltip.lobby"
-                })}
-              >
-                <span className={classes.disabledButton}>
+                  <span className={classes.disabledButton}>
+                    <IconButton
+                      aria-label={intl.formatMessage({
+                        id: "tooltip.lobby"
+                      })}
+                      className={classes.actionButton}
+                      color="inherit"
+                      disabled={!canPromote}
+                      onClick={() => setLockDialogOpen(!room.lockDialogOpen)}
+                    >
+                      <PulsingBadge
+                        color="secondary"
+                        badgeContent={lobbyPeers.length}
+                      >
+                        <SecurityIcon />
+                      </PulsingBadge>
+                    </IconButton>
+                  </span>
+                </Tooltip>
+              )}
+              {loginEnabled && (
+                <Tooltip title={loginTooltip}>
                   <IconButton
                     aria-label={intl.formatMessage({
-                      id: "tooltip.lobby"
+                      id: "tooltip.login"
                     })}
                     className={classes.actionButton}
                     color="inherit"
-                    disabled={!canPromote}
-                    onClick={() => setLockDialogOpen(!room.lockDialogOpen)}
+                    onClick={() => {
+                      loggedIn ? roomClient.logout() : roomClient.login();
+                    }}
                   >
-                    <PulsingBadge
-                      color="secondary"
-                      badgeContent={lobbyPeers.length}
-                    >
-                      <SecurityIcon />
-                    </PulsingBadge>
+                    {myPicture ? (
+                      <Avatar src={myPicture} />
+                    ) : (
+                      <AccountCircle
+                        className={loggedIn ? classes.green : null}
+                      />
+                    )}
                   </IconButton>
-                </span>
-              </Tooltip>
-            )}
-            <IconButton
-              aria-haspopup
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
-          <div className={classes.divider} />
+                </Tooltip>
+              )}
+            </div>
+            <div className={classes.sectionMobile}>
+              {lobbyPeers.length > 0 && (
+                <Tooltip
+                  title={intl.formatMessage({
+                    id: "tooltip.lobby"
+                  })}
+                >
+                  <span className={classes.disabledButton}>
+                    <IconButton
+                      aria-label={intl.formatMessage({
+                        id: "tooltip.lobby"
+                      })}
+                      className={classes.actionButton}
+                      color="inherit"
+                      disabled={!canPromote}
+                      onClick={() => setLockDialogOpen(!room.lockDialogOpen)}
+                    >
+                      <PulsingBadge
+                        color="secondary"
+                        badgeContent={lobbyPeers.length}
+                      >
+                        <SecurityIcon />
+                      </PulsingBadge>
+                    </IconButton>
+                  </span>
+                </Tooltip>
+              )}
+              <IconButton
+                aria-haspopup
+                onClick={handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
+              </IconButton>
+            </div>
+            <div className={classes.divider} />
 
-          <Button
+            {/* <Button
             aria-label={intl.formatMessage({
               id: "label.leave"
             })}
@@ -454,249 +482,256 @@ const TopBar = props => {
             onClick={() => roomClient.close()}
           >
             <FormattedMessage id="label.leave" defaultMessage="Leave" />
-          </Button>
-        </Toolbar>
-      </AppBar>
-      <Popover
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        transformOrigin={{ vertical: "top", horizontal: "left" }}
-        open={isMenuOpen}
-        onClose={handleMenuClose}
-        onExited={handleExited}
-        getContentAnchorEl={null}
-      >
-        {currentMenu === "moreActions" && (
-          <Paper>
+          </Button> */}
+          </Toolbar>
+        </AppBar>
+        <Popover
+          anchorEl={anchorEl}
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+          transformOrigin={{ vertical: "top", horizontal: "left" }}
+          open={isMenuOpen}
+          onClose={handleMenuClose}
+          onExited={handleExited}
+          getContentAnchorEl={null}
+        >
+          {currentMenu === "moreActions" && (
+            <Paper>
+              <MenuItem
+                disabled={!canProduceExtraVideo}
+                onClick={() => {
+                  handleMenuClose();
+                  setExtraVideoOpen(!room.extraVideoOpen);
+                }}
+              >
+                <VideoCallIcon
+                  aria-label={intl.formatMessage({
+                    id: "label.addVideo"
+                  })}
+                />
+                <p className={classes.moreAction}>
+                  <FormattedMessage
+                    id="label.addVideo"
+                    defaultMessage="Add video"
+                  />
+                </p>
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleMenuClose();
+                  setHideSelfView(!room.hideSelfView);
+                }}
+              >
+                {room.hideSelfView ? (
+                  <SelfViewOnIcon
+                    aria-label={intl.formatMessage({
+                      id: "room.showSelfView"
+                    })}
+                  />
+                ) : (
+                  <SelfViewOffIcon
+                    aria-label={intl.formatMessage({
+                      id: "room.hideSelfView"
+                    })}
+                  />
+                )}
+                {room.hideSelfView ? (
+                  <p className={classes.moreAction}>
+                    <FormattedMessage
+                      id="room.showSelfView"
+                      defaultMessage="Show self view video"
+                    />
+                  </p>
+                ) : (
+                  <p className={classes.moreAction}>
+                    <FormattedMessage
+                      id="room.hideSelfView"
+                      defaultMessage="Hide self view video"
+                    />
+                  </p>
+                )}
+              </MenuItem>
+            </Paper>
+          )}
+        </Popover>
+        <Menu
+          anchorEl={mobileMoreAnchorEl}
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+          transformOrigin={{ vertical: "bottom", horizontal: "right" }}
+          open={isMobileMenuOpen}
+          onClose={handleMenuClose}
+          getContentAnchorEl={null}
+        >
+          {loginEnabled && (
             <MenuItem
-              disabled={!canProduceExtraVideo}
+              aria-label={loginTooltip}
               onClick={() => {
                 handleMenuClose();
-                setExtraVideoOpen(!room.extraVideoOpen);
+                loggedIn ? roomClient.logout() : roomClient.login();
               }}
             >
-              <VideoCallIcon
+              {myPicture ? (
+                <Avatar src={myPicture} />
+              ) : (
+                <AccountCircle className={loggedIn ? classes.green : null} />
+              )}
+              {loggedIn ? (
+                <p className={classes.moreAction}>
+                  <FormattedMessage
+                    id="tooltip.logout"
+                    defaultMessage="Log out"
+                  />
+                </p>
+              ) : (
+                <p className={classes.moreAction}>
+                  <FormattedMessage
+                    id="tooltip.login"
+                    defaultMessage="Log in"
+                  />
+                </p>
+              )}
+            </MenuItem>
+          )}
+          <MenuItem
+            aria-label={lockTooltip}
+            disabled={!canLock}
+            onClick={() => {
+              handleMenuClose();
+
+              if (room.locked) {
+                roomClient.unlockRoom();
+              } else {
+                roomClient.lockRoom();
+              }
+            }}
+          >
+            {room.locked ? <LockIcon /> : <LockOpenIcon />}
+            {room.locked ? (
+              <p className={classes.moreAction}>
+                <FormattedMessage
+                  id="tooltip.unLockRoom"
+                  defaultMessage="Unlock room"
+                />
+              </p>
+            ) : (
+              <p className={classes.moreAction}>
+                <FormattedMessage
+                  id="tooltip.lockRoom"
+                  defaultMessage="Lock room"
+                />
+              </p>
+            )}
+          </MenuItem>
+          <MenuItem
+            aria-label={intl.formatMessage({
+              id: "tooltip.settings"
+            })}
+            onClick={() => {
+              handleMenuClose();
+              setSettingsOpen(!room.settingsOpen);
+            }}
+          >
+            <SettingsIcon />
+            <p className={classes.moreAction}>
+              <FormattedMessage
+                id="tooltip.settings"
+                defaultMessage="Show settings"
+              />
+            </p>
+          </MenuItem>
+          <MenuItem
+            aria-label={intl.formatMessage({
+              id: "tooltip.participants"
+            })}
+            onClick={() => {
+              handleMenuClose();
+              openUsersTab();
+            }}
+          >
+            <Badge color="primary" badgeContent={peersLength + 1}>
+              <PeopleIcon />
+            </Badge>
+            <p className={classes.moreAction}>
+              <FormattedMessage
+                id="tooltip.participants"
+                defaultMessage="Show participants"
+              />
+            </p>
+          </MenuItem>
+          {fullscreenEnabled && (
+            <MenuItem
+              aria-label={intl.formatMessage({
+                id: "tooltip.enterFullscreen"
+              })}
+              onClick={() => {
+                handleMenuClose();
+                onFullscreen();
+              }}
+            >
+              {fullscreen ? <FullScreenExitIcon /> : <FullScreenIcon />}
+              <p className={classes.moreAction}>
+                <FormattedMessage
+                  id="tooltip.enterFullscreen"
+                  defaultMessage="Enter fullscreen"
+                />
+              </p>
+            </MenuItem>
+          )}
+          <MenuItem
+            disabled={!canProduceExtraVideo}
+            onClick={() => {
+              handleMenuClose();
+              setExtraVideoOpen(!room.extraVideoOpen);
+            }}
+          >
+            <VideoCallIcon
+              aria-label={intl.formatMessage({
+                id: "label.addVideo"
+              })}
+            />
+            <p className={classes.moreAction}>
+              <FormattedMessage
+                id="label.addVideo"
+                defaultMessage="Add video"
+              />
+            </p>
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleMenuClose();
+              setHideSelfView(!room.hideSelfView);
+            }}
+          >
+            {room.hideSelfView ? (
+              <SelfViewOnIcon
                 aria-label={intl.formatMessage({
-                  id: "label.addVideo"
+                  id: "room.showSelfView"
                 })}
               />
-              <p className={classes.moreAction}>
-                <FormattedMessage
-                  id="label.addVideo"
-                  defaultMessage="Add video"
-                />
-              </p>
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                handleMenuClose();
-                setHideSelfView(!room.hideSelfView);
-              }}
-            >
-              {room.hideSelfView ? (
-                <SelfViewOnIcon
-                  aria-label={intl.formatMessage({
-                    id: "room.showSelfView"
-                  })}
-                />
-              ) : (
-                <SelfViewOffIcon
-                  aria-label={intl.formatMessage({
-                    id: "room.hideSelfView"
-                  })}
-                />
-              )}
-              {room.hideSelfView ? (
-                <p className={classes.moreAction}>
-                  <FormattedMessage
-                    id="room.showSelfView"
-                    defaultMessage="Show self view video"
-                  />
-                </p>
-              ) : (
-                <p className={classes.moreAction}>
-                  <FormattedMessage
-                    id="room.hideSelfView"
-                    defaultMessage="Hide self view video"
-                  />
-                </p>
-              )}
-            </MenuItem>
-          </Paper>
-        )}
-      </Popover>
-      <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        transformOrigin={{ vertical: "bottom", horizontal: "right" }}
-        open={isMobileMenuOpen}
-        onClose={handleMenuClose}
-        getContentAnchorEl={null}
-      >
-        {loginEnabled && (
-          <MenuItem
-            aria-label={loginTooltip}
-            onClick={() => {
-              handleMenuClose();
-              loggedIn ? roomClient.logout() : roomClient.login();
-            }}
-          >
-            {myPicture ? (
-              <Avatar src={myPicture} />
             ) : (
-              <AccountCircle className={loggedIn ? classes.green : null} />
+              <SelfViewOffIcon
+                aria-label={intl.formatMessage({
+                  id: "room.hideSelfView"
+                })}
+              />
             )}
-            {loggedIn ? (
+            {room.hideSelfView ? (
               <p className={classes.moreAction}>
                 <FormattedMessage
-                  id="tooltip.logout"
-                  defaultMessage="Log out"
+                  id="room.showSelfView"
+                  defaultMessage="Show self view video"
                 />
               </p>
             ) : (
               <p className={classes.moreAction}>
-                <FormattedMessage id="tooltip.login" defaultMessage="Log in" />
+                <FormattedMessage
+                  id="room.hideSelfView"
+                  defaultMessage="Hide self view video"
+                />
               </p>
             )}
           </MenuItem>
-        )}
-        <MenuItem
-          aria-label={lockTooltip}
-          disabled={!canLock}
-          onClick={() => {
-            handleMenuClose();
-
-            if (room.locked) {
-              roomClient.unlockRoom();
-            } else {
-              roomClient.lockRoom();
-            }
-          }}
-        >
-          {room.locked ? <LockIcon /> : <LockOpenIcon />}
-          {room.locked ? (
-            <p className={classes.moreAction}>
-              <FormattedMessage
-                id="tooltip.unLockRoom"
-                defaultMessage="Unlock room"
-              />
-            </p>
-          ) : (
-            <p className={classes.moreAction}>
-              <FormattedMessage
-                id="tooltip.lockRoom"
-                defaultMessage="Lock room"
-              />
-            </p>
-          )}
-        </MenuItem>
-        <MenuItem
-          aria-label={intl.formatMessage({
-            id: "tooltip.settings"
-          })}
-          onClick={() => {
-            handleMenuClose();
-            setSettingsOpen(!room.settingsOpen);
-          }}
-        >
-          <SettingsIcon />
-          <p className={classes.moreAction}>
-            <FormattedMessage
-              id="tooltip.settings"
-              defaultMessage="Show settings"
-            />
-          </p>
-        </MenuItem>
-        <MenuItem
-          aria-label={intl.formatMessage({
-            id: "tooltip.participants"
-          })}
-          onClick={() => {
-            handleMenuClose();
-            openUsersTab();
-          }}
-        >
-          <Badge color="primary" badgeContent={peersLength + 1}>
-            <PeopleIcon />
-          </Badge>
-          <p className={classes.moreAction}>
-            <FormattedMessage
-              id="tooltip.participants"
-              defaultMessage="Show participants"
-            />
-          </p>
-        </MenuItem>
-        {fullscreenEnabled && (
-          <MenuItem
-            aria-label={intl.formatMessage({
-              id: "tooltip.enterFullscreen"
-            })}
-            onClick={() => {
-              handleMenuClose();
-              onFullscreen();
-            }}
-          >
-            {fullscreen ? <FullScreenExitIcon /> : <FullScreenIcon />}
-            <p className={classes.moreAction}>
-              <FormattedMessage
-                id="tooltip.enterFullscreen"
-                defaultMessage="Enter fullscreen"
-              />
-            </p>
-          </MenuItem>
-        )}
-        <MenuItem
-          disabled={!canProduceExtraVideo}
-          onClick={() => {
-            handleMenuClose();
-            setExtraVideoOpen(!room.extraVideoOpen);
-          }}
-        >
-          <VideoCallIcon
-            aria-label={intl.formatMessage({
-              id: "label.addVideo"
-            })}
-          />
-          <p className={classes.moreAction}>
-            <FormattedMessage id="label.addVideo" defaultMessage="Add video" />
-          </p>
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            handleMenuClose();
-            setHideSelfView(!room.hideSelfView);
-          }}
-        >
-          {room.hideSelfView ? (
-            <SelfViewOnIcon
-              aria-label={intl.formatMessage({
-                id: "room.showSelfView"
-              })}
-            />
-          ) : (
-            <SelfViewOffIcon
-              aria-label={intl.formatMessage({
-                id: "room.hideSelfView"
-              })}
-            />
-          )}
-          {room.hideSelfView ? (
-            <p className={classes.moreAction}>
-              <FormattedMessage
-                id="room.showSelfView"
-                defaultMessage="Show self view video"
-              />
-            </p>
-          ) : (
-            <p className={classes.moreAction}>
-              <FormattedMessage
-                id="room.hideSelfView"
-                defaultMessage="Hide self view video"
-              />
-            </p>
-          )}
-        </MenuItem>
-      </Menu>
+        </Menu>
+      </MuiThemeProvider>
     </React.Fragment>
   );
 };

@@ -11,7 +11,7 @@ import SpeakerPeer from "../Containers/SpeakerPeer";
 import DrawingBoard from "../DrawingBoard/DrawingBoard";
 import Grid from "@material-ui/core/Grid";
 
-const PADDING_V = 64;
+const PADDING_V = 50;
 const FILMSTRING_PADDING_V = 0;
 const FILMSTRING_PADDING_H = 10;
 
