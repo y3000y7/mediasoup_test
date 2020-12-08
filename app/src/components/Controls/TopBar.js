@@ -42,9 +42,16 @@ import Tooltip from "@material-ui/core/Tooltip";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
+import helpIcon from "../../images/icon-help.svg";
+import helpHoverIcon from "../../images/icon-help-over.svg";
+import settingIcon from "../../images/icon-setting.svg";
+import settingHoverIcon from "../../images/icon-setting-over.svg";
+
 const theme = createMuiTheme({
   overrides: {
     MuiToolbar: {
+      padding: 0,
+
       regular: {
         height: "50px",
         minHeight: "50px",
@@ -53,7 +60,8 @@ const theme = createMuiTheme({
         }
       },
       gutters: {
-        padding: "0 !important"
+        paddingLeft: "0 !important",
+        paddingRight: "0 !important"
       }
     }
   }
@@ -135,7 +143,7 @@ const styles = theme => ({
     color: "rgba(0, 153, 0, 1)"
   },
   moreAction: {
-    margin: theme.spacing(0.5, 0, 0.5, 1.5)
+    // margin: theme.spacing(0.5, 0, 0.5, 1.5)
   },
   toolBar: {
     position: "relative",
@@ -149,6 +157,31 @@ const styles = theme => ({
     transform: "translateX(-50%)",
     fontSize: "15px",
     fontWeight: "500"
+  },
+  helpIcon: {
+    width: "30px",
+    height: "30px",
+    backgroundImage: `url(${helpIcon})`,
+
+    "&:hover": {
+      backgroundImage: `url(${helpHoverIcon})`
+    }
+  },
+  settingIcon: {
+    width: "30px",
+    height: "30px",
+    backgroundImage: `url(${settingIcon})`,
+
+    "&:hover": {
+      backgroundImage: `url(${settingHoverIcon})`
+    }
+  },
+  lectureTime: {
+    position: "absolute",
+    top: "0",
+    right: "145px",
+    lineHeight: "50px",
+    color: "#ffffff"
   }
 });
 
@@ -350,6 +383,33 @@ const TopBar = props => {
                 </Badge>
               </IconButton>
             </Tooltip> */}
+              <div className={classes.lectureTime}>수업 경과 12:12</div>
+              <Tooltip
+                title={intl.formatMessage({
+                  id: "tooltip.help"
+                })}
+              >
+                <IconButton
+                  aria-label={intl.formatMessage({
+                    id: "tooltip.help"
+                  })}
+                  className={classes.actionButton}
+                  color="inherit"
+                  // onClick={() => setSettingsOpen(!room.helpOpen)}
+                >
+                  {/* <SettingsIcon /> */}
+                  {/* <img
+                    src={helpIcon}
+                    alt="helpzIcon"
+                    className={classes.helpIcon}
+                  /> */}
+                  <p
+                    src={helpIcon}
+                    alt="helpzIcon"
+                    className={classes.helpIcon}
+                  />
+                </IconButton>
+              </Tooltip>
               <Tooltip
                 title={intl.formatMessage({
                   id: "tooltip.settings"
@@ -363,7 +423,12 @@ const TopBar = props => {
                   color="inherit"
                   onClick={() => setSettingsOpen(!room.settingsOpen)}
                 >
-                  <SettingsIcon />
+                  <p
+                    src={settingIcon}
+                    alt="settingIcon"
+                    className={classes.settingIcon}
+                  />
+                  {/* <SettingsIcon /> */}
                 </IconButton>
               </Tooltip>
               {/* <Tooltip title={lockTooltip}>
