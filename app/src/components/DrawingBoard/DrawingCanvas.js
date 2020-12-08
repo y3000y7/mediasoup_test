@@ -71,7 +71,11 @@ class DrawingCanvas extends React.PureComponent {
     };
   }
   shouldComponentUpdate(nextProps, nextState) {
+    console.log(11111111, "change", "SHOULDCOM");
     if (nextProps.draw.length !== this.props.draw.length) {
+      return true;
+    }
+    if (JSON.stringify(nextProps.draw) !== JSON.stringify(this.props.draw)) {
       return true;
     }
     if (
@@ -101,6 +105,7 @@ class DrawingCanvas extends React.PureComponent {
 
   handleMouseDown = e => {
     const { selectedTool, selectedColor } = this.state;
+    if (selectedTool === Tool.SELECT) return;
 
     const pos = e.target.getStage().getPointerPosition();
     const scale = this.props.stageWidth / originWidth;
@@ -206,7 +211,15 @@ class DrawingCanvas extends React.PureComponent {
   };
 
   handleOnSelect = id => {
-    this.setState({ selectedObjId: id });
+    if (this.state.selectedTool === Tool.SELECT) {
+      if (this.state.selectedObjId !== id) {
+        this.setState({ selectedObjId: id });
+      }
+    }
+  };
+
+  handleOnChangeObj = changedProps => {
+    this.props.onObjectChanged(changedProps);
   };
 
   render() {
@@ -223,7 +236,8 @@ class DrawingCanvas extends React.PureComponent {
       handleMouseUp,
       handleSelectTool,
       handleSelectColor,
-      handleOnSelect
+      handleOnSelect,
+      handleOnChangeObj
     } = this;
 
     const scale = stageWidth / originWidth;
@@ -307,8 +321,9 @@ class DrawingCanvas extends React.PureComponent {
                   properties={properties}
                   draggable={selectedTool === Tool.SELECT}
                   onChange={changedProps => {
+                    console.log(1111111, "onchange");
                     handleOnSelect(obj.id);
-                    console.log(11111111, "onchanged", changedProps);
+                    handleOnChangeObj(changedProps);
                   }}
                   onSelect={() => handleOnSelect(obj.id)}
                   isSelected={obj.id === selectedObjId}

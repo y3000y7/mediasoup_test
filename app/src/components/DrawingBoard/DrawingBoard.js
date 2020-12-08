@@ -69,6 +69,10 @@ class DrawingBoard extends React.PureComponent {
     this.props.roomClient.addDrawingObject(obj);
   };
 
+  onObjectChanged = obj => {
+    this.props.roomClient.changeDrawingObject(obj);
+  };
+
   onClear = () => {
     this.props.roomClient.clearDrawingObjects();
   };
@@ -76,7 +80,7 @@ class DrawingBoard extends React.PureComponent {
   render() {
     const { classes, draw } = this.props;
     const { canvasWrapperWidth, canvasWrapperHeight } = this.state;
-    const { onObjectAdded, onClear } = this;
+    const { onObjectAdded, onClear, onObjectChanged } = this;
     const wrapperStyles = {
       width: canvasWrapperWidth,
       height: canvasWrapperHeight
@@ -88,6 +92,7 @@ class DrawingBoard extends React.PureComponent {
           <DrawingCanvas
             draw={draw}
             onObjectAdded={onObjectAdded}
+            onObjectChanged={onObjectChanged}
             onClear={onClear}
             stageWidth={canvasWrapperWidth}
             stageHeight={canvasWrapperHeight}
