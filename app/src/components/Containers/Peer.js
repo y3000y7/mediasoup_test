@@ -80,9 +80,9 @@ const styles = theme => ({
     height: "100%",
     // backgroundColor: "rgba(0, 0, 0, 0.3)",
     display: "flex",
-    // flexDirection: "column",
+    flexDirection: "column-reverse",
     // justifyContent: "center",
-    alignItems: "flex-end",
+    alignItems: "flex-start",
     padding: theme.spacing(1),
     zIndex: 21,
     opacity: 0,
@@ -271,7 +271,7 @@ const Peer = props => {
               )}
             </Tooltip>
 
-            {/* {browser.platform !== "mobile" && (
+            {browser.platform !== "mobile" && (
               <Tooltip
                 title={intl.formatMessage({
                   id: "label.newWindow",
@@ -316,9 +316,9 @@ const Peer = props => {
                   </Fab>
                 )}
               </Tooltip>
-            )} */}
+            )}
 
-            {/* <Tooltip
+            <Tooltip
               title={intl.formatMessage({
                 id: "label.fullscreen",
                 defaultMessage: "Fullscreen"
@@ -357,7 +357,7 @@ const Peer = props => {
                   <FullScreenIcon />
                 </Fab>
               )}
-            </Tooltip> */}
+            </Tooltip>
           </div>
 
           <VideoView
