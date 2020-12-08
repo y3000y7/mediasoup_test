@@ -38,6 +38,13 @@ class DrawingBoard extends React.PureComponent {
     if (nextProps.objects.length !== this.props.objects.length) {
       return true;
     }
+
+    if (
+      JSON.stringify(nextProps.objects) !== JSON.stringify(this.props.objects)
+    ) {
+      return true;
+    }
+
     if (nextState.canvasWrapperWidth !== this.state.canvasWrapperWidth) {
       return true;
     }
@@ -112,8 +119,7 @@ DrawingBoard.propTypes = {};
 
 const mapStateToProps = state => {
   return {
-    objects: state.draw.objects,
-    drawTimeStamp: state.draw.timeStamp
+    objects: state.draw.objects
   };
 };
 
@@ -124,11 +130,7 @@ export default withRoomContext(
     null,
     {
       areStatesEqual: (next, prev) => {
-        // return (
-        //   prev.draw.objects === next.draw.objects &&
-        //   prev.draw.timeStamp === next.draw.timeStamp
-        // );
-        return false;
+        return prev.draw.objects === next.draw.objects;
       }
     }
   )(withStyles(styles)(DrawingBoard))

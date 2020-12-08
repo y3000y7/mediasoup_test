@@ -30,6 +30,7 @@ const TransformShape = ({
     ref: shapeRef,
     draggable,
     onDragEnd: e => {
+      console.log(1111111, e);
       onChange({
         id: id,
         x: e.target.x(),
