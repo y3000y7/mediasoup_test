@@ -13,7 +13,8 @@ const styles = () => ({
     // border: "2px solid red",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    zIndex: 100
   },
   boardWrap: {}
 });
