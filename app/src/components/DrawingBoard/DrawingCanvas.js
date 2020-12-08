@@ -186,6 +186,11 @@ class DrawingCanvas extends React.PureComponent {
       drawingObject.startY = pos.y / scale;
     } else if (selectedTool === Tool.PEN) {
       drawingObject.points = [pos.x / scale, pos.y / scale];
+    } else if (selectedTool === Tool.TEXT) {
+      this.handleSelectTool(Tool.SELECT);
+      const text = window.prompt("작성할 내용을 입력하세요");
+      drawingObject.text = text;
+      drawingObject.fontSize = 48;
     }
 
     this.setState({
@@ -243,7 +248,7 @@ class DrawingCanvas extends React.PureComponent {
   };
 
   handleMouseUp = () => {
-    const { drawingObject } = this.state;
+    const { selectedTool, drawingObject } = this.state;
     if (drawingObject) {
       this.props.onObjectAdded(drawingObject);
       this.setState({ drawingObject: null });
@@ -359,9 +364,9 @@ class DrawingCanvas extends React.PureComponent {
                     ...properties,
                     x: obj.x,
                     y: obj.y,
-                    text: "내용을 입력하세요..",
-                    fill: obj.fill,
-                    fontSize: 20
+                    text: obj.text,
+                    fontSize: obj.fontSize,
+                    fill: obj.fill
                   };
                   break;
                 }
