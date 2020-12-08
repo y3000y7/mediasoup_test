@@ -1699,11 +1699,10 @@ class Room extends EventEmitter {
           throw new Error("peer not authorized");
 
         const { object } = request.data;
-        this._drawingHistory.map(obj => {
+        this._drawingHistory.forEach(obj => {
           if (obj.id === object.id) {
-            return { ...obj, object };
+            obj = { ...obj, object };
           }
-          return obj;
         });
 
         // Spread to others
