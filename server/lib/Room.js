@@ -1701,7 +1701,7 @@ class Room extends EventEmitter {
         const { object } = request.data;
         this._drawingHistory = this._drawingHistory.map(obj => {
           if (obj.id === object.id) {
-            return { ...obj, object };
+            return { ...obj, ...object };
           }
           return obj;
         });
