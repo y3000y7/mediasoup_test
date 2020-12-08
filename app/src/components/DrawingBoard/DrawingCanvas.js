@@ -86,7 +86,13 @@ class DrawingCanvas extends React.PureComponent {
     if (nextState.selectedColor !== this.state.selectedColor) {
       return true;
     }
-    if (nextProps.stageWidth !== this.props.stageWidth) {
+    if (nextState.selectedObjId !== this.state.selectedObjId) {
+      return true;
+    }
+    if (
+      nextProps.stageWidth !== this.props.stageWidth ||
+      nextProps.stageHeight !== this.props.stageHeight
+    ) {
       return true;
     }
 
@@ -98,16 +104,24 @@ class DrawingCanvas extends React.PureComponent {
 
     const pos = e.target.getStage().getPointerPosition();
     const scale = this.props.stageWidth / originWidth;
-    let drawingObject = null;
-    drawingObject = {
+
+    let drawingObject = {
+      id: new Date().getTime(),
+      x: pos.x / scale,
+      y: pos.y / scale,
       type: selectedTool,
-      fill: selectedColor,
-      points: [pos.x / scale, pos.y / scale],
-      id: new Date().getTime()
+      fill: selectedColor
     };
 
     if (selectedTool === Tool.RECT || selectedTool === Tool.ELLIPSE) {
-      drawingObject.points = [pos.x, pos.y, pos.x, pos.y];
+      drawingObject.width = 0;
+      drawingObject.height = 0;
+      // drawingObject.x = x;
+      // drawingObject.y = y;
+      drawingObject.startX = pos.x / scale;
+      drawingObject.startY = pos.y / scale;
+    } else if (selectedTool === Tool.PEN) {
+      drawingObject.points = [pos.x / scale, pos.y / scale];
     }
 
     this.setState({
@@ -120,41 +134,51 @@ class DrawingCanvas extends React.PureComponent {
       return;
     }
     const { drawingObject } = this.state;
-    const stage = e.target.getStage();
-    const point = stage.getPointerPosition();
+    const pos = e.target.getStage().getPointerPosition();
     const scale = this.props.stageWidth / originWidth;
+
     switch (drawingObject.type) {
       case Tool.PEN: {
         this.setState({
           drawingObject: {
             ...drawingObject,
-            points: drawingObject.points.concat([
-              point.x / scale,
-              point.y / scale
-            ])
+            x: drawingObject.x,
+            y: drawingObject.y,
+            points: drawingObject.points.concat([pos.x / scale, pos.y / scale])
           }
         });
         break;
       }
-      case Tool.RECT:
+      case Tool.RECT: {
+        this.setState({
+          drawingObject: {
+            ...drawingObject,
+            width: pos.x / scale - drawingObject.x,
+            height: pos.y / scale - drawingObject.y
+          }
+        });
+        break;
+      }
       case Tool.ELLIPSE: {
         this.setState({
           drawingObject: {
             ...drawingObject,
-            points: [
-              drawingObject.points[0],
-              drawingObject.points[1],
-              point.x / scale,
-              point.y / scale
-            ]
+            x:
+              drawingObject.startX + (pos.x / scale - drawingObject.startX) / 2,
+            y:
+              drawingObject.startY + (pos.y / scale - drawingObject.startY) / 2,
+            width: Math.abs(pos.x / scale - drawingObject.startX),
+            height: Math.abs(pos.y / scale - drawingObject.startY)
           }
         });
+        break;
       }
+      default:
+        break;
     }
   };
 
   handleMouseUp = () => {
-    this.setState({ isDrawing: false });
     const { drawingObject } = this.state;
     if (drawingObject) {
       this.props.onObjectAdded(drawingObject);
@@ -163,6 +187,9 @@ class DrawingCanvas extends React.PureComponent {
   };
 
   handleSelectTool = tool => {
+    if (tool !== Tool.SELECT) {
+      this.handleOnSelect(null);
+    }
     if (tool === Tool.CLEAR) {
       this.props.onClear();
     } else {
@@ -220,6 +247,8 @@ class DrawingCanvas extends React.PureComponent {
               x={0}
               y={0}
               fill="#444"
+              onClick={() => handleOnSelect(null)}
+              onTap={() => handleOnSelect(null)}
             />
             {[...draw, drawingObject].map((obj, i) => {
               if (!obj) {
@@ -239,8 +268,8 @@ class DrawingCanvas extends React.PureComponent {
                 }
                 case Tool.TEXT: {
                   properties = {
-                    x: obj.points[0],
-                    y: obj.points[1],
+                    x: obj.x,
+                    y: obj.y,
                     text: "type here...",
                     fill: obj.fill,
                     fontSize: 20
@@ -249,20 +278,20 @@ class DrawingCanvas extends React.PureComponent {
                 }
                 case Tool.RECT: {
                   properties = {
-                    x: obj.points[0],
-                    y: obj.points[1],
-                    width: obj.points[2] - obj.points[0],
-                    height: obj.points[3] - obj.points[1],
+                    x: obj.x,
+                    y: obj.y,
+                    width: obj.width,
+                    height: obj.height,
                     fill: obj.fill
                   };
                   break;
                 }
                 case Tool.ELLIPSE: {
                   properties = {
-                    x: obj.points[0] + (obj.points[2] - obj.points[0]) / 2,
-                    y: obj.points[1] + (obj.points[3] - obj.points[1]) / 2,
-                    width: Math.abs(obj.points[2] - obj.points[0]),
-                    height: Math.abs(obj.points[3] - obj.points[1]),
+                    x: obj.x,
+                    y: obj.y,
+                    width: obj.width,
+                    height: obj.height,
                     fill: obj.fill
                   };
                   break;
@@ -278,6 +307,7 @@ class DrawingCanvas extends React.PureComponent {
                   properties={properties}
                   draggable={selectedTool === Tool.SELECT}
                   onChange={changedProps => {
+                    handleOnSelect(obj.id);
                     console.log(11111111, "onchanged", changedProps);
                   }}
                   onSelect={() => handleOnSelect(obj.id)}
