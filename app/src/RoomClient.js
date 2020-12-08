@@ -1231,18 +1231,31 @@ export default class RoomClient {
       logger.error('addDrawingObject() [error:"%o"]', error);
     }
   }
-  
+
   async clearDrawingObjects() {
     logger.debug("clearDrawingObjects()");
-  
+
     try {
       await this.sendRequest("clearDrawingObjects");
-  
+
       store.dispatch(drawActions.clearDrawingObjects());
     } catch (error) {
       logger.error('clearDrawingObjects() [error:"%o"]', error);
     }
+  }
 
+  async changeDrawingObject(object) {
+    logger.debug("changeDrawingObject()");
+
+    try {
+      await this.sendRequest("changeDrawingObject", {
+        object
+      });
+
+      store.dispatch(drawActions.changeDrawingObject(object));
+    } catch (error) {
+      logger.error('changeDrawingObject()? [error:"%o"]', error);
+    }
   }
 
   addSelectedPeer(peerId) {
@@ -2475,11 +2488,19 @@ export default class RoomClient {
 
             break;
           }
-          
-          case "clearDrawingObjects":{
-            console.log("RESPONSE?",111111)
 
+          case "clearDrawingObjects": {
             store.dispatch(drawActions.clearDrawingObjects());
+            break;
+          }
+
+          case "changeDrawingObject": {
+            const { peerId, object } = notification.data;
+
+            store.dispatch(
+              drawActions.changeDrawingObject({ ...object, peerId })
+            );
+
             break;
           }
 
