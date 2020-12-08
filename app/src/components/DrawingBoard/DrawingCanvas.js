@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Stage, Layer, Rect } from "react-konva";
 import TransformShape from "./TransformShape";
@@ -163,6 +163,8 @@ class DrawingCanvas extends React.PureComponent {
   handleMouseDown = e => {
     const { selectedTool, selectedColor } = this.state;
     if (selectedTool === Tool.SELECT) return;
+    if (selectedTool === Tool.CHAT) return;
+    if (selectedTool === Tool.USERLIST) return;
 
     const pos = e.target.getStage().getPointerPosition();
     const scale = this.props.stageWidth / originWidth;
@@ -249,6 +251,14 @@ class DrawingCanvas extends React.PureComponent {
   };
 
   handleSelectTool = tool => {
+    if (tool === Tool.CHAT) {
+      this.props.openChatTab();
+      return;
+    }
+    if (tool === Tool.USERLIST) {
+      this.props.openUsersTab();
+      return;
+    }
     if (tool !== Tool.SELECT) {
       this.handleOnSelect(null);
     }

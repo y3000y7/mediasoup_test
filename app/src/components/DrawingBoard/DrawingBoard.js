@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import * as toolareaActions from "../../actions/toolareaActions";
 import { withStyles } from "@material-ui/core/styles";
 import { withRoomContext } from "../../RoomContext";
 import DrawingCanvas from "./DrawingCanvas";
@@ -88,7 +89,13 @@ class DrawingBoard extends React.PureComponent {
   };
 
   render() {
-    const { classes, objects, drawTimeStamp } = this.props;
+    const {
+      classes,
+      objects,
+      drawTimeStamp,
+      openChatTab,
+      openUsersTab
+    } = this.props;
     const { canvasWrapperWidth, canvasWrapperHeight } = this.state;
     const { onObjectAdded, onClear, onObjectChanged } = this;
     const wrapperStyles = {
@@ -102,6 +109,8 @@ class DrawingBoard extends React.PureComponent {
         <div className={classes.boardWrap} style={wrapperStyles}>
           <DrawingCanvas
             objects={objects}
+            openChatTab={openChatTab}
+            openUsersTab={openUsersTab}
             drawTimeStamp={drawTimeStamp}
             onObjectAdded={onObjectAdded}
             onObjectChanged={onObjectChanged}
@@ -123,10 +132,21 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = dispatch => ({
+  openChatTab: () => {
+    dispatch(toolareaActions.openToolArea());
+    dispatch(toolareaActions.setToolTab("chat"));
+  },
+  openUsersTab: () => {
+    dispatch(toolareaActions.openToolArea());
+    dispatch(toolareaActions.setToolTab("users"));
+  }
+});
+
 export default withRoomContext(
   connect(
     mapStateToProps,
-    null,
+    mapDispatchToProps,
     null,
     {
       areStatesEqual: (next, prev) => {
