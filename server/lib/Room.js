@@ -1694,6 +1694,35 @@ class Room extends EventEmitter {
         break;
       }
 
+      case "changeDrawingObject": {
+        if (!this._hasPermission(peer, DRAW_OBJECT))
+          throw new Error("peer not authorized");
+
+        const { object } = request.data;
+        this._drawingHistory.map(obj => {
+          if (obj.id === object.id) {
+            return { ...obj, object };
+          }
+          return obj;
+        });
+
+        // Spread to others
+        this._notification(
+          peer.socket,
+          "changeDrawingObject",
+          {
+            peerId: peer.id,
+            object: object
+          },
+          true
+        );
+
+        // Return no error
+        cb();
+
+        break;
+      }
+
       default: {
         logger.error('unknown request.method "%s"', request.method);
 
