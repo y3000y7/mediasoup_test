@@ -122,8 +122,8 @@
   "label.username": "이름",
   "label.password": "비밀번호",
   "label.login": "로그인",
-  "label.logout": null,
-  "label.join": null,
+  "label.logout": "로그아웃",
+  "label.join": "입장하기",
 
   "settings.settings": "설정",
   "settings.camera": "카메라",
