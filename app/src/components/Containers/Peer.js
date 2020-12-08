@@ -50,7 +50,11 @@ const styles = theme => ({
       order: 4
     },
     "&.screen": {
-      order: 3
+      position: "absolute",
+      left: "0",
+      bottom: "0",
+      order: 3,
+      border: "2px solid violet"
     }
   },
   fab: {

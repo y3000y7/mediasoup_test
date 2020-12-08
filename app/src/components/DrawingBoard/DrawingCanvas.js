@@ -4,6 +4,8 @@ import { Stage, Layer, Rect } from "react-konva";
 import TransformShape from "./TransformShape";
 import Tool from "./Tool";
 
+import chatIconOn from "../../images/icon-chat-on.svg";
+import userlistIconOn from "../../images/icon-user-list-on.svg";
 import selectIconOn from "../../images/icon-select-on.svg";
 import penIconOn from "../../images/icon-pencil-on.svg";
 import rectIconOn from "../../images/icon-text-on.svg";
@@ -11,6 +13,8 @@ import ellipseIconOn from "../../images/icon-text-on.svg";
 import textIconOn from "../../images/icon-text-on.svg";
 import clearIconOn from "../../images/icon-delete-on.svg";
 
+import chatIconOff from "../../images/icon-chat-off.svg";
+import userlistIconOff from "../../images/icon-user-list-off.svg";
 import selectIconOff from "../../images/icon-select-off.svg";
 import penIconOff from "../../images/icon-pencil-off.svg";
 import rectIconOff from "../../images/icon-text-off.svg";
@@ -346,6 +350,16 @@ class DrawingCanvas extends React.PureComponent {
             let className = classes.tool;
             let defaultImg, activeImg, bgColor;
             switch (tool) {
+              case Tool.CHAT:
+                defaultImg = chatIconOff;
+                activeImg = chatIconOn;
+                bgColor = "#51c5f7";
+                break;
+              case Tool.USERLIST:
+                defaultImg = userlistIconOff;
+                activeImg = userlistIconOn;
+                bgColor = "#aadc73";
+                break;
               case Tool.SELECT:
                 defaultImg = selectIconOff;
                 activeImg = selectIconOn;
@@ -356,13 +370,13 @@ class DrawingCanvas extends React.PureComponent {
                 activeImg = penIconOn;
                 bgColor = "#fb7f85";
                 break;
-              case Tool.RECT:
-                defaultImg = rectIconOff;
-                activeImg = rectIconOn;
-              case Tool.ELLIPSE:
-                defaultImg = ellipseIconOff;
-                activeImg = ellipseIconOn;
-                break;
+              // case Tool.RECT:
+              //   defaultImg = rectIconOff;
+              //   activeImg = rectIconOn;
+              // case Tool.ELLIPSE:
+              //   defaultImg = ellipseIconOff;
+              //   activeImg = ellipseIconOn;
+              //   break;
               case Tool.TEXT:
                 defaultImg = textIconOff;
                 activeImg = textIconOn;

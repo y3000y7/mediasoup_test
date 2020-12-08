@@ -25,7 +25,10 @@ const styles = theme => ({
     overflow: "hidden",
     justifyContent: "center",
     alignItems: "center",
-    alignContent: "center"
+    alignContent: "center",
+    "&.screen": {
+      display: "none !important"
+    }
   },
   hiddenToolBar: {
     paddingTop: 0,
@@ -162,7 +165,12 @@ class Democratic extends React.PureComponent {
         ref={this.peersRef}
       >
         {!hideSelfView && (
-          <Me advancedMode={advancedMode} spacing={6} style={style} />
+          <Me
+            advancedMode={advancedMode}
+            spacing={6}
+            style={style}
+            mode={"Democratic"}
+          />
         )}
         {spotlightsPeers.map(peer => {
           return (
