@@ -10,6 +10,8 @@ import Peer from "../Containers/Peer";
 import SpeakerPeer from "../Containers/SpeakerPeer";
 import DrawingBoard from "../DrawingBoard/DrawingBoard";
 import Grid from "@material-ui/core/Grid";
+import * as roomAction from "../../actions/roomActions";
+import viewDemocraticIcon from "../../images/icon-gallery-view.svg";
 
 const PADDING_V = 50;
 const FILMSTRING_PADDING_V = 0;
@@ -25,7 +27,6 @@ const styles = () => ({
     overflow: "hidden",
     gridTemplateColumns: "1fr",
     gridTemplateRows: "1fr 0.25fr"
-    // border: "2px solid green"
   },
   speaker: {
     // gridArea: "auto / auto / auto / auto",
@@ -35,9 +36,11 @@ const styles = () => ({
     height: "calc(100vh - 224px - 50px)"
   },
   filmStrip: {
+    position: "relative",
     // gridArea: "auto / auto / auto / auto"
     background: "#1a1a1a",
-    height: "224px"
+    height: "224px",
+    overflow: "hidden"
   },
   filmItem: {
     display: "flex",
@@ -57,6 +60,14 @@ const styles = () => ({
   showingToolBar: {
     paddingTop: PADDING_V,
     transition: "padding .5s"
+  },
+  viewDemocraticIcon: {
+    position: "absolute",
+    top: "13px",
+    right: "30px",
+    width: "30px",
+    height: "30px",
+    cursor: "pointer"
   }
 });
 
@@ -211,9 +222,17 @@ class Filmstrip extends React.PureComponent {
               }
             })}
           </Grid>
+          <img
+            src={viewDemocraticIcon}
+            alt="viewDemocraticIcon"
+            className={classes.viewDemocraticIcon}
+            onClick={() => {
+              this.props.setDisplayMode("democratic");
+            }}
+          />
         </div>
         <div className={classes.speaker}>
-          {/* {peers[activePeerId] && (
+          {/* {peers[activePeerId] && (1
             <SpeakerPeer
               advancedMode={advancedMode}
               id={activePeerId}
@@ -266,7 +285,7 @@ const mapStateToProps = state => {
 export default withRoomContext(
   connect(
     mapStateToProps,
-    null,
+    { setDisplayMode: roomAction.setDisplayMode },
     null,
     {
       areStatesEqual: (next, prev) => {

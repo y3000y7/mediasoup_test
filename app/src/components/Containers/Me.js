@@ -49,7 +49,11 @@ const styles = theme => ({
       order: 1
     },
     "&.screen": {
-      order: 2
+      position: "absolute",
+      left: "0",
+      top: "0",
+      order: 2,
+      border: "2px solid violet"
     }
   },
   fab: {
@@ -162,7 +166,8 @@ const Me = props => {
     hasScreenPermission,
     transports,
     noiseVolume,
-    classes
+    classes,
+    mode
   } = props;
 
   const videoVisible =
@@ -798,7 +803,7 @@ const Me = props => {
           </div>
         );
       })}
-      {screenProducer && (
+      {screenProducer && mode !== "Democratic" && (
         <div
           className={classnames(classes.root, "screen", hover ? "hover" : null)}
           onMouseOver={() => setHover(true)}
