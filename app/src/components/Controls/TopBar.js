@@ -146,6 +146,7 @@ const styles = theme => ({
   toolBarTitle: {
     position: "absolute",
     left: "50%",
+    transform: "translateX(-50%)",
     fontSize: "15px",
     fontWeight: "500"
   }

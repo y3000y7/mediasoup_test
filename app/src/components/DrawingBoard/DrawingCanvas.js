@@ -1,42 +1,89 @@
-import React from "react";
+import React, { Children } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Stage, Layer, Rect } from "react-konva";
 import TransformShape from "./TransformShape";
 import Tool from "./Tool";
 
+import selectIconOn from "../../images/icon-select-on.svg";
+import penIconOn from "../../images/icon-pencil-on.svg";
+import rectIconOn from "../../images/icon-text-on.svg";
+import ellipseIconOn from "../../images/icon-text-on.svg";
+import textIconOn from "../../images/icon-text-on.svg";
+import clearIconOn from "../../images/icon-delete-on.svg";
+
+import selectIconOff from "../../images/icon-select-off.svg";
+import penIconOff from "../../images/icon-pencil-off.svg";
+import rectIconOff from "../../images/icon-text-off.svg";
+import ellipseIconOff from "../../images/icon-text-off.svg";
+import textIconOff from "../../images/icon-text-off.svg";
+import clearIconOff from "../../images/icon-delete-off.svg";
+
 const styles = () => ({
+  stage: {
+    borderRadius: "15px",
+    overflow: "hidden"
+  },
   tools: {
     position: "absolute",
-    left: "20px",
-    top: "20px",
-    display: "flex"
+    top: "20.44%",
+    right: "1.5625%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "flex-end"
   },
   tool: {
+    boxSizing: "border-box",
+    position: "relative",
     cursor: "pointer",
-    width: "50px",
-    lineHeight: "30px",
+    // width: "50px",
+    // height: "50px",
+    width: "2.6vw",
+    height: "2.6vw",
+    // minWidth: "30px",
+    // minHeight: "30px",
     borderRadius: "5px",
-    marginRight: "10px",
-    backgroundColor: "#ffffff",
+    // backgroundColor: "#000000",
     fontSize: "12px",
-    textAlign: "center"
+    textAlign: "center",
+    marginBottom: "15px"
+  },
+  toolImg: {
+    position: "absolute",
+    top: "0.52vw",
+    left: "0.52vw",
+    width: "1.5625vw",
+    height: "1.5625vw"
+    // minWidth: "20px",
+    // minHeight: "20px"
   },
   selectedTool: {
-    background: "#333333",
     color: "#ffffff"
   },
   colors: {
     position: "absolute",
-    left: "20px",
-    top: "60px",
-    display: "flex"
+    right: "110px",
+    bottom: "150px",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    width: "10.83vw",
+    maxWidth: "208px",
+    minWidth: "150px",
+    // height: "271px",
+    backgroundColor: "#2f2f2f",
+    borderRadius: "10px",
+    padding: "25px 20px"
   },
   color: {
     cursor: "pointer",
-    width: "30px",
-    height: "30px",
-    marginRight: "10px",
-    borderRadius: "15px",
+    width: "20%",
+    maxWidth: "30px",
+    minWidth: "22px",
+    height: "1.5625vw",
+    maxHeight: "30px",
+    minHeight: "22px",
+    margin: "11px 2% 0",
+    borderRadius: "6px",
     transform: "scale(1)"
   },
   selectedColor: {
@@ -48,14 +95,18 @@ const styles = () => ({
 const tools = Object.values(Tool);
 
 const colors = [
-  "#FF0000",
-  "#00FF00",
-  "#0000FF",
-  "#FFFF00",
-  "#00FFFF",
-  "#FF00FF",
+  "#ffffff",
+  "#c5c5c5",
+  "#9b9b9b",
   "#000000",
-  "#FFFFFF"
+  "#fd3918",
+  "#ffa016",
+  "#fbd213",
+  "#ff9cbd",
+  "#99d823",
+  "#96ddff",
+  "#00b1ff",
+  "#a56fff"
 ];
 
 const originWidth = 1920;
@@ -212,6 +263,7 @@ class DrawingCanvas extends React.PureComponent {
           onMousemove={handleMouseMove}
           onMouseup={handleMouseUp}
           scale={{ x: scale, y: scale }}
+          className={classes.stage}
         >
           <Layer>
             <Rect
@@ -219,7 +271,7 @@ class DrawingCanvas extends React.PureComponent {
               height={stageHeight / scale}
               x={0}
               y={0}
-              fill="#444"
+              fill="#1a1a1a"
             />
             {[...draw, drawingObject].map((obj, i) => {
               if (!obj) {
@@ -292,6 +344,37 @@ class DrawingCanvas extends React.PureComponent {
         <div className={classes.tools}>
           {tools.map((tool, i) => {
             let className = classes.tool;
+            let defaultImg, activeImg, bgColor;
+            switch (tool) {
+              case Tool.SELECT:
+                defaultImg = selectIconOff;
+                activeImg = selectIconOn;
+                bgColor = "#9182e6";
+                break;
+              case Tool.PEN:
+                defaultImg = penIconOff;
+                activeImg = penIconOn;
+                bgColor = "#fb7f85";
+                break;
+              case Tool.RECT:
+                defaultImg = rectIconOff;
+                activeImg = rectIconOn;
+              case Tool.ELLIPSE:
+                defaultImg = ellipseIconOff;
+                activeImg = ellipseIconOn;
+                break;
+              case Tool.TEXT:
+                defaultImg = textIconOff;
+                activeImg = textIconOn;
+                bgColor = "#53cdc1";
+                break;
+              case Tool.CLEAR:
+                defaultImg = clearIconOff;
+                activeImg = clearIconOn;
+                bgColor = "#ffd464";
+                break;
+            }
+
             if (tool === selectedTool) {
               className += " " + classes.selectedTool;
             }
@@ -300,8 +383,18 @@ class DrawingCanvas extends React.PureComponent {
                 key={i}
                 className={className}
                 onClick={() => handleSelectTool(tool)}
+                // style={{ backgroundColor: `${bgColor}` }}
+                style={{
+                  backgroundColor: `${
+                    tool === selectedTool ? bgColor : "#000000"
+                  }`
+                }}
               >
-                {tool}
+                <img
+                  src={tool === selectedTool ? activeImg : defaultImg}
+                  alt={tool}
+                  className={classes.toolImg}
+                />
               </div>
             );
           })}

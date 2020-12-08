@@ -6,14 +6,14 @@ import DrawingCanvas from "./DrawingCanvas";
 
 const styles = () => ({
   board: {
-    background: "#333333",
-    width: "100%",
-    height: "100%",
     position: "relative",
-    // border: "2px solid red",
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    background: "#242424",
+    width: "100%",
+    height: "100%",
+    overflow: "auto"
   },
   boardWrap: {}
 });
@@ -50,13 +50,16 @@ class DrawingBoard extends React.PureComponent {
     const w = parent.offsetWidth;
 
     let canvasWrapperWidth, canvasWrapperHeight;
-    if (h / w > 5 / 12) {
-      canvasWrapperWidth = w;
-      canvasWrapperHeight = (w * 5) / 12;
-    } else {
-      canvasWrapperWidth = (h * 12) / 5;
-      canvasWrapperHeight = h;
-    }
+    canvasWrapperWidth = w * 0.89;
+    canvasWrapperHeight = h * 0.92;
+
+    // if (h / w > 5 / 12) {
+    //   canvasWrapperWidth = w;
+    //   canvasWrapperHeight = (w * 5) / 12;
+    // } else {
+    //   canvasWrapperWidth = (h * 12) / 5;
+    //   canvasWrapperHeight = h;
+    // }
 
     this.setState({
       canvasWrapperWidth,
@@ -78,7 +81,8 @@ class DrawingBoard extends React.PureComponent {
     const { onObjectAdded, onClear } = this;
     const wrapperStyles = {
       width: canvasWrapperWidth,
-      height: canvasWrapperHeight
+      height: canvasWrapperHeight,
+      borderRadius: "15px"
     };
 
     return (
