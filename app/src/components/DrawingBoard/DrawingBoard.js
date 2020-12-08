@@ -13,7 +13,8 @@ const styles = () => ({
     background: "#242424",
     width: "100%",
     height: "100%",
-    overflow: "auto"
+    overflow: "auto",
+    zIndex: 100
   },
   boardWrap: {}
 });
@@ -34,7 +35,7 @@ class DrawingBoard extends React.PureComponent {
     window.removeEventListener("resize", this.resizeView);
   }
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.draw.length !== this.props.draw.length) {
+    if (nextProps.objects.length !== this.props.objects.length) {
       return true;
     }
     if (nextState.canvasWrapperWidth !== this.state.canvasWrapperWidth) {
@@ -71,14 +72,18 @@ class DrawingBoard extends React.PureComponent {
     this.props.roomClient.addDrawingObject(obj);
   };
 
+  onObjectChanged = obj => {
+    this.props.roomClient.changeDrawingObject(obj);
+  };
+
   onClear = () => {
     this.props.roomClient.clearDrawingObjects();
   };
 
   render() {
-    const { classes, draw } = this.props;
+    const { classes, objects, drawTimeStamp } = this.props;
     const { canvasWrapperWidth, canvasWrapperHeight } = this.state;
-    const { onObjectAdded, onClear } = this;
+    const { onObjectAdded, onClear, onObjectChanged } = this;
     const wrapperStyles = {
       width: canvasWrapperWidth,
       height: canvasWrapperHeight,
@@ -89,8 +94,10 @@ class DrawingBoard extends React.PureComponent {
       <div id="DrawingBoard" className={classes.board}>
         <div className={classes.boardWrap} style={wrapperStyles}>
           <DrawingCanvas
-            draw={draw}
+            objects={objects}
+            drawTimeStamp={drawTimeStamp}
             onObjectAdded={onObjectAdded}
+            onObjectChanged={onObjectChanged}
             onClear={onClear}
             stageWidth={canvasWrapperWidth}
             stageHeight={canvasWrapperHeight}
@@ -105,7 +112,8 @@ DrawingBoard.propTypes = {};
 
 const mapStateToProps = state => {
   return {
-    draw: state.draw
+    objects: state.draw.objects,
+    drawTimeStamp: state.draw.timeStamp
   };
 };
 
@@ -116,7 +124,11 @@ export default withRoomContext(
     null,
     {
       areStatesEqual: (next, prev) => {
-        return prev.draw === next.draw;
+        // return (
+        //   prev.draw.objects === next.draw.objects &&
+        //   prev.draw.timeStamp === next.draw.timeStamp
+        // );
+        return false;
       }
     }
   )(withStyles(styles)(DrawingBoard))
