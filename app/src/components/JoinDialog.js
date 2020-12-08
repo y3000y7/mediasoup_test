@@ -49,6 +49,7 @@ const styles = theme => ({
   dialogTitle: {},
   dialogPaper: {
     width: "30vw",
+    backgroundColor: "#2f2f2f",
     padding: theme.spacing(2),
     [theme.breakpoints.down("lg")]: {
       width: "40vw"
@@ -78,13 +79,14 @@ const styles = theme => ({
     color: "rgba(153, 0, 0, 1)"
   },
   joinButton: {
-    background: "#2e7031",
+    background: "#ff9f0a",
     color: "white",
     "&:hover": {
-      backgroundColor: "#2e7031"
+      backgroundColor: "#ff9f0a"
     }
   },
   mediaDevicesAnySelectedButton: {
+    color: "#ffffff",
     "& .Mui-selected": {
       color: "white",
       backgroundColor: "#5F9B2D",
@@ -104,6 +106,26 @@ const styles = theme => ({
         backgroundColor: "#f50057"
       }
     }
+  },
+  line: {
+    border: "1px solid #242424"
+  },
+  text: {
+    color: "#ffffff",
+    borderRadius: "6px",
+    "& .MuiOutlinedInput-root": {
+      color: "#ffffff"
+    },
+    "& .MuiFormLabel-root": {
+      color: "#ffffff"
+    }
+
+    // "& .MuiOutlinedInput-notchedOutline": {
+    //   borderColor: "#242424"
+    // }
+    // "& .MuiFocused": {
+    //   borderColor: "#242424"
+    // }
   }
 });
 
@@ -306,11 +328,12 @@ const JoinDialog = ({
         </DialogTitle>
 
         <DialogContent>
-          <hr />
+          <hr className={classes.line} />
           {/* ROOM NAME */}
           <TextField
             autoFocus
             id="roomId"
+            className={classes.text}
             label={intl.formatMessage({
               id: "label.roomName"
             })}
@@ -379,6 +402,7 @@ const JoinDialog = ({
           {/* NAME FIELD */}
           <TextField
             id="displayname"
+            className={classes.text}
             label={intl.formatMessage({
               id: "label.yourName"
             })}
