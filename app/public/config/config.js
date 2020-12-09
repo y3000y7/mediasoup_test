@@ -2,7 +2,7 @@
 var config = {
   loginEnabled: false,
   developmentPort: 4443,
-  productionPort: 5001,
+  productionPort: 4443,
 
   /**
    * Supported browsers version

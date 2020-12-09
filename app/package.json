@@ -46,7 +46,7 @@
   "scripts": {
     "start": "react-scripts start",
     "ssl": "HTTPS=true SSL_CRT_FILE=./cert/fullchain.crt SSL_KEY_FILE=./cert/privkey.key PORT=5001 react-scripts start",
-    "build": "NODE_OPTIONS=--max_old_space_size=4096 react-scripts build && rm build/static/**/*.map",
+    "build": "NODE_OPTIONS=--max_old_space_size=4096 react-scripts build && rm build/static/**/*.map && mkdir -p ../server/public && rm -rf ../server/public/* && cp -r build/* ../server/public/",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "aws s3 sync build_release/ s3://mediasoup-test",

@@ -314,7 +314,7 @@ const TopBar = props => {
           )}
         >
           <Toolbar className={classes.toolBar}>
-            <p className={classes.toolBarTitle}>발레 기본 수업</p>
+            <p className={classes.toolBarTitle}>기본 수업</p>
             {/* <PulsingBadge
             color="secondary"
             badgeContent={unread}
