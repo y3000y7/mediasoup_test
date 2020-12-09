@@ -29,7 +29,7 @@ const styles = () => ({
   },
   tools: {
     position: "absolute",
-    top: "20.44%",
+    top: "30px",
     right: "1.5625%",
     display: "flex",
     flexDirection: "column",
