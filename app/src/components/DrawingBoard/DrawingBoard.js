@@ -46,7 +46,10 @@ class DrawingBoard extends React.PureComponent {
       return true;
     }
 
-    if (nextState.canvasWrapperWidth !== this.state.canvasWrapperWidth) {
+    if (
+      nextState.canvasWrapperWidth !== this.state.canvasWrapperWidth ||
+      nextState.canvasWrapperHeight !== this.state.canvasWrapperHeight
+    ) {
       return true;
     }
 
@@ -59,8 +62,8 @@ class DrawingBoard extends React.PureComponent {
     const w = parent.offsetWidth;
 
     let canvasWrapperWidth, canvasWrapperHeight;
-    canvasWrapperWidth = w * 0.89;
-    canvasWrapperHeight = h * 0.92;
+    canvasWrapperWidth = w - 130;
+    canvasWrapperHeight = h - 60;
 
     // if (h / w > 5 / 12) {
     //   canvasWrapperWidth = w;
