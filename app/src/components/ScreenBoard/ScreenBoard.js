@@ -5,7 +5,6 @@ import { withRoomContext } from "../../RoomContext";
 import PropTypes from "prop-types";
 import { makePeerScreenConsumerSelector } from "../Selectors";
 import Peer from "../Containers/Peer";
-import { borderRadius } from "@material-ui/system";
 const getPeerScreenConsumer = makePeerScreenConsumerSelector();
 
 const styles = () => ({
@@ -39,10 +38,10 @@ class ScreenBoard extends React.PureComponent {
     const screenConsumerPeerIds = Object.keys(this.props.peers)
       .map(peerId => {
         const screenConsumer = getPeerScreenConsumer(this.props, peerId);
-        console.log(11111111111, screenConsumer);
         if (screenConsumer) return peerId;
+        else return null;
       })
-      .filter(peerId => peerId !== undefined);
+      .filter(peerId => peerId !== null);
 
     if (screenConsumerPeerIds.length === 0) {
       return <div />;
