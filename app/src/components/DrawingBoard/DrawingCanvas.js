@@ -108,8 +108,8 @@ const colors = [
 
 // const originWidth = 1920;
 // const originHeight = 1080;
-const originWidth = 1710;
-const originHeight = 746;
+const originWidth = 1280;
+const originHeight = 500;
 
 class DrawingCanvas extends React.PureComponent {
   constructor(props) {
