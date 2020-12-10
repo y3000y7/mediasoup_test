@@ -30,7 +30,7 @@ const styles = () => ({
   tools: {
     position: "absolute",
     top: "30px",
-    right: "1.5625%",
+    right: "12.5px",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end"
@@ -39,26 +39,19 @@ const styles = () => ({
     boxSizing: "border-box",
     position: "relative",
     cursor: "pointer",
-    // width: "50px",
-    // height: "50px",
-    width: "2.6vw",
-    height: "2.6vw",
-    // minWidth: "30px",
-    // minHeight: "30px",
+    width: "40px",
+    height: "40px",
     borderRadius: "5px",
-    // backgroundColor: "#000000",
     fontSize: "12px",
     textAlign: "center",
-    marginBottom: "15px"
+    marginBottom: "10px"
   },
   toolImg: {
     position: "absolute",
-    top: "0.52vw",
-    left: "0.52vw",
-    width: "1.5625vw",
-    height: "1.5625vw"
-    // minWidth: "20px",
-    // minHeight: "20px"
+    top: "10px",
+    left: "10px",
+    width: "20px",
+    height: "20px"
   },
   selectedTool: {
     color: "#ffffff"
@@ -113,7 +106,10 @@ const colors = [
   "#a56fff"
 ];
 
-const originWidth = 1920;
+// const originWidth = 1920;
+// const originHeight = 1080;
+const originWidth = 1710;
+const originHeight = 746;
 
 class DrawingCanvas extends React.PureComponent {
   constructor(props) {
@@ -167,12 +163,13 @@ class DrawingCanvas extends React.PureComponent {
     if (selectedTool === Tool.USERLIST) return;
 
     const pos = e.target.getStage().getPointerPosition();
-    const scale = this.props.stageWidth / originWidth;
+    const scaleX = this.props.stageWidth / originWidth;
+    const scaleY = this.props.stageHeight / originHeight;
 
     let drawingObject = {
       id: new Date().getTime(),
-      x: pos.x / scale,
-      y: pos.y / scale,
+      x: pos.x / scaleX,
+      y: pos.y / scaleY,
       type: selectedTool,
       fill: selectedColor
     };
@@ -182,10 +179,10 @@ class DrawingCanvas extends React.PureComponent {
       drawingObject.height = 0;
       // drawingObject.x = x;
       // drawingObject.y = y;
-      drawingObject.startX = pos.x / scale;
-      drawingObject.startY = pos.y / scale;
+      drawingObject.startX = pos.x / scaleX;
+      drawingObject.startY = pos.y / scaleY;
     } else if (selectedTool === Tool.PEN) {
-      drawingObject.points = [pos.x / scale, pos.y / scale];
+      drawingObject.points = [pos.x / scaleX, pos.y / scaleY];
     } else if (selectedTool === Tool.TEXT) {
       this.handleSelectTool(Tool.SELECT);
       const text = window.prompt("작성할 내용을 입력하세요");
@@ -204,7 +201,8 @@ class DrawingCanvas extends React.PureComponent {
     }
     const { drawingObject } = this.state;
     const pos = e.target.getStage().getPointerPosition();
-    const scale = this.props.stageWidth / originWidth;
+    const scaleX = this.props.stageWidth / originWidth;
+    const scaleY = this.props.stageHeight / originHeight;
 
     switch (drawingObject.type) {
       case Tool.PEN: {
@@ -213,7 +211,10 @@ class DrawingCanvas extends React.PureComponent {
             ...drawingObject,
             x: drawingObject.x,
             y: drawingObject.y,
-            points: drawingObject.points.concat([pos.x / scale, pos.y / scale])
+            points: drawingObject.points.concat([
+              pos.x / scaleX,
+              pos.y / scaleY
+            ])
           }
         });
         break;
@@ -222,8 +223,8 @@ class DrawingCanvas extends React.PureComponent {
         this.setState({
           drawingObject: {
             ...drawingObject,
-            width: pos.x / scale - drawingObject.x,
-            height: pos.y / scale - drawingObject.y
+            width: pos.x / scaleX - drawingObject.x,
+            height: pos.y / scaleY - drawingObject.y
           }
         });
         break;
@@ -233,11 +234,13 @@ class DrawingCanvas extends React.PureComponent {
           drawingObject: {
             ...drawingObject,
             x:
-              drawingObject.startX + (pos.x / scale - drawingObject.startX) / 2,
+              drawingObject.startX +
+              (pos.x / scaleX - drawingObject.startX) / 2,
             y:
-              drawingObject.startY + (pos.y / scale - drawingObject.startY) / 2,
-            width: Math.abs(pos.x / scale - drawingObject.startX),
-            height: Math.abs(pos.y / scale - drawingObject.startY)
+              drawingObject.startY +
+              (pos.y / scaleY - drawingObject.startY) / 2,
+            width: Math.abs(pos.x / scaleX - drawingObject.startX),
+            height: Math.abs(pos.y / scaleY - drawingObject.startY)
           }
         });
         break;
@@ -313,7 +316,9 @@ class DrawingCanvas extends React.PureComponent {
       handleOnChangeObj
     } = this;
 
-    const scale = stageWidth / originWidth;
+    const scaleX = stageWidth / originWidth;
+    const scaleY = stageHeight / originHeight;
+
     return (
       <div>
         <Stage
@@ -324,13 +329,13 @@ class DrawingCanvas extends React.PureComponent {
           }}
           onMousemove={handleMouseMove}
           onMouseup={handleMouseUp}
-          scale={{ x: scale, y: scale }}
+          scale={{ x: scaleX, y: scaleY }}
           className={classes.stage}
         >
           <Layer ref={layerRef}>
             <Rect
-              width={stageWidth / scale}
-              height={stageHeight / scale}
+              width={stageWidth / scaleX}
+              height={stageHeight / scaleY}
               x={0}
               y={0}
               fill="#1a1a1a"
