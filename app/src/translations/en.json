@@ -67,6 +67,7 @@
   "roles.gotRole": "You got the role: {role}",
   "roles.lostRole": "You lost the role: {role}",
 
+  "tooltip.help": "도움말",
   "tooltip.login": "로그인",
   "tooltip.logout": "로그아웃",
   "tooltip.admitFromLobby": "Admit from lobby",

@@ -9,6 +9,7 @@ import Me from "../Containers/Me";
 import Peer from "../Containers/Peer";
 import SpeakerPeer from "../Containers/SpeakerPeer";
 import DrawingBoard from "../DrawingBoard/DrawingBoard";
+import ScreenBoard from "../ScreenBoard/ScreenBoard";
 import Grid from "@material-ui/core/Grid";
 import * as roomAction from "../../actions/roomActions";
 import viewDemocraticIcon from "../../images/icon-gallery-view.svg";
@@ -241,6 +242,7 @@ class Filmstrip extends React.PureComponent {
           )} */}
 
           <DrawingBoard />
+          <ScreenBoard />
         </div>
       </div>
     );
