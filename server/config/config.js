@@ -451,7 +451,7 @@ module.exports =
 			listenIps :
 			[
 				// change 192.0.2.1 IPv4 to your server's IPv4 address!!
-				{ ip: '172.31.29.198', announcedIp: '15.165.238.151' }
+				{ ip: '172.31.13.181', announcedIp: '3.35.214.206' }
 
 				// Can have multiple listening interfaces
 				// change 2001:DB8::1 IPv6 to your server's IPv6 address!!
