@@ -6,24 +6,29 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import * as appPropTypes from "../appPropTypes";
 import IconButton from "@material-ui/core/IconButton";
-import PanIcon from "@material-ui/icons/PanTool";
 import { green } from "@material-ui/core/colors";
+import handUpIcon from "../../images/icon-main-hand-up-on.svg";
+import handDownIcon from "../../images/icon-main-hand-up-off.svg";
 
 const styles = () => ({
   raiseHand: {
     position: "fixed",
     cursor: "pointer",
-    left: "80px",
-    bottom: "100px",
-    background: "#999",
-    width: "80px",
-    height: "80px",
+    right: "7.5px",
+    bottom: "87px",
+    background: "#000000",
+    width: "50px",
+    height: "50px",
     zIndex: 101,
     display: "flex",
     justifyContent: "center",
-    borderRadius: "20px"
+    borderRadius: "50%"
   },
-  raised: { background: "#fff", border: "2px solid green" }
+  raised: { background: "#ff9f0a" },
+  handIcon: {
+    width: "30px",
+    height: "30px"
+  }
 });
 
 class RaiseHand extends React.PureComponent {
@@ -49,7 +54,11 @@ class RaiseHand extends React.PureComponent {
           style={{ color: green[500] }}
           size="medium"
         >
-          <PanIcon />
+          <img
+            src={me.raisedHand ? handUpIcon : handDownIcon}
+            alt=""
+            className={classes.handIcon}
+          />
         </IconButton>
       </div>
     );
