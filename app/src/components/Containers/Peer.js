@@ -20,6 +20,10 @@ import MicOffIcon from "../../images/icon-mic-off.svg";
 import NewWindowIcon from "@material-ui/icons/OpenInNew";
 import FullScreenIcon from "@material-ui/icons/Fullscreen";
 import Volume from "./Volume";
+import PanIcon from "@material-ui/icons/PanTool";
+import { green } from "@material-ui/core/colors";
+import handUpIcon from "../../images/icon-main-hand-up-on.svg";
+import handDownIcon from "../../images/icon-main-hand-up-off.svg";
 
 const styles = theme => ({
   root: {
@@ -55,7 +59,8 @@ const styles = theme => ({
       // top: "0",
       // order: 3,
       // border: "2px solid violet"
-    }
+    },
+    position: "relative"
   },
   fab: {
     margin: theme.spacing(1)
@@ -114,6 +119,11 @@ const styles = theme => ({
       fontSize: 20,
       color: "rgba(255, 255, 255, 0.55)"
     }
+  },
+  raisedHand: {
+    position: "absolute",
+    bottom: 0,
+    right: 0
   }
 });
 
@@ -405,6 +415,16 @@ const Peer = props => {
             >
               <Volume id={peer.id} />
             </VideoView>
+            {peer.raisedHand && (
+              <div className={classes.raisedHand}>
+                <IconButton
+                  className={classes.buttons}
+                  style={{ color: green[500] }}
+                >
+                  <img src={handUpIcon} alt="" className={classes.handIcon} />
+                </IconButton>
+              </div>
+            )}
           </div>
         </div>
       )}

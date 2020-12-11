@@ -9,14 +9,15 @@ const getPeerScreenConsumer = makePeerScreenConsumerSelector();
 
 const styles = () => ({
   board: {
-    position: "fixed",
+    position: "absolute",
     // background: "#f00",
-    width: "auto",
+    width: "100vw",
+    height: "calc(100vh - 274px)",
     // height: "500px",
-    left: "80px",
-    top: "250px",
+    left: "0px",
+    top: "274px",
     zIndex: 101,
-    border: "1px solid white",
+    // border: "1px solid white",
     borderRadius: "10px",
     overflow: "hidden"
   },
@@ -31,8 +32,9 @@ class ScreenBoard extends React.PureComponent {
     const { classes, advancedMode } = this.props;
 
     const peerStyle = {
-      width: "500px",
-      height: "auto"
+      margin: "0 auto",
+      width: "calc(100vw - 130px)",
+      height: "calc(100vh - 274px)"
     };
 
     const screenConsumerPeerIds = Object.keys(this.props.peers)
