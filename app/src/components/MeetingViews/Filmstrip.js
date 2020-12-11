@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import classnames from "classnames";
-import { videoBoxesSelector } from "../Selectors";
+import { videoBoxesSelector, raisedHandsSelector } from "../Selectors";
 import { withRoomContext } from "../../RoomContext";
 import Me from "../Containers/Me";
 import Peer from "../Containers/Peer";
 import SpeakerPeer from "../Containers/SpeakerPeer";
 import DrawingBoard from "../DrawingBoard/DrawingBoard";
 import ScreenBoard from "../ScreenBoard/ScreenBoard";
+import RaiseHand from "../RaiseHand/RaiseHand";
 import Grid from "@material-ui/core/Grid";
 import * as roomAction from "../../actions/roomActions";
 import viewDemocraticIcon from "../../images/icon-gallery-view.svg";
@@ -243,6 +244,7 @@ class Filmstrip extends React.PureComponent {
 
           <DrawingBoard />
           <ScreenBoard />
+          <RaiseHand />
         </div>
       </div>
     );
@@ -264,7 +266,8 @@ Filmstrip.propTypes = {
   toolAreaOpen: PropTypes.bool.isRequired,
   permanentTopBar: PropTypes.bool.isRequired,
   aspectRatio: PropTypes.number.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  raisedHands: PropTypes.number.isRequired
 };
 
 const mapStateToProps = state => {
@@ -280,14 +283,19 @@ const mapStateToProps = state => {
     hideSelfView: state.room.hideSelfView,
     toolAreaOpen: state.toolarea.toolAreaOpen,
     aspectRatio: state.settings.aspectRatio,
-    permanentTopBar: state.settings.permanentTopBar
+    permanentTopBar: state.settings.permanentTopBar,
+    raisedHands: raisedHandsSelector(state)
   };
+};
+
+const mapDispatchToProps = {
+  setDisplayMode: roomAction.setDisplayMode
 };
 
 export default withRoomContext(
   connect(
     mapStateToProps,
-    { setDisplayMode: roomAction.setDisplayMode },
+    mapDispatchToProps,
     null,
     {
       areStatesEqual: (next, prev) => {
