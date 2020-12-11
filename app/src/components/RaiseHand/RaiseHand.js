@@ -5,6 +5,9 @@ import { withRoomContext } from "../../RoomContext";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import * as appPropTypes from "../appPropTypes";
+import IconButton from "@material-ui/core/IconButton";
+import PanIcon from "@material-ui/icons/PanTool";
+import { green } from "@material-ui/core/colors";
 
 const styles = () => ({
   raiseHand: {
@@ -12,12 +15,15 @@ const styles = () => ({
     cursor: "pointer",
     left: "80px",
     bottom: "100px",
-    background: "#fff",
-    width: "100px",
-    height: "100px",
-    zIndex: 101
+    background: "#999",
+    width: "80px",
+    height: "80px",
+    zIndex: 101,
+    display: "flex",
+    justifyContent: "center",
+    borderRadius: "20px"
   },
-  raised: { border: "5px solid green" }
+  raised: { background: "#fff", border: "2px solid green" }
 });
 
 class RaiseHand extends React.PureComponent {
@@ -38,7 +44,13 @@ class RaiseHand extends React.PureComponent {
         )}
         onClick={raiseHand}
       >
-        RaiseHand
+        <IconButton
+          className={classes.buttons}
+          style={{ color: green[500] }}
+          size="medium"
+        >
+          <PanIcon />
+        </IconButton>
       </div>
     );
   }
