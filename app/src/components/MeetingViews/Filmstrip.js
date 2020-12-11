@@ -242,8 +242,8 @@ class Filmstrip extends React.PureComponent {
             />
           )} */}
 
-          <DrawingBoard />
           <ScreenBoard />
+          <DrawingBoard />
           <RaiseHand />
         </div>
       </div>

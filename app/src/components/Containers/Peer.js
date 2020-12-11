@@ -22,6 +22,8 @@ import FullScreenIcon from "@material-ui/icons/Fullscreen";
 import Volume from "./Volume";
 import PanIcon from "@material-ui/icons/PanTool";
 import { green } from "@material-ui/core/colors";
+import handUpIcon from "../../images/icon-main-hand-up-on.svg";
+import handDownIcon from "../../images/icon-main-hand-up-off.svg";
 
 const styles = theme => ({
   root: {
@@ -419,7 +421,7 @@ const Peer = props => {
                   className={classes.buttons}
                   style={{ color: green[500] }}
                 >
-                  <PanIcon />
+                  <img src={handUpIcon} alt="" className={classes.handIcon} />
                 </IconButton>
               </div>
             )}
