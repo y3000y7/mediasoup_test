@@ -14,8 +14,8 @@ const styles = () => ({
   raiseHand: {
     position: "fixed",
     cursor: "pointer",
-    right: "7.5px",
-    bottom: "87px",
+    right: "20px",
+    top: "213px",
     background: "#000000",
     width: "50px",
     height: "50px",
