@@ -42,9 +42,10 @@ const styles = theme => ({
     //     "0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px rgba(82, 168, 236, 0.9)"
     // },
     "&.active-speaker": {
-      // transition  : 'filter .2s',
-      // filter      : 'grayscale(0)',
-      // borderColor: "var(--active-speaker-border-color)"
+      // border: "2px solid red"
+      transition: "filter .2s",
+      filter: "grayscale(0)",
+      borderColor: "var(--active-speaker-border-color)"
     },
     "&:not(.active-speaker):not(.screen)": {
       // transition : 'filter 10s',
