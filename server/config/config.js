@@ -132,9 +132,9 @@ module.exports =
 	// if you use encrypted private key the set the passphrase
 	tls          :
 	{
-		cert : `${__dirname}/../certs/fullchain.pem`,
+		cert : `${__dirname}/../certs/waffle.crt`,
 		// passphrase: 'key_password'
-		key  : `${__dirname}/../certs/privkey.pem`
+		key  : `${__dirname}/../certs/waffle.key`
 	},
 	// listening Host or IP 
 	// If omitted listens on every IP. ("0.0.0.0" and "::")
