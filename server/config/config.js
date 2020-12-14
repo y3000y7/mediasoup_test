@@ -132,9 +132,9 @@ module.exports =
 	// if you use encrypted private key the set the passphrase
 	tls          :
 	{
-		cert : `${__dirname}/../certs/wizlive.crt`,
+		cert : `${__dirname}/../certs/waffle.crt`,
 		// passphrase: 'key_password'
-		key  : `${__dirname}/../certs/wizlive.key`
+		key  : `${__dirname}/../certs/waffle.key`
 	},
 	// listening Host or IP 
 	// If omitted listens on every IP. ("0.0.0.0" and "::")
