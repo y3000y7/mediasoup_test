@@ -1,6 +1,6 @@
 const list = [
   {
-    name: "English",
+    name: "한국어",
     file: "en",
     locale: ["en", "en-en"]
   }
