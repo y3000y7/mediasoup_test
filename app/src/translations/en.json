@@ -156,7 +156,7 @@
   "settings.echoCancellation": "에코 제거",
   "settings.autoGainControl": "자동 이득 조정",
   "settings.noiseSuppression": "잡음 억제",
-  "settings.drawerOverlayed": "Side drawer over content",
+  "settings.drawerOverlayed": "팝업 화면표시",
   "settings.voiceActivatedUnmute": "Voice activated unmute",
   "settings.noiseThreshold": "잡음 기준",
   "settings.mirrorOwnVideo": "내 화면 반전",
@@ -206,5 +206,6 @@
   "unsupportedBrowser.titlewebrtcUnavailable": "지원하지 않는 브라우저입니다.",
   "unsupportedBrowser.bodyText": "지원하지 않는 브라우저입니다.",
 
-  "me.mutedPTT": "음소거 상태입니다. 해제하려면 스페이스바를 누르세요"
+  "me.mutedPTT": "음소거 상태입니다. 해제하려면 스페이스바를 누르세요",
+  "settings.language": "언어"
 }

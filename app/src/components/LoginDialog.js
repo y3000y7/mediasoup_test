@@ -107,7 +107,7 @@ const ChooseRoom = ({ classes }) => {
               autoFocus
               id="username"
               label={intl.formatMessage({
-                id: "label.username",
+                id: "label.username"
               })}
               variant="outlined"
               margin="normal"
@@ -118,7 +118,7 @@ const ChooseRoom = ({ classes }) => {
             <TextField
               id="password"
               label={intl.formatMessage({
-                id: "label.password",
+                id: "label.password"
               })}
               variant="outlined"
               margin="normal"
