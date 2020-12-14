@@ -60,10 +60,10 @@ var config = {
   // The aspect ratio of the video from the camera
   // this is not changeable in settings, only config
   videoAspectRatio: 1.777,
-  defaultResolution: "medium",
+  defaultResolution: "high",
   defaultFrameRate: 15,
   defaultScreenResolution: "veryhigh",
-  defaultScreenSharingFrameRate: 5,
+  defaultScreenSharingFrameRate: 10,
   // Enable or disable simulcast for webcam video
   simulcast: true,
   // Enable or disable simulcast for screen sharing video

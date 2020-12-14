@@ -148,6 +148,16 @@ class Filmstrip extends React.PureComponent {
     } = this.props;
 
     const activePeerId = this.getActivePeerId();
+    // console.log(111111111, activePeerId);
+    const peerIds = Object.keys(peers).sort((p1, p2) => {
+      if (p1 === activePeerId) {
+        console.log(1111111111, peers[p1].id, peers[p1].displayName);
+        return -1;
+      }
+      return 0;
+      // console.log(1111111, activePeerId, p1, p2);
+    });
+    console.log(1111111111, peerIds);
 
     // const speakerStyle = {
     //   width: this.state.speakerWidth,
@@ -192,7 +202,7 @@ class Filmstrip extends React.PureComponent {
               </div>
             </Grid>
 
-            {Object.keys(peers).map(peerId => {
+            {peerIds.map(peerId => {
               if (
                 spotlights.find(
                   spotlightsElement => spotlightsElement === peerId
