@@ -132,9 +132,9 @@ module.exports =
 	// if you use encrypted private key the set the passphrase
 	tls          :
 	{
-		cert : `${__dirname}/../certs/waffle.crt`,
+		cert : `${__dirname}/../certs/waffledev.crt`,
 		// passphrase: 'key_password'
-		key  : `${__dirname}/../certs/waffle.key`
+		key  : `${__dirname}/../certs/waffledev.key`
 	},
 	// listening Host or IP 
 	// If omitted listens on every IP. ("0.0.0.0" and "::")
@@ -451,7 +451,7 @@ module.exports =
 			listenIps :
 			[
 				// change 192.0.2.1 IPv4 to your server's IPv4 address!!
-				{ ip: '172.31.13.181', announcedIp: '3.35.214.206' }
+				{ ip: '172.31.20.53', announcedIp: '13.125.52.80' }
 
 				// Can have multiple listening interfaces
 				// change 2001:DB8::1 IPv6 to your server's IPv6 address!!
