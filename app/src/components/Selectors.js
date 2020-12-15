@@ -246,6 +246,13 @@ export const meProducersSelector = createSelector(
   }
 );
 
+export const meScreenProducersSelector = createSelector(
+  screenProducerSelector,
+  screenProducer => {
+    return screenProducer;
+  }
+);
+
 export const makePeerScreenConsumerSelector = () => {
   return createSelector(
     getPeerConsumers,

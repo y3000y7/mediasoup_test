@@ -30,7 +30,7 @@ const styles = theme => ({
     flex: "0 0 auto",
     boxShadow: "var(--peer-shadow)",
     border: "var(--peer-border)",
-    touchAction: "none",
+    // touchAction: "none",
     // backgroundColor: "var(--peer-bg-color)",
     // backgroundImage: "var(--peer-empty-avatar)",
     backgroundPosition: "bottom",
@@ -45,7 +45,9 @@ const styles = theme => ({
       // border: "2px solid red"
       transition: "filter .2s",
       filter: "grayscale(0)",
-      borderColor: "var(--active-speaker-border-color)"
+      // borderColor: "var(--active-speaker-border-color)"
+      border: "5px solid #f90 !important",
+      overflow: "hidden"
     },
     "&:not(.active-speaker):not(.screen)": {
       // transition : 'filter 10s',
@@ -64,7 +66,11 @@ const styles = theme => ({
     position: "relative"
   },
   fab: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
+    display: "none"
+  },
+  fabOn: {
+    display: "block"
   },
   smallContainer: {
     // backgroundColor: "rgba(255, 255, 255, 0.9)",
@@ -673,7 +679,7 @@ const Peer = props => {
                       id: "label.newWindow",
                       defaultMessage: "New window"
                     })}
-                    className={classes.fab}
+                    className={classnames(classes.fab, classes.fabOn)}
                     disabled={
                       !screenVisible || windowConsumer === screenConsumer.id
                     }
@@ -699,7 +705,7 @@ const Peer = props => {
                     id: "label.fullscreen",
                     defaultMessage: "Fullscreen"
                   })}
-                  className={classes.fab}
+                  className={classnames(classes.fab, classes.fabOn)}
                   disabled={!screenVisible}
                   size={smallContainer ? "small" : "large"}
                   onClick={() => {

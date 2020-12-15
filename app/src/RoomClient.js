@@ -132,8 +132,6 @@ export default class RoomClient {
     if (displayName)
       store.dispatch(settingsActions.setDisplayName(displayName));
 
-    this._tracker = "wss://tracker.lab.vvc.niif.hu:443";
-
     // Whether simulcast should be used.
     this._useSimulcast = false;
 
@@ -1484,11 +1482,13 @@ export default class RoomClient {
           consumer.appData.peerId === peerId &&
           consumer.appData.source === type
         ) {
+          console.log(1111111111, mute, peerId, consumer);
           if (mute) await this._pauseConsumer(consumer);
           else await this._resumeConsumer(consumer);
         }
       }
     } catch (error) {
+      console.error(1111111111, error);
       logger.error('modifyPeerConsumer() [error:"%o"]', error);
     }
 
@@ -2663,7 +2663,6 @@ export default class RoomClient {
         authenticated,
         roles,
         peers,
-        tracker,
         roomPermissions,
         userRoles,
         allowWhenRoleMissing,
@@ -2686,8 +2685,6 @@ export default class RoomClient {
         roles,
         userRoles
       );
-
-      tracker && (this._tracker = tracker);
 
       store.dispatch(meActions.loggedIn(authenticated));
 

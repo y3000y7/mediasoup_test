@@ -3,8 +3,13 @@ import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import { withRoomContext } from "../../RoomContext";
 import PropTypes from "prop-types";
-import { makePeerScreenConsumerSelector } from "../Selectors";
+import {
+  makePeerScreenConsumerSelector,
+  meScreenProducersSelector
+} from "../Selectors";
+import * as appPropTypes from "../appPropTypes";
 import Peer from "../Containers/Peer";
+import Me from "../Containers/Me";
 const getPeerScreenConsumer = makePeerScreenConsumerSelector();
 
 const styles = () => ({
@@ -23,21 +28,29 @@ const styles = () => ({
   },
   screens: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
+    margin: "0 auto",
+    width: "calc(100vw - 130px)",
+    height: "calc(100vh - 274px)"
   }
 });
 
 class ScreenBoard extends React.PureComponent {
   render() {
-    const { classes, advancedMode } = this.props;
+    const { classes, advancedMode, peers, screenProducer } = this.props;
 
     const peerStyle = {
-      margin: "0 auto",
-      width: "calc(100vw - 130px)",
-      height: "calc(100vh - 274px)"
+      // margin: "0 auto",
+      // width: "calc(100vw - 130px)",
+      // height: "calc(100vh - 274px)",
+      flex: "100%",
+      // border: "1px solid #ffffff",
+      width: "100%",
+      height: "100%",
+      marginRight: "3px"
     };
 
-    const screenConsumerPeerIds = Object.keys(this.props.peers)
+    const screenConsumerPeerIds = Object.keys(peers)
       .map(peerId => {
         const screenConsumer = getPeerScreenConsumer(this.props, peerId);
         if (screenConsumer) return peerId;
@@ -45,13 +58,23 @@ class ScreenBoard extends React.PureComponent {
       })
       .filter(peerId => peerId !== null);
 
-    if (screenConsumerPeerIds.length === 0) {
+    if (!screenProducer && screenConsumerPeerIds.length === 0) {
       return <div />;
     }
 
     return (
       <div className={classes.board}>
         <div className={classes.screens}>
+          {screenProducer && (
+            <Me
+              advancedMode={advancedMode}
+              style={peerStyle}
+              smallContainer
+              cameraOn={false}
+              extraOn={false}
+              screenOn={true}
+            />
+          )}
           {screenConsumerPeerIds.map(peerId => {
             return (
               <Peer
@@ -73,15 +96,18 @@ class ScreenBoard extends React.PureComponent {
 }
 
 ScreenBoard.propTypes = {
+  me: appPropTypes.Me.isRequired,
   peers: PropTypes.object.isRequired,
   consumers: PropTypes.object.isRequired,
+  screenProducer: appPropTypes.Producer,
   advancedMode: PropTypes.bool
 };
 
 const mapStateToProps = state => {
   return {
     peers: state.peers,
-    consumers: state.consumers
+    consumers: state.consumers,
+    screenProducer: meScreenProducersSelector(state)
   };
 };
 
@@ -94,7 +120,11 @@ export default withRoomContext(
     null,
     {
       areStatesEqual: (next, prev) => {
-        return prev.peers === next.peers && prev.consumers === next.consumers;
+        return (
+          prev.peers === next.peers &&
+          prev.consumers === next.consumers &&
+          prev.me === next.me
+        );
       }
     }
   )(withStyles(styles)(ScreenBoard))

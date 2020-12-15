@@ -151,12 +151,17 @@ class Filmstrip extends React.PureComponent {
 
     let peerIds = Object.keys(peers);
     const activePeerId = this.getActivePeerId();
+
     // if (activePeerId) {
     //   this.activePeers[activePeerId] = new Date().getTime();
     // }
     // peerIds = Object.keys(peers).sort((p1, p2) => {
-    //   if (this.activePeers[p1] && this.activePeers[p2]) {
-    //     console.log(11111111, this.activePeers[p1], this.activePeers[p2]);
+    //   if (this.activePeers[p1] && !this.activePeers[p2]) {
+    //     return -1;
+    //   } else if (!this.activePeers[p1] && this.activePeers[p2]) {
+    //     return 1;
+    //   } else if (this.activePeers[p1] && this.activePeers[p2]) {
+    //     // console.log(11111111, this.activePeers[p1], this.activePeers[p2]);
     //     if (this.activePeers[p1] > this.activePeers[p2]) {
     //       return -1;
     //       // } else {
