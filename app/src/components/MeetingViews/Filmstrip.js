@@ -84,6 +84,8 @@ class Filmstrip extends React.PureComponent {
     // this.activePeerContainer = React.createRef();
 
     this.filmStripContainer = React.createRef();
+
+    this.activePeers = {};
   }
 
   state = {
@@ -147,17 +149,25 @@ class Filmstrip extends React.PureComponent {
       classes
     } = this.props;
 
+    let peerIds = Object.keys(peers);
     const activePeerId = this.getActivePeerId();
-    // console.log(111111111, activePeerId);
-    const peerIds = Object.keys(peers).sort((p1, p2) => {
-      if (p1 === activePeerId) {
-        console.log(1111111111, peers[p1].id, peers[p1].displayName);
-        return -1;
-      }
-      return 0;
-      // console.log(1111111, activePeerId, p1, p2);
-    });
-    console.log(1111111111, peerIds);
+    // if (activePeerId) {
+    //   this.activePeers[activePeerId] = new Date().getTime();
+    // }
+    // peerIds = Object.keys(peers).sort((p1, p2) => {
+    //   if (this.activePeers[p1] && this.activePeers[p2]) {
+    //     console.log(11111111, this.activePeers[p1], this.activePeers[p2]);
+    //     if (this.activePeers[p1] > this.activePeers[p2]) {
+    //       return -1;
+    //       // } else {
+    //       //   return 0;
+    //     } else {
+    //       return 1;
+    //     }
+    //   }
+
+    //   return 0;
+    // });
 
     // const speakerStyle = {
     //   width: this.state.speakerWidth,
