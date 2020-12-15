@@ -122,9 +122,9 @@ module.exports = {
   cookieName: "edumeet.sid",
   // if you use encrypted private key the set the passphrase
   tls: {
-    cert: `${__dirname}/../certs/waffle.crt`,
+    cert: `${__dirname}/../certs/waffledev.crt`,
     // passphrase: 'key_password'
-    key: `${__dirname}/../certs/waffle.key`
+    key: `${__dirname}/../certs/waffledev.key`
   },
   // listening Host or IP
   // If omitted listens on every IP. ("0.0.0.0" and "::")
