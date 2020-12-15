@@ -664,7 +664,7 @@ const TopBar = props => {
               )}
             </MenuItem>
           )}
-          <MenuItem
+          {/* <MenuItem
             aria-label={lockTooltip}
             disabled={!canLock}
             onClick={() => {
@@ -693,7 +693,7 @@ const TopBar = props => {
                 />
               </p>
             )}
-          </MenuItem>
+          </MenuItem> */}
           <MenuItem
             aria-label={intl.formatMessage({
               id: "tooltip.settings"
@@ -711,7 +711,7 @@ const TopBar = props => {
               />
             </p>
           </MenuItem>
-          <MenuItem
+          {/* <MenuItem
             aria-label={intl.formatMessage({
               id: "tooltip.participants"
             })}
@@ -802,7 +802,7 @@ const TopBar = props => {
                 />
               </p>
             )}
-          </MenuItem>
+          </MenuItem> */}
         </Menu>
       </MuiThemeProvider>
     </React.Fragment>
