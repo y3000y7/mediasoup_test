@@ -414,7 +414,7 @@ module.exports = {
     webRtcTransport: {
       listenIps: [
         // change 192.0.2.1 IPv4 to your server's IPv4 address!!
-        { ip: "172.31.20.53", announcedIp: "13.125.52.80" }
+        { ip: "172.31.20.53", announcedIp: "13.209.74.215" }
 
         // Can have multiple listening interfaces
         // change 2001:DB8::1 IPv6 to your server's IPv6 address!!
