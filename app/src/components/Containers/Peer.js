@@ -30,7 +30,7 @@ const styles = theme => ({
     flex: "0 0 auto",
     boxShadow: "var(--peer-shadow)",
     border: "var(--peer-border)",
-    touchAction: "none",
+    // touchAction: "none",
     // backgroundColor: "var(--peer-bg-color)",
     // backgroundImage: "var(--peer-empty-avatar)",
     backgroundPosition: "bottom",
@@ -68,6 +68,9 @@ const styles = theme => ({
   fab: {
     margin: theme.spacing(1),
     display: "none"
+  },
+  fabOn: {
+    display: "block"
   },
   smallContainer: {
     // backgroundColor: "rgba(255, 255, 255, 0.9)",
@@ -676,7 +679,7 @@ const Peer = props => {
                       id: "label.newWindow",
                       defaultMessage: "New window"
                     })}
-                    className={classes.fab}
+                    className={classnames(classes.fab, classes.fabOn)}
                     disabled={
                       !screenVisible || windowConsumer === screenConsumer.id
                     }
@@ -702,7 +705,7 @@ const Peer = props => {
                     id: "label.fullscreen",
                     defaultMessage: "Fullscreen"
                   })}
-                  className={classes.fab}
+                  className={classnames(classes.fab, classes.fabOn)}
                   disabled={!screenVisible}
                   size={smallContainer ? "small" : "large"}
                   onClick={() => {
