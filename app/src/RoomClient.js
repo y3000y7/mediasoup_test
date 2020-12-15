@@ -1482,11 +1482,13 @@ export default class RoomClient {
           consumer.appData.peerId === peerId &&
           consumer.appData.source === type
         ) {
+          console.log(1111111111, mute, peerId, consumer);
           if (mute) await this._pauseConsumer(consumer);
           else await this._resumeConsumer(consumer);
         }
       }
     } catch (error) {
+      console.error(1111111111, error);
       logger.error('modifyPeerConsumer() [error:"%o"]', error);
     }
 

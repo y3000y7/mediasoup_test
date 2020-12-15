@@ -39,7 +39,8 @@ const styles = theme => ({
     "&.active-speaker": {
       // transition  : 'filter .2s',
       // filter      : 'grayscale(0)',
-      borderColor: "var(--active-speaker-border-color)"
+      // borderColor: "var(--active-speaker-border-color)"
+      border: "5px solid #f90"
     },
     "&:not(.active-speaker):not(.screen)": {
       // transition : 'filter 10s',
@@ -61,7 +62,8 @@ const styles = theme => ({
   },
   fab: {
     margin: theme.spacing(1),
-    pointerEvents: "auto"
+    pointerEvents: "auto",
+    display: "none"
   },
   smallContainer: {
     // backgroundColor: "rgba(255, 255, 255, 0.9)",

@@ -180,7 +180,7 @@
 
   "devices.microphoneDisconnected": "마이크 연결이 끊어졌습니다.",
   "devices.microphoneError": "마이크 접근 중 에러가 발생하였습니다.",
-  "devices.microphoneMute": "Muted your microphone",
+  "devices.microphoneMute": "마이크 음소거가 설정되었습니다.",
   "devices.microphoneUnMute": "마이크 음소거가 해제되었습니다.",
   "devices.microphoneEnable": "마이크 음소거가 설정되었습니다.",
   "devices.microphoneMuteError": "마아크 음소거 설정에 실패하였습니다.",

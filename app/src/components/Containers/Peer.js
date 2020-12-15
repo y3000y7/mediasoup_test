@@ -45,7 +45,9 @@ const styles = theme => ({
       // border: "2px solid red"
       transition: "filter .2s",
       filter: "grayscale(0)",
-      borderColor: "var(--active-speaker-border-color)"
+      // borderColor: "var(--active-speaker-border-color)"
+      border: "5px solid #f90 !important",
+      overflow: "hidden"
     },
     "&:not(.active-speaker):not(.screen)": {
       // transition : 'filter 10s',
@@ -64,7 +66,8 @@ const styles = theme => ({
     position: "relative"
   },
   fab: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
+    display: "none"
   },
   smallContainer: {
     // backgroundColor: "rgba(255, 255, 255, 0.9)",
