@@ -87,7 +87,8 @@ function run() {
   const produce = parameters.get("produce") !== "false";
   const forceTcp = parameters.get("forceTcp") === "true";
   const displayName = parameters.get("displayName");
-  const muted = parameters.get("muted") === "true";
+  // const muted = parameters.get("muted") === "true"; //original
+  const muted = true;
 
   const { pathname } = window.location;
 

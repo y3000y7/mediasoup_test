@@ -132,8 +132,6 @@ export default class RoomClient {
     if (displayName)
       store.dispatch(settingsActions.setDisplayName(displayName));
 
-    this._tracker = "wss://tracker.lab.vvc.niif.hu:443";
-
     // Whether simulcast should be used.
     this._useSimulcast = false;
 
@@ -2663,7 +2661,6 @@ export default class RoomClient {
         authenticated,
         roles,
         peers,
-        tracker,
         roomPermissions,
         userRoles,
         allowWhenRoleMissing,
@@ -2686,8 +2683,6 @@ export default class RoomClient {
         roles,
         userRoles
       );
-
-      tracker && (this._tracker = tracker);
 
       store.dispatch(meActions.loggedIn(authenticated));
 
